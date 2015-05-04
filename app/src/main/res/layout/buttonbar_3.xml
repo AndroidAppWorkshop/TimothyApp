@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+	<LinearLayout
+     	    android:id="@+id/me3"
+     	    android:layout_width="match_parent"
+     	    android:layout_height="60dp"
+     	    android:background="@drawable/bottom_bar" >
+  
+        <RelativeLayout  
+            android:id="@+id/cou"  
+            android:layout_width="0dp"  
+            android:layout_height="match_parent"  
+            android:layout_weight="1" >  
+  
+            <LinearLayout
+               
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="vertical" >
+  
+                <ImageView  
+                    android:id="@+id/course_image1"  
+                    android:layout_width="wrap_content"  
+                    android:layout_height="wrap_content"  
+                    android:layout_gravity="center_horizontal"  
+                    android:src="@drawable/one" />  
+  
+                <TextView  
+                    android:id="@+id/course_text1"  
+                    android:layout_width="wrap_content"  
+                    android:layout_height="wrap_content"  
+                    android:layout_gravity="center_horizontal"  
+                    android:text="煩悶"  
+                    android:textColor="#7597B3" />  
+            </LinearLayout>  
+        </RelativeLayout>  
+        
+        <RelativeLayout  
+            android:id="@+id/fou"  
+            android:layout_width="0dp"  
+            android:layout_height="match_parent"  
+            android:layout_weight="1" >  
+  
+            <LinearLayout
+             
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="vertical" >
+  
+                <ImageView  
+                    android:id="@+id/found_image2"  
+                    android:layout_width="wrap_content"  
+                    android:layout_height="wrap_content"  
+                    android:layout_gravity="center_horizontal"  
+                    android:src="@drawable/two" />  
+  
+                <TextView  
+                    android:id="@+id/found_text2"  
+                    android:layout_width="wrap_content"  
+                    android:layout_height="wrap_content"  
+                    android:layout_gravity="center_horizontal"  
+                    android:text="發現"  
+                    android:textColor="#7597B3" />  
+            </LinearLayout>  
+        </RelativeLayout>  
+        
+        
+        <RelativeLayout  
+            android:id="@+id/set"  
+            android:layout_width="0dp"  
+            android:layout_height="match_parent"  
+            android:layout_weight="1" >  
+  
+            <LinearLayout
+            
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="vertical" >
+  
+                <ImageView  
+                    android:id="@+id/setting_image3"  
+                    android:layout_width="wrap_content"  
+                    android:layout_height="wrap_content"  
+                    android:layout_gravity="center_horizontal"  
+                    android:src="@drawable/thr" />  
+  
+                <TextView  
+                    android:id="@+id/setting_text3"  
+                    android:layout_width="wrap_content"  
+                    android:layout_height="wrap_content"  
+                    android:layout_gravity="center_horizontal"  
+                    android:text="設置"  
+                    android:textColor="#7597B3" />  
+            </LinearLayout>  
+        </RelativeLayout>  
+                
+        
+  </LinearLayout>
+  
+</LinearLayout>

@@ -1,0 +1,14 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.practice.MainActivity" >
+
+    <item
+        android:id="@+id/MenuBtn01"
+        android:orderInCategory="0"
+        android:icon="@drawable/sbak"
+        android:showAsAction="always"
+        android:title="MenuBtn01"/>
+
+
+</menu>
