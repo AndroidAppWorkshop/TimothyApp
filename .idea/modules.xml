@@ -6,8 +6,6 @@
       <module fileurl="file://$PROJECT_DIR$/TimothyApp.iml" filepath="$PROJECT_DIR$/TimothyApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/ViewPagerlistview/ViewPagerlistview.iml" filepath="$PROJECT_DIR$/ViewPagerlistview/ViewPagerlistview.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/notification/notification.iml" filepath="$PROJECT_DIR$/notification/notification.iml" />
     </modules>
   </component>
 </project>
-
