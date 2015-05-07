@@ -1,1 +1,1 @@
-include ':app', ':ViewPagerlistview', ':GCM_Android'
+include ':app',':notification', ':ViewPagerlistview', ':GCM_Android'

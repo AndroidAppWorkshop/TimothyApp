@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/GCM_Android" />
             <option value="$PROJECT_DIR$/ViewPagerlistview" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/notification" />
           </set>
         </option>
       </GradleProjectSettings>
