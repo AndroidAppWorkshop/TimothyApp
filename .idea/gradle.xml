@@ -9,6 +9,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/GCM_Android" />
+            <option value="$PROJECT_DIR$/ViewPagerlistview" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>
