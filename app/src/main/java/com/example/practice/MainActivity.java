@@ -11,6 +11,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -31,6 +32,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.Volley;
+
 public class MainActivity extends FragmentActivity implements OnPageChangeListener, AdapterView.OnItemClickListener {
 
     private List<Fragment> mFragments = new ArrayList<Fragment>();
@@ -50,8 +56,12 @@ public class MainActivity extends FragmentActivity implements OnPageChangeListen
                     "http://data.kaohsiung.gov.tw/Opendata/DownLoad.aspx?Type=2&CaseNo1=AV&CaseNo2=1&FileType=1&Lang=C&FolderType",
                     "http://data.kaohsiung.gov.tw/Opendata/DownLoad.aspx?Type=2&CaseNo1=AF&CaseNo2=2&FileType=2&Lang=C&FolderType=O"
             };
+    String url2;
     FragmentManager fm;
     private myadapter myadapter;
+    ImageLoader.ImageListener Imlisten;
+    NetworkImageView nt;
+    ImageLoader Imlod;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -89,6 +99,8 @@ public class MainActivity extends FragmentActivity implements OnPageChangeListen
         myadapter=new myadapter(fm,Arrays,mFragments);
         myViewPager.setAdapter(myadapter);
         myViewPager.setOnPageChangeListener(this);
+
+        
     }
 
     private void init() {
@@ -98,6 +110,7 @@ public class MainActivity extends FragmentActivity implements OnPageChangeListen
         mFragments.add(fag);
         mFragments.add(fag2);
         mFragments.add(fag3);
+
     }
 
 	@Override
@@ -154,10 +167,9 @@ public class MainActivity extends FragmentActivity implements OnPageChangeListen
                 ft0.replace(R.id.DraOut , Artgine ).commit() ;
                 break;
             case 1:
-                android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.addToBackStack("BACK");
-
-                ft.replace(R.id.DraOut , Artgine ).commit() ;
+                android.support.v4.app.FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
+                ft1.addToBackStack("HOME");
+                ft1.replace(R.id.DraOut , new NetImage() ).commit() ;
             break;
         }
     }
