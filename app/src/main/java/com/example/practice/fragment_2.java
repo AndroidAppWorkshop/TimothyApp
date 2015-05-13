@@ -3,8 +3,15 @@ package com.example.practice;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.practice.R;
 
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,8 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class fragment_2  extends Fragment implements OnClickListener{
-	JSONArray jsonArray;
-	private RelativeLayout course;  
+	private RelativeLayout course;
 	private RelativeLayout found;  
 	private RelativeLayout set; 
 	private ImageView course_image;  
@@ -27,32 +33,42 @@ public class fragment_2  extends Fragment implements OnClickListener{
     private ImageView settings_image;  
     private TextView course_text;  
     private TextView settings_text;  
-    private TextView found_text;  
+    private TextView found_text;
+    private TextView txv;
     private int gray = 0xFF7597B3;  
 	private int blue =0xFF0AB2FB;  
-	private LinearLayout me; 
-	View view;	
+	private LinearLayout me;
+    RequestQueue RQueue;
+	View view;
+    String URL = "http://data.kaohsiung.gov.tw/Opendata/DownLoad.aspx?Type=2&CaseNo1=AM&CaseNo2=5&FileType=1&Lang=C&FolderType=O";
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.layout2, container, false);
-		initView(); 
-		String msg= (String) getArguments().get("json");
-		try 
-		{
-			jsonArray=new JSONArray(msg);
-		} 
-		catch (JSONException e)
-		{	
-			e.printStackTrace();
-		}
-		TextView txv=(TextView)view.findViewById(R.id.txv);
-		txv.setText(parseJson.parseJsonData(jsonArray));
-		
-		
+
+		initView();
+
 		return view;
 	}
-	private void initView() 
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        RQueue = Volley.newRequestQueue(getActivity());
+
+        Response.Listener<JSONArray> listener = new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+
+                txv.setText(parseJson.parseJsonData(jsonArray));
+
+            }
+        };
+        ServerRequest serverRequest = new ServerRequest( RQueue , URL , listener);
+        serverRequest.MgetRequest();
+    }
+
+    private void initView()
 	{			
 		me=(LinearLayout)view.findViewById(R.id.me);
 		course=(RelativeLayout)view.findViewById(R.id.course);
@@ -68,7 +84,7 @@ public class fragment_2  extends Fragment implements OnClickListener{
 		found.setOnClickListener(this);
 		set.setOnClickListener(this);	
 		me.getBackground().setAlpha(200);
-
+        txv=(TextView)view.findViewById(R.id.txv);
 	}
 	@Override
 	public void onClick(View v) {

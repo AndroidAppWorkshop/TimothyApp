@@ -21,9 +21,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
 
 import java.io.File;
 import java.util.HashMap;
@@ -56,12 +60,12 @@ public class NetImage extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        context = getActivity() ;
+        context = getActivity();
         requestQueue = Volley.newRequestQueue(context);
 
         String url = "http://i.imgur.com/7spzG.png";
 
-        ImageLoader Imlod = new ImageLoader(requestQueue , new ImageLoader.ImageCache() {
+        ImageLoader Imlod = new ImageLoader(requestQueue, new ImageLoader.ImageCache() {
             @Override
             public Bitmap getBitmap(String s) {
                 return null;
@@ -72,28 +76,40 @@ public class NetImage extends Fragment {
 
             }
         });
-        ImageLoader.ImageListener Imlisten = Imlod.getImageListener(networkImageView, R.drawable.clear_dark , R.drawable.boot_camp_dark );
+        ImageLoader.ImageListener Imlisten = Imlod.getImageListener(networkImageView, R.drawable.clear_dark, R.drawable.boot_camp_dark);
 
-        networkImageView.setImageUrl(url , Imlod );
+        networkImageView.setImageUrl(url, Imlod);
 
-//        ImageRequest request = new ImageRequest(url,
-//                new Response.Listener<Bitmap>() {
-//                    @Override
-//                    public void onResponse(Bitmap bitmap) {
-//                        networkImageView.setImageBitmap(bitmap);
-//
-//                    }
-//                }, 0, 0, Bitmap.Config.ARGB_8888 ,
-//                new Response.ErrorListener() {
-//                    public void onErrorResponse(VolleyError error) {
-//                        networkImageView.setImageResource(R.drawable.boot_camp_dark);
-//                    }
-//                });
-//
-//        requestQueue.add(request);
-//        requestQueue.start();
+        String[] url2 =
+                {
+                        "http://data.kaohsiung.gov.tw/Opendata/DownLoad.aspx?Type=2&CaseNo1=BA&CaseNo2=1&FileType=2&Lang=C&FolderType=O",
+                        "http://data.kaohsiung.gov.tw/Opendata/DownLoad.aspx?Type=2&CaseNo1=AV&CaseNo2=1&FileType=1&Lang=C&FolderType",
+                        "http://data.kaohsiung.gov.tw/Opendata/DownLoad.aspx?Type=2&CaseNo1=AF&CaseNo2=2&FileType=2&Lang=C&FolderType=O"
+                };
+
+        for (int URLSwitch = 0; URLSwitch < url2.length; URLSwitch++) {
+
+            JsonArrayRequest JRequest = new JsonArrayRequest
+                    (Request.Method.GET ,  url2[URLSwitch] ,
+                            new Response.Listener<JSONArray>() {
+                                @Override
+                                public void onResponse(JSONArray jsonArray) {
+
+                                    tx1.append(jsonArray.toString());
+
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+
+                        }
+
+                    });
+            requestQueue.add(JRequest);
+        }
+
+        }
     }
-}
 //
 //    class SRequest extends com.android.volley.toolbox.StringRequest {
 //        String url;
