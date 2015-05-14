@@ -65,14 +65,17 @@ public class GcmIntentService extends IntentService {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);//與系統要mNotificationManager
 
+
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, MainActivity.class), 0);//被點到要做什麼事情(81行),啟動MainActivity
+                new Intent(this, ActivityA.class), 0);//被點到要做什麼事情(81行),啟動MainActivity
+
         //設定新通知訊息
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.mipmap.ic_launcher)//圖片
-                        .setContentTitle("GCM Notification")
-                        .setTicker("GCM Notification")
+                        .setContentTitle("Go to A")
+                        .setTicker("A")
+                        .setAutoCancel(true) //點了會自動消失
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(msg))
                         .setContentText(msg);//傳回的msg
