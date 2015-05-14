@@ -7,52 +7,46 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class MainActivity extends Activity {
 
-
-    private ListView listView;
-
+    private ProductRepository productRepository = new ProductRepository();//做分類
+    private Map<String, Integer> productCountMap = new HashMap<String, Integer>();
+    private int totalPrice = 0,total=0;
+    private TextView textViewPriceSum;
+    private TextView textViewTotal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        listView = (ListView) findViewById(R.id.listview);
-        listView.setAdapter(new ListViewAdapter());//自訂listview
+        ListView listView = (ListView) findViewById(R.id.listview);
+        listView.setAdapter(new ListViewAdapter());
+        textViewPriceSum = (TextView) findViewById(R.id.textViewTotalPrice);
+        textViewTotal = (TextView) findViewById(R.id.textViewTotal);
     }
 
     private class ListViewAdapter extends BaseAdapter {
 
-        private String[] data = {//上排
-                "飲料區", "甜點區", "主餐區",
-        };
-
-        private String[][] subDatas = {//每一排
-                {"咖啡", "珍珠奶茶", "紅茶"},
-                {"蛋糕", "奶酪", "布丁"},
-                {"豬排", "羊排", "牛排"},
-        };
-
-    int[][] icon= {
-                   {R.mipmap.coffee, R.mipmap.milketra, R.mipmap.redtea},
-                   {R.mipmap.cake,R.mipmap.pi,R.mipmap.pudding},
-                   {R.mipmap.pig,R.mipmap.sheep,R.mipmap.steak}
-                  };
-
-        @Override
+        private List<CategoryVo> categories = productRepository.getAllCategories();
+        //取得全部商品
         public int getCount() {
-            return data.length;
-        }//取得到底有多少列的方法
+            return categories.size();
+        }
 
         @Override
         public Object getItem(int position) {
-            return data[position];
-        }//取得某一列的內容
+            return categories.get(position);
+        }
 
         @Override
         public long getItemId(int position) {
@@ -60,56 +54,137 @@ public class MainActivity extends Activity {
         }
 
         @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {//修改某一列View的內容
+        public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder viewHolder;
             if (convertView == null) {
-                convertView = getLayoutInflater().inflate(R.layout.listitem_sample, null);
-                viewHolder = new ViewHolder();//去取屬性(每列的)
-                viewHolder.textViewTitle = (TextView) convertView.findViewById(R.id.textViewTitle);//初始化取回來元件
-                viewHolder.viewPager = (ViewPager) convertView.findViewById(R.id.viewPager);
+                convertView = getLayoutInflater().inflate(R.layout.listitem_category, null);
+                viewHolder = new ViewHolder();
+                viewHolder.textViewVategoryTitle = (TextView) convertView.findViewById(R.id.textViewCategoryTitle);
+                viewHolder.viewPagerProduct = (ViewPager) convertView.findViewById(R.id.productPager);
+
                 convertView.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
 
-            viewHolder.textViewTitle.setText(data[position]);
-//-----------------------------------------(自訂listview)-------------------------------------------------------------
-            viewHolder.viewPager.setAdapter(new PagerAdapter() {//對viewpager元件做設置
-                @Override
-                public Object instantiateItem(ViewGroup container, int pagerPosition) {
-                    //將要顯示的圖片或其他元件放到這,進行緩存,將要顯示的元件初始化加入viewgroup然後返回
-                    View inflate = getLayoutInflater().inflate(R.layout.pageritem_sample, null);//取得這個layout
-                    TextView textView = (TextView) inflate.findViewById(R.id.textView);
-                    ImageView imageView=(ImageView)inflate.findViewById(R.id.imageView);
-                    textView.setText(subDatas[position][pagerPosition]);
-                    imageView.setBackgroundResource(icon[position][pagerPosition]);
-                    container.addView(inflate);
-                    return inflate;
-                }
-
-                @Override//獲取滑動元件的數量
-                public int getCount() {
-                    return subDatas[position].length;
-                }
-
-                @Override//判斷是否顯示同一張圖片
-                public boolean isViewFromObject(View view, Object o) {
-                    return view.equals(o);
-                }
-
-                @Override//只緩存3張圖片,滑動超出緩存範圍則調用將圖片銷毀
-                public void destroyItem(ViewGroup container, int position, Object object) {
-                    container.removeView((View) object);
-                }
-            });
+            CategoryVo categoryVo = categories.get(position);
+            //拿第0區產品
+            viewHolder.textViewVategoryTitle.setText(categoryVo.getName());
+            //設置第0區名子
+            ProductPagerAdapter adapter = new ProductPagerAdapter(categoryVo.getProductVos());
+            //橫向傳入第0區商品資料
+            viewHolder.viewPagerProduct.setAdapter(adapter);
 
             return convertView;
         }
-//-----------------------------------------(滑動viewpager)-------------------------------------------------------------
 
-        private class ViewHolder {//宣告成一個類別讓該列的set屬性去讀取
-            TextView textViewTitle;
-            ViewPager viewPager;
+        private class ViewHolder {
+
+            TextView textViewVategoryTitle;
+            ViewPager viewPagerProduct;
+        }
+    }
+
+    private class ProductPagerAdapter extends PagerAdapter {
+
+        private List<ProductVo> products;
+
+        public ProductPagerAdapter(List<ProductVo> products) {
+            this.products = products;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int pagerPosition) {
+            View inflate = getLayoutInflater().inflate(R.layout.pageritem_container, null);
+            LinearLayout pagerContainer = (LinearLayout) inflate.findViewById(R.id.pagerContainer);
+            //1~3頁
+            int start = 3 * pagerPosition + 0;// 012,345,678
+            int end = 3 * pagerPosition + 2;
+            int[] pagerItemProductViewIds = {R.id.pagerItem1, R.id.pagerItem2, R.id.pagerItem3};
+            for (int i = start; i <= end; i++) {
+                View productView = pagerContainer.findViewById(pagerItemProductViewIds[i - 3 * pagerPosition]);
+                //取第一頁的pagerItem
+                ProductVo productVo = null;//try:取到有商品資訊   catch:如果沒有資訊,把該pagerItem隱藏起來,繼續做
+                try {
+                    productVo = products.get(i);
+                } catch (Exception e) {
+                    productView.setVisibility(View.INVISIBLE);
+                    continue;
+                }
+
+
+                TextView textViewProductName = (TextView) productView.findViewById(R.id.textViewProductName);
+                textViewProductName.setText(productVo.getName());
+
+                TextView textViewProductPrice = (TextView) productView.findViewById(R.id.textViewProductPrice);
+                final int price = productVo.getPrice();
+                textViewProductPrice.setText(String.valueOf(price));
+
+                final TextView textViewProductCount = (TextView) productView.findViewById(R.id.textViewProductCount);
+                final String productId = productVo.getId();
+                Integer count = productCountMap.get(productId);
+                if (count == null) {
+                    count = 0;
+                    productCountMap.put(productId, count);//每個產品編號(id)不同用key-value對應
+                }
+                textViewProductCount.setText(String.valueOf(count));
+
+                Button btnAdd = (Button) productView.findViewById(R.id.btnAdd);
+                btnAdd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {//第0頁第1個btn
+                        Integer count = productCountMap.get(productId);//取數量
+                        count = count + 1;
+                        productCountMap.put(productId, count);//+1後塞回去
+                        textViewProductCount.setText(String.valueOf(count));
+
+                        totalPrice += price;//+價錢
+                        textViewPriceSum.setText(String.valueOf(totalPrice));
+                        total+=1;
+                        textViewTotal.setText(String.valueOf(total));
+                    }
+                });
+
+                Button btnDecrease = (Button) productView.findViewById(R.id.btnDecrease);
+                btnDecrease.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Integer count = productCountMap.get(productId);
+                        if (count.intValue() == 0) {
+                            return;
+                        }
+
+                        count = count - 1;
+                        productCountMap.put(productId, count);
+                        textViewProductCount.setText(String.valueOf(count));
+
+                        totalPrice -= price;
+                        textViewPriceSum.setText(String.valueOf(totalPrice));
+                        total-=1;
+                        textViewTotal.setText(String.valueOf(total));
+                    }
+                });
+
+            }
+
+
+            container.addView(inflate);
+            return inflate;
+        }
+
+        @Override
+        public int getCount() {
+            return products.size() / 3 + 1;
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object o) {
+            return view.equals(o);
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
         }
     }
 
