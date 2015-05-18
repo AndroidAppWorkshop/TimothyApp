@@ -3,13 +3,9 @@ package com.example.practice;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-
-import org.json.JSONArray;
 
 import android.content.Context;
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -29,44 +25,36 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 
 public class MainActivity extends FragmentActivity implements OnPageChangeListener, AdapterView.OnItemClickListener {
 
     private List<Fragment> mFragments = new ArrayList<Fragment>();
-    String[] strA  = {"Page01 ","Page 02"};
+    String[] strA = {"  PageArtgine  ", "  PageImageVolley  "," PageNotification  "};
     ListView LV;
     DrawerLayout DL;
-    Artgine Artgine =new Artgine();
+    Artgine Artgine = new Artgine();
     Menu mMenu;
     ViewPager myViewPager;
     ActionBar actionBar;
-    int[] icon={R.drawable.cute,R.drawable.good,R.drawable.train};
-    String[] TABName = {"CUTE","QOO","TRAIN"};
+    int[] icon = {R.drawable.cute, R.drawable.good, R.drawable.train};
+    String[] TABName = {"CUTE", "QOO", "TRAIN"};
     FragmentManager fm;
     private myadapter myadapter;
     RequestQueue mRequestQueue;
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         init();
-
         DL = (DrawerLayout) findViewById(R.id.DraOut);
-        LV = (ListView)findViewById(R.id.LV);
-        LV.setAdapter(new ArrayAdapter<String>(this , android.R.layout.simple_expandable_list_item_1 , strA));
+        LV = (ListView) findViewById(R.id.LV);
+        LV.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, strA));
         LV.setOnItemClickListener(this);
-        myViewPager=(ViewPager)findViewById(R.id.viewpager);
+        myViewPager = (ViewPager) findViewById(R.id.viewpager);
 
         //Arrays = new ServerRequest().execute(url).get();
-
         actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayOptions(0, ActionBar.DISPLAY_SHOW_TITLE);//遮蔽標題
@@ -75,44 +63,42 @@ public class MainActivity extends FragmentActivity implements OnPageChangeListen
             actionBar.addTab(actionBar.newTab().setText(TABName[i]).setIcon(icon[i]).setTabListener(ontab));
         }
 
-        fm =getSupportFragmentManager();
-        myadapter = new myadapter(fm  , mFragments ) ;
+        fm = getSupportFragmentManager();
+        myadapter = new myadapter(fm, mFragments);
         myViewPager.setAdapter(myadapter);
         myViewPager.setOnPageChangeListener(this);
     }
 
     private void init() {
-        mRequestQueue = Volley.newRequestQueue( this );
-        fragment_1 fag=new fragment_1();
-        fragment_2 fag2=new fragment_2();
-        fragment_3 fag3=new fragment_3();
+        mRequestQueue = Volley.newRequestQueue(this);
+        fragment_1 fag = new fragment_1();
+        fragment_2 fag2 = new fragment_2();
+        fragment_3 fag3 = new fragment_3();
         mFragments.add(fag);
         mFragments.add(fag2);
         mFragments.add(fag3);
     }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
         mMenu = menu;
-		getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
 
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		int id = item.getItemId();
-		if (id == mMenu.getItem(0).getItemId()){
-            if(!DL.isDrawerOpen(Gravity.END))
-                {DL.openDrawer(Gravity.END);}
-            else
-                {DL.closeDrawer(Gravity.END);}
-
-			return true;
-		}
-		return super.onOptionsItemSelected(item);		
-	}
-
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == mMenu.getItem(0).getItemId()) {
+            if (!DL.isDrawerOpen(Gravity.END)) {
+                DL.openDrawer(Gravity.END);
+            } else {
+                DL.closeDrawer(Gravity.END);
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 //--------------------viewpager監聽滑動(頁)事件--------------------------------------
 
     @Override
@@ -120,52 +106,57 @@ public class MainActivity extends FragmentActivity implements OnPageChangeListen
         actionBar.setSelectedNavigationItem(arg0);
 
     }
-
     @Override
     public void onPageScrolled(int arg0, float arg1, int arg2) {
 
     }
-
     @Override
     public void onPageScrollStateChanged(int arg0) {
 
     }
 
-//---------------------Tab 的監聽器-----------------------------------------------------
+    //---------------------Tab 的監聽器-----------------------------------------------------
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        switch(position)
-        {
+        android.support.v4.app.FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
+        ft1.addToBackStack("HOME");
+        Fragment Fra;
+        switch (position) {
             case 0:
-                android.support.v4.app.FragmentTransaction ft0 = getSupportFragmentManager().beginTransaction();
-                ft0.addToBackStack("HOME");
-                ft0.replace(R.id.DraOut , Artgine ).commit() ;
+                Fra = Artgine;
+                ft1.replace(R.id.DraOut, Fra).commit();
                 break;
             case 1:
-                android.support.v4.app.FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
-                ft1.addToBackStack("HOME");
-                ft1.replace(R.id.DraOut , new NetImage() ).commit() ;
-            break;
+                Fra = new NetImage();
+                ft1.replace(R.id.DraOut, Fra).commit();
+                break;
+            case 2:
+                Intent it = new Intent(this , PushNotificationActivity.class);
+                startActivity(it);
+                break;
+            default:
+                Fra = new NetImage();
+                ft1.replace(R.id.DraOut, Fra).commit();
+                break;
         }
-    }
-    /**
-	 * 警告：一定不能在这三个回调中为fragment转换调用commit()——系统会自动为你调用，
-	 * 如果你自己再调可能会抛	出异常，另外，也不能将这些fragment转换加入back stack。
-	 */
 
-    private ActionBar.TabListener ontab = new  ActionBar.TabListener()
-    {
+    }
+
+    /**
+     * 警告：一定不能在这三个回调中为fragment转换调用commit()——系统会自动为你调用，
+     * 如果你自己再调可能会抛	出异常，另外，也不能将这些fragment转换加入back stack。
+     */
+
+    private ActionBar.TabListener ontab = new ActionBar.TabListener() {
 
         @Override
         public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
             ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
-            if (myViewPager != null)
-            {
+            if (myViewPager != null) {
                 myViewPager.setCurrentItem(tab.getPosition());
             }
             tab.getIcon().setAlpha(255);
         }
-
         @Override
         public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
             tab.getIcon().setAlpha(100);
@@ -177,26 +168,29 @@ public class MainActivity extends FragmentActivity implements OnPageChangeListen
         }
 
     };
-//用	FragmentPagerAdapter 來裝其他的fragment
-    class myadapter  extends FragmentPagerAdapter
-    {	List<Fragment> frag;
+
+    //用	FragmentPagerAdapter 來裝其他的fragment
+    class myadapter extends FragmentPagerAdapter {
+        List<Fragment> frag;
         Fragment Fra;
         String json[];
-        public myadapter(FragmentManager fm , List<Fragment> lv ) {
+
+        public myadapter(FragmentManager fm, List<Fragment> lv) {
             super(fm);
-            frag=lv;
+            frag = lv;
         }
+
         @Override
         public Fragment getItem(int i) {
-            Log.d("uni", "get item is call   "+ i);
+            Log.d("uni", "get item is call   " + i);
 
-            switch (i)
-            {
+            switch (i) {
                 default:
                     Fragment Fra = frag.get(i);
-                return Fra ;
+                    return Fra;
             }
         }
+
         @Override
         public int getCount() {//總�?�數
             Log.d("uni", "get count is call");

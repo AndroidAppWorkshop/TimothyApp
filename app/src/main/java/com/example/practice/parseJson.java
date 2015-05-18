@@ -16,8 +16,8 @@ public class parseJson {
 		{	
 			Iterator<String>  iterator;
 			for(int i= 0;i<data.length();i++)
-			{	JSONObject  school =data.getJSONObject(i);
-				
+			{
+                JSONObject  school =data.getJSONObject(i);
 				iterator=school.keys();//JSONObject�����okey���|�ǤJiterator
 				while(iterator.hasNext())
 				{
@@ -25,8 +25,7 @@ public class parseJson {
 					SchoolData.append(str+":"+school.get(str) +"\n");
 				}
 				 SchoolData.append("\n\n");
-			} 	
-			
+			}
 		}
 		catch (JSONException e) {
 			

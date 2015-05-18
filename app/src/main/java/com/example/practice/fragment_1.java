@@ -14,6 +14,7 @@ import com.example.practice.R;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -47,6 +48,7 @@ public class fragment_1  extends Fragment implements OnClickListener{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        Log.e("DATA Report",  this.toString() + "Fragmen Has be Calllllllllllllllllll ! ");
         RQueue = Volley.newRequestQueue(getActivity());
 
         Response.Listener<JSONArray> listener = new Response.Listener<JSONArray>() {
@@ -57,8 +59,7 @@ public class fragment_1  extends Fragment implements OnClickListener{
 
             }
         };
-        ServerRequest serverRequest = new ServerRequest( RQueue , URL , listener);
-        serverRequest.MgetRequest();
+        new ServerRequest( RQueue , URL , listener).MgetRequest();
     }
 
     private void initView()

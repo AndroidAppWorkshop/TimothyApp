@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.R.integer;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,11 +41,10 @@ public class fragment_3  extends Fragment implements OnClickListener {
 
 		view = inflater.inflate(R.layout.layout3, container, false);
 
-		initView(); 
+		initView();
 
 		return view;
 	}
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -61,7 +61,6 @@ public class fragment_3  extends Fragment implements OnClickListener {
         ServerRequest serverRequest = new ServerRequest( RQueue , URL , listener);
         serverRequest.MgetRequest();
     }
-
     private void initView() {
 		me3=(LinearLayout)view.findViewById(R.id.me3);
 		course=(RelativeLayout)view.findViewById(R.id.cou);
@@ -94,8 +93,7 @@ public class fragment_3  extends Fragment implements OnClickListener {
 	        case R.id.set:  
 	            setTabSelection(2);
 	            Toast.makeText(getActivity(),"���g", Toast.LENGTH_SHORT).show();
-	            break;  
-	      	  
+	            break;
 	        default:  
 	            break;  
 		 }
@@ -103,7 +101,6 @@ public class fragment_3  extends Fragment implements OnClickListener {
 	}
 	
 	private void setTabSelection(int i) {
-		
         resetBtn();       
         switch (i)  
         {  
@@ -124,14 +121,13 @@ public class fragment_3  extends Fragment implements OnClickListener {
         	settings_image.setImageResource(R.drawable.thr3);  
         	//set.setBackgroundColor(R.drawable.ic_tabbar_bg_click);
         	settings_text.setTextColor(green);  
-            break; 
-            
+            break;
         default:  
             break; 
-        }     
-		
+        }
 	}
-	private void resetBtn() {
+	private void resetBtn()
+    {
 		course_image.setImageResource(R.drawable.one);  
         //course.setBackgroundColor(R.drawable.bottom_bar);  
         course_text.setTextColor(gray);  

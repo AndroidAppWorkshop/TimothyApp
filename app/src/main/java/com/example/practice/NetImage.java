@@ -35,7 +35,7 @@ import java.util.Map;
 
 /**
  * Created by h94u04 on 2015/5/6.
-*/
+ */
 public class NetImage extends Fragment {
     RequestQueue requestQueue;
     Context context;
@@ -54,13 +54,15 @@ public class NetImage extends Fragment {
         // Retrieves an image specified by the URL, displays it in the UI.
 
         // Access the RequestQueue through your singleton class.
-        //MySingleton.getInstance(this).addToRequestQueue(request);
         return v;
     }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         context = getActivity();
+
         requestQueue = Volley.newRequestQueue(context);
 
         String url = "http://i.imgur.com/7spzG.png";
@@ -80,36 +82,34 @@ public class NetImage extends Fragment {
 
         networkImageView.setImageUrl(url, Imlod);
 
-        String[] url2 =
-                {
-                        "http://data.kaohsiung.gov.tw/Opendata/DownLoad.aspx?Type=2&CaseNo1=BA&CaseNo2=1&FileType=2&Lang=C&FolderType=O",
-                        "http://data.kaohsiung.gov.tw/Opendata/DownLoad.aspx?Type=2&CaseNo1=AV&CaseNo2=1&FileType=1&Lang=C&FolderType",
-                        "http://data.kaohsiung.gov.tw/Opendata/DownLoad.aspx?Type=2&CaseNo1=AF&CaseNo2=2&FileType=2&Lang=C&FolderType=O"
-                };
-
-        for (int URLSwitch = 0; URLSwitch < url2.length; URLSwitch++) {
-
-            JsonArrayRequest JRequest = new JsonArrayRequest
-                    (Request.Method.GET ,  url2[URLSwitch] ,
-                            new Response.Listener<JSONArray>() {
-                                @Override
-                                public void onResponse(JSONArray jsonArray) {
-
-                                    tx1.append(jsonArray.toString());
-
-                                }
-                            }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError volleyError) {
-
-                        }
-
-                    });
-            requestQueue.add(JRequest);
-        }
-
-        }
+//        String[] url2 =
+//                {
+//                        "http://data.kaohsiung.gov.tw/Opendata/DownLoad.aspx?Type=2&CaseNo1=BA&CaseNo2=1&FileType=2&Lang=C&FolderType=O",
+//                        "http://data.kaohsiung.gov.tw/Opendata/DownLoad.aspx?Type=2&CaseNo1=AV&CaseNo2=1&FileType=1&Lang=C&FolderType",
+//                        "http://data.kaohsiung.gov.tw/Opendata/DownLoad.aspx?Type=2&CaseNo1=AF&CaseNo2=2&FileType=2&Lang=C&FolderType=O"
+//                };
+//        for (int URLSwitch = 0; URLSwitch < url2.length; URLSwitch++) {
+//
+//            JsonArrayRequest JRequest = new JsonArrayRequest
+//                    (Request.Method.GET ,  url2[URLSwitch] ,
+//                            new Response.Listener<JSONArray>() {
+//                                @Override
+//                                public void onResponse(JSONArray jsonArray) {
+//
+//                                    tx1.append(jsonArray.toString());
+//
+//                                }
+//                            }, new Response.ErrorListener() {
+//                        @Override
+//                        public void onErrorResponse(VolleyError volleyError) {
+//
+//                        }
+//
+//                    });
+//            requestQueue.add(JRequest);
+//        }
     }
+}
 //
 //    class SRequest extends com.android.volley.toolbox.StringRequest {
 //        String url;
