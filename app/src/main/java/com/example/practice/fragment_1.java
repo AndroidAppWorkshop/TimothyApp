@@ -144,7 +144,7 @@ public class fragment_1  extends Fragment implements OnClickListener{
         //set.setBackgroundColor(R.drawable.bottom_bar);  
         settings_text.setTextColor(gray);  
 	}
-	
+
 	
 	
 }

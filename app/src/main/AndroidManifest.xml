@@ -28,7 +28,7 @@
         <activity android:name="com.example.practice.PushNotificationActivity" />
 
         <activity android:name="org.achartengine.GraphicalActivity" />
-
+        <activity android:name=".MenuListActivity" />
         <receiver
             android:name = "com.example.practice.GcmBroadcastReceiver"
             android:permission = "com.google.android.c2dm.permission.SEND"  >

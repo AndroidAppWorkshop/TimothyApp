@@ -31,7 +31,7 @@ import com.android.volley.toolbox.Volley;
 public class MainActivity extends FragmentActivity implements OnPageChangeListener, AdapterView.OnItemClickListener {
 
     private List<Fragment> mFragments = new ArrayList<Fragment>();
-    String[] strA = {"  PageArtgine  ", "  PageImageVolley  "," PageNotification  "};
+    String[] strA = {" PageNotification  " , "  Menu List " };
     ListView LV;
     DrawerLayout DL;
     Artgine Artgine = new Artgine();
@@ -121,22 +121,20 @@ public class MainActivity extends FragmentActivity implements OnPageChangeListen
         android.support.v4.app.FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
         ft1.addToBackStack("HOME");
         Fragment Fra;
+        Intent it;
         switch (position) {
+
+            case 1 :
+                it = new Intent(this , MenuListActivity.class );
+                startActivity(it);
+                break;
             case 0:
-                Fra = Artgine;
-                ft1.replace(R.id.DraOut, Fra).commit();
-                break;
-            case 1:
-                Fra = new NetImage();
-                ft1.replace(R.id.DraOut, Fra).commit();
-                break;
-            case 2:
-                Intent it = new Intent(this , PushNotificationActivity.class);
+                it = new Intent(this , PushNotificationActivity.class);
                 startActivity(it);
                 break;
             default:
-                Fra = new NetImage();
-                ft1.replace(R.id.DraOut, Fra).commit();
+                it = new Intent(this , PushNotificationActivity.class);
+                startActivity(it);
                 break;
         }
 

@@ -81,6 +81,7 @@ public class NetImage extends Fragment {
         ImageLoader.ImageListener Imlisten = Imlod.getImageListener(networkImageView, R.drawable.clear_dark, R.drawable.boot_camp_dark);
 
         networkImageView.setImageUrl(url, Imlod);
+        networkImageView.setDefaultImageResId(R.drawable.clear_dark);
 
 //        String[] url2 =
 //                {

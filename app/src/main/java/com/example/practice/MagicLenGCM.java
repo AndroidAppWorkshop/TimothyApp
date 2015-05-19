@@ -24,20 +24,19 @@ import java.io.IOException;
  *
  */
 public class MagicLenGCM {
-
     // ----------類別常數(須自行修改)----------
     /**
      * Google Developers Console 的 Project Number
      */
-    public final static String SENDER_ID = "707422521982";
+    public final static String SENDER_ID = "707422521982" ;
 
     // ----------類別列舉----------
     public static enum PlayServicesState {
-        SUPPROT, NEED_PLAY_SERVICE, UNSUPPORT;
+        SUPPROT, NEED_PLAY_SERVICE, UNSUPPORT ;
     }
 
     public static enum GCMState {
-        PLAY_SERVICES_NEED_PLAY_SERVICE, PLAY_SERVICES_UNSUPPORT, NEED_REGISTER, AVAILABLE;
+        PLAY_SERVICES_NEED_PLAY_SERVICE, PLAY_SERVICES_UNSUPPORT, NEED_REGISTER, AVAILABLE ;
     }
 
     // ----------類別介面----------
@@ -62,7 +61,6 @@ public class MagicLenGCM {
         public boolean gcmSendRegistrationIdToAppServer(String regID);
 
     }
-
     // ----------類別常數----------
     /**
      * 用來當作SharedPreferences的Key.
