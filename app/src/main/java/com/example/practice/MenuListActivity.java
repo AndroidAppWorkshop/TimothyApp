@@ -1,6 +1,7 @@
 package com.example.practice;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -16,13 +17,14 @@ import java.util.List;
 import java.util.Map;
 
 
-public class MenuListActivity extends Activity {
+public class MenuListActivity extends Activity implements View.OnClickListener {
 
     private ProductRepository productRepository = new ProductRepository();//做分類
     private Map<String, Integer> productCountMap = new HashMap<String, Integer>();
     private int totalPrice = 0,total=0;
     private TextView textViewPriceSum;
     private TextView textViewTotal;
+    Button commit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +33,14 @@ public class MenuListActivity extends Activity {
         listView.setAdapter(new ListViewAdapter());
         textViewPriceSum = (TextView) findViewById(R.id.textViewTotalPrice);
         textViewTotal = (TextView) findViewById(R.id.textViewTotal);
+        commit = (Button)findViewById(R.id.button1);
+        commit.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent it = new Intent(this , MainActivity.class );
+        startActivity(it);
     }
 
     private class ListViewAdapter extends BaseAdapter {

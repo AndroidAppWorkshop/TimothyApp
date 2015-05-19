@@ -84,13 +84,17 @@ public class LoginActivity extends Activity
                 {
                     goToNextActivity();
                 }
+                else
+                {
+                    Toast.makeText(LoginActivity.this, "Login fail.", Toast.LENGTH_SHORT).show();
+                }
                 progressBar.setVisibility(View.GONE);
 
             }
         },new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(LoginActivity.this, "Login fail.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "No Response .", Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
                 Log.e("eror",error.toString());
             }
@@ -110,7 +114,7 @@ public class LoginActivity extends Activity
         mQueue.add(jsonObjectRequest);
     }
     private void goToNextActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, MenuListActivity.class);
         startActivity(intent);
         finish();
     }

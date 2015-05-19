@@ -31,7 +31,7 @@ import com.android.volley.toolbox.Volley;
 public class MainActivity extends FragmentActivity implements OnPageChangeListener, AdapterView.OnItemClickListener {
 
     private List<Fragment> mFragments = new ArrayList<Fragment>();
-    String[] strA = {" PageNotification  " , "  Menu List " };
+    String[] strA = {" PageNotification  " };
     ListView LV;
     DrawerLayout DL;
     Artgine Artgine = new Artgine();
@@ -123,11 +123,6 @@ public class MainActivity extends FragmentActivity implements OnPageChangeListen
         Fragment Fra;
         Intent it;
         switch (position) {
-
-            case 1 :
-                it = new Intent(this , MenuListActivity.class );
-                startActivity(it);
-                break;
             case 0:
                 it = new Intent(this , PushNotificationActivity.class);
                 startActivity(it);
