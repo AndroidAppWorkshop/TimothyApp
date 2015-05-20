@@ -12,6 +12,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.Volley;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -103,6 +109,9 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
 
         @Override
         public Object instantiateItem(ViewGroup container, int pagerPosition) {
+            ImageLruCache cache = new ImageLruCache();
+            RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+            ImageLoader Imlo = new ImageLoader(queue , cache);
             View inflate = getLayoutInflater().inflate(R.layout.pageritem_container, null);
             LinearLayout pagerContainer = (LinearLayout) inflate.findViewById(R.id.pagerContainer);
             //1~3頁
@@ -136,7 +145,9 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
                     productCountMap.put(productId, count);//每個產品編號(id)不同用key-value對應
                 }
                 textViewProductCount.setText(String.valueOf(count));
-
+                NetworkImageView image = (NetworkImageView) productView.findViewById(R.id.image);
+                image.setDefaultImageResId(R.drawable.clear_dark);
+                image.setImageUrl(Url_Value.urlArray[i - 3 * pagerPosition] ,Imlo );
                 Button btnAdd = (Button) productView.findViewById(R.id.btnAdd);
                 btnAdd.setOnClickListener(new View.OnClickListener() {
                     @Override
