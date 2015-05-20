@@ -41,7 +41,7 @@ public class fragment_2  extends Fragment implements OnClickListener{
 	private LinearLayout me;
     RequestQueue RQueue;
 	View view;
-    String URL = "http://data.kaohsiung.gov.tw/Opendata/DownLoad.aspx?Type=2&CaseNo1=AM&CaseNo2=5&FileType=1&Lang=C&FolderType=O";
+    String URL = Url_Value.fragUrl[1];
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
