@@ -38,6 +38,17 @@ public class ProductRepository {
     public List<CategoryVo> getAllCategories() {
         return categoryVos;
     }
+
+    public ProductVo  findProductById(String productId) {
+        for (CategoryVo categoryVo : categoryVos) {
+            for (ProductVo productVo : categoryVo.getProductVos()) {
+                if (productId.equals(productVo.getId())) {
+                    return productVo;
+                }
+            }
+        }
+        return null;
+    }
 }
 //1.新增一個乾淨的List<ProductVo> productVos,drink內的List<ProductVo> 開始新增它
 //2.新增完後把這個add進去 List<CategoryVo> categoryVos
