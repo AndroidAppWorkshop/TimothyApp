@@ -6,9 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class parseJson {
+public class ParseforJsonArray {
 
-	//��@����json object
 	public static  StringBuilder parseJsonData(JSONArray data)
 	{	
 		StringBuilder  SchoolData=new StringBuilder();
@@ -18,7 +17,7 @@ public class parseJson {
 			for(int i= 0;i<data.length();i++)
 			{
                 JSONObject  school =data.getJSONObject(i);
-				iterator=school.keys();//JSONObject�����okey���|�ǤJiterator
+				iterator=school.keys();
 				while(iterator.hasNext())
 				{
 					String str=iterator.next().toString();//��key ID
@@ -28,10 +27,8 @@ public class parseJson {
 			}
 		}
 		catch (JSONException e) {
-			
 			e.printStackTrace();
 		}
 		return SchoolData;	
 	}
-	
 }

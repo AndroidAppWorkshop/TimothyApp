@@ -6,18 +6,17 @@ import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.ViewDebug;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +30,7 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
     private TextView textViewPriceSum;
     private TextView textViewTotal;
     Button commit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,41 +113,43 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
             RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
             ImageLoader Imlo = new ImageLoader(queue , cache);
             View inflate = getLayoutInflater().inflate(R.layout.pageritem_container, null);
-            LinearLayout pagerContainer = (LinearLayout) inflate.findViewById(R.id.pagerContainer);
-            //1~3頁
-            int start = 3 * pagerPosition + 0;// 012,345,678
-            int end = 3 * pagerPosition + 2;
-            int[] pagerItemProductViewIds = {R.id.pagerItem1, R.id.pagerItem2, R.id.pagerItem3};
-            for (int i = start; i <= end; i++) {
-                View productView = pagerContainer.findViewById(pagerItemProductViewIds[i - 3 * pagerPosition]);
-                //取第一頁的pagerItem
-                ProductVo productVo = null;//try:取到有商品資訊   catch:如果沒有資訊,把該pagerItem隱藏起來,繼續做
-                try {
-                    productVo = products.get(i);
-                } catch (Exception e) {
-                    productView.setVisibility(View.INVISIBLE);
-                    continue;
-                }
+                LinearLayout pagerContainer = (LinearLayout) inflate.findViewById(R.id.pagerContainer);
+                //1~3頁
+                int start = 3 * pagerPosition + 0;// 012,345,678
+                int end = 3 * pagerPosition + 2;
+                int[] pagerItemProductViewIds = {R.id.pagerItem1, R.id.pagerItem2, R.id.pagerItem3};
+                for (int i = start; i <= end; i++) {
+                    View productView = pagerContainer.findViewById(pagerItemProductViewIds[i - 3 * pagerPosition]);
+                    //取第一頁的pagerItem
+                    ProductVo productVo = null;//try:取到有商品資訊   catch:如果沒有資訊,把該pagerItem隱藏起來,繼續做
+                    try {
+                        productVo = products.get(i);
+                    } catch (Exception e) {
+                        productView.setVisibility(View.INVISIBLE);
+                        continue;
+                    }
 
 
-                TextView textViewProductName = (TextView) productView.findViewById(R.id.textViewProductName);
-                textViewProductName.setText(productVo.getName());
+                    TextView textViewProductName = (TextView) productView.findViewById(R.id.textViewProductName);
+                    textViewProductName.setText(productVo.getName());
 
-                TextView textViewProductPrice = (TextView) productView.findViewById(R.id.textViewProductPrice);
-                final int price = productVo.getPrice();
-                textViewProductPrice.setText(String.valueOf(price));
+                    TextView textViewProductPrice = (TextView) productView.findViewById(R.id.textViewProductPrice);
+                    final int price = productVo.getPrice();
+                    textViewProductPrice.setText(String.valueOf(price));
 
-                final TextView textViewProductCount = (TextView) productView.findViewById(R.id.textViewProductCount);
-                final String productId = productVo.getId();
-                Integer count = productCountMap.get(productId);
+                    final TextView textViewProductCount = (TextView) productView.findViewById(R.id.textViewProductCount);
+                    final String productId = productVo.getId();
+                    Integer count = productCountMap.get(productId);
                 if (count == null) {
                     count = 0;
                     productCountMap.put(productId, count);//每個產品編號(id)不同用key-value對應
                 }
                 textViewProductCount.setText(String.valueOf(count));
+
                 NetworkImageView image = (NetworkImageView) productView.findViewById(R.id.image);
                 image.setDefaultImageResId(R.drawable.clear_dark);
-                image.setImageUrl(Url_Value.urlArray[i - 3 * pagerPosition] ,Imlo );
+                image.setImageUrl( Url_Value.urlArray[i - 3 * pagerPosition] ,Imlo );
+
                 Button btnAdd = (Button) productView.findViewById(R.id.btnAdd);
                 btnAdd.setOnClickListener(new View.OnClickListener() {
                     @Override

@@ -10,58 +10,54 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
-/**
- * GCM相關類別．
- *
- * @author magiclen
- *
- */
 public class MagicLenGCM {
-    // ----------類別常數(須自行修改)----------
-    /**
-     * Google Developers Console 的 Project Number
-     */
-    public final static String SENDER_ID = "707422521982" ;
 
-    // ----------類別列舉----------
+    public final static String SENDER_ID = "707422521982";
+
     public static enum PlayServicesState {
-        SUPPROT, NEED_PLAY_SERVICE, UNSUPPORT ;
+        SUPPROT, NEED_PLAY_SERVICE, UNSUPPORT;
     }
 
     public static enum GCMState {
-        PLAY_SERVICES_NEED_PLAY_SERVICE, PLAY_SERVICES_UNSUPPORT, NEED_REGISTER, AVAILABLE ;
+        PLAY_SERVICES_NEED_PLAY_SERVICE, PLAY_SERVICES_UNSUPPORT, NEED_REGISTER, AVAILABLE;
     }
 
-    // ----------類別介面----------
     public static interface MagicLenGCMListener {
         /**
          * GCM註冊結束
          *
-         * @param successfull
-         *            是否註冊成功
-         * @param regID
-         *            傳回註冊到的regID
+         * @param successfull 是否註冊成功
+         * @param regID       傳回註冊到的regID
          */
         public void gcmRegistered(boolean successfull, String regID);
 
         /**
          * GCM註冊成功，將結果寫入App Server
          *
-         * @param regID
-         *            傳回註冊到的regID
+         * @param regID 傳回註冊到的regID
          * @return 是否傳送App Server成功
          */
         public boolean gcmSendRegistrationIdToAppServer(String regID);
 
     }
-    // ----------類別常數----------
+
     /**
      * 用來當作SharedPreferences的Key.
      */
@@ -72,26 +68,18 @@ public class MagicLenGCM {
      */
     public final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
-    // ----------類別方法----------
+
     /**
      * 發出Local端的通知(顯示在通知欄上)
      *
-     * @param context
-     *            Context
-     * @param notifyID
-     *            通知ID(重複會被覆蓋)
-     * @param drawableSmallIcon
-     *            小圖示(用Drawable ID來設定)
-     * @param title
-     *            標題
-     * @param msg
-     *            訊息
-     * @param info
-     *            附加文字
-     * @param autoCancel
-     *            是否按下後就消失
-     * @param pendingIntent
-     *            按下後要使用什麼Intent
+     * @param context           Context
+     * @param notifyID          通知ID(重複會被覆蓋)
+     * @param drawableSmallIcon 小圖示(用Drawable ID來設定)
+     * @param title             標題
+     * @param msg               訊息
+     * @param info              附加文字
+     * @param autoCancel        是否按下後就消失
+     * @param pendingIntent     按下後要使用什麼Intent
      */
     public static void sendLocalNotification(Context context, int notifyID,
                                              int drawableSmallIcon, String title, String msg, String info,
@@ -112,11 +100,9 @@ public class MagicLenGCM {
         mNotificationManager.notify(notifyID, mBuilder.build());
     }
 
-    // ----------物件變數----------
     private Activity activity;
     private MagicLenGCMListener listener;
 
-    // ----------建構子----------
     public MagicLenGCM(Activity activity) {
         this(activity, null);
     }
@@ -126,12 +112,6 @@ public class MagicLenGCM {
         setMagicLenGCMListener(listener);
     }
 
-    // ----------物件方法----------
-    /**
-     * 取得Activity
-     *
-     * @return 傳回Activity
-     */
     public Activity getActivity() {
         return activity;
     }
@@ -140,20 +120,10 @@ public class MagicLenGCM {
         this.listener = listener;
     }
 
-    /**
-     * 開始接上GCM
-     *
-     * @return 傳回GCM狀態
-     */
     public GCMState startGCM() {
         return openGCM();
     }
 
-    /**
-     * 開始接上GCM
-     *
-     * @return 傳回GCM狀態
-     */
     public GCMState openGCM() {
         switch (checkPlayServices()) {
             case SUPPROT:
@@ -177,7 +147,6 @@ public class MagicLenGCM {
         if (registrationId.isEmpty()) {
             return "";
         }
-        // 檢查程式是否有更新過
         int registeredVersion = prefs.getInt(MagicLenGCM.PROPERTY_APP_VERSION,
                 Integer.MIN_VALUE);
         int currentVersion = getAppVersion();
@@ -193,7 +162,6 @@ public class MagicLenGCM {
                     .getPackageInfo(activity.getPackageName(), 0);
             return packageInfo.versionCode;
         } catch (NameNotFoundException e) {
-            // 不可能會發生
             throw new RuntimeException("Could not get package name: " + e);
         }
     }
@@ -243,7 +211,6 @@ public class MagicLenGCM {
                     return "";
                 }
 
-                // 儲存regID
                 storeRegistrationId(regid);
 
                 if (listener != null) {
@@ -255,7 +222,7 @@ public class MagicLenGCM {
             } catch (IOException ex) {
 
             }
-            return regid ;
+            return regid;
         }
 
         @Override
@@ -273,5 +240,35 @@ public class MagicLenGCM {
         editor.putString(PROPERTY_REG_ID, regId);
         editor.putInt(PROPERTY_APP_VERSION, appVersion);
         editor.commit();
+    }
+    public void SendMessage(RequestQueue queue , String message)
+    {
+        Map<String,String> params = new HashMap<String, String>();
+        params.put("RegistrationId", getRegistrationId() );
+        params.put("Message", message ) ;
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,"http://jasonchi.ddns.net:8080/api/PushNotification", new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("通知", response.toString());
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("錯誤", error.getMessage(), error);
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Accept", "application/json");
+                headers.put("Content-Type", "application/json; charset=utf-8");
+
+                return headers;
+            }
+        };
+        queue.add(jsonObjectRequest);
     }
 }

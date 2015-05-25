@@ -31,59 +31,35 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 
 public class PushNotificationActivity extends Activity implements View.OnClickListener{
 
     Button send;
-    EditText registrationId, message;
+    EditText Message;
     RequestQueue mQueue;
+    String regId , MessageText ;
+    MagicLenGCM magicLenGCM;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pushnoitfication);
         send = (Button) findViewById(R.id.Send);
-        registrationId = (EditText) findViewById(R.id.RegistrationId);
-        message = (EditText) findViewById(R.id.Message);
+        Message = (EditText) findViewById(R.id.RegistrationId);
         mQueue = Volley.newRequestQueue(this);
         send.setOnClickListener(this);
-
-        MagicLenGCM magicLenGCM = new MagicLenGCM(this);
+        magicLenGCM = new MagicLenGCM(this);
         magicLenGCM.openGCM();
-        registrationId.setText(magicLenGCM.getRegistrationId());
+        regId = magicLenGCM.getRegistrationId();
+        MessageText = Message.getText().toString();
     }
     @Override
     public void onClick(final View view) {
-        Map<String,String> params = new HashMap<String, String>();
-        params.put("RegistrationId", registrationId.getText().toString());
-        params.put("Message", message.getText().toString());
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,"http://jasonchi.ddns.net:8080/api/PushNotification", new JSONObject(params),
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("通知", response.toString());
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("錯誤", error.getMessage(), error);
-            }
-        })
-        {
-            @Override
-            public Map<String, String> getHeaders() {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Accept", "application/json");
-                headers.put("Content-Type", "application/json; charset=utf-8");
-
-                return headers;
-            }
-        };
-
-        mQueue.add(jsonObjectRequest);
+        magicLenGCM.SendMessage( mQueue , MessageText );
+    }
+    private void findV(Activity act ,Object obj, int Res )
+    {
+        act.findViewById(Res);
     }
 }
-//檢查手機有沒有regid
-//註冊後儲存
-//送出訊息出去(pushsender)

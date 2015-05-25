@@ -55,6 +55,9 @@ public class MainActivity extends FragmentActivity implements OnPageChangeListen
         myViewPager = (ViewPager) findViewById(R.id.viewpager);
 
         //Arrays = new ServerRequest().execute(url).get();
+
+//        int imageId = getResources().getIdentifier(myViewPager.toString(),
+//                "drawable", this.getPackageName());
         actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayOptions(0, ActionBar.DISPLAY_SHOW_TITLE);//遮蔽標題
@@ -104,6 +107,7 @@ public class MainActivity extends FragmentActivity implements OnPageChangeListen
     @Override
     public void onPageSelected(int arg0) {
         actionBar.setSelectedNavigationItem(arg0);
+
 
     }
     @Override

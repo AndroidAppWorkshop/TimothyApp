@@ -46,11 +46,12 @@ public class NetImage extends Fragment {
 
         requestQueue = Volley.newRequestQueue(context);
 
-        String url = "http://i.imgur.com/7spzG.png";
+        String url = Url_Value.urlArray[0];
 
         ImageLruCache cache = new ImageLruCache();
 
-        ImageLoader Imlod = new ImageLoader(requestQueue, cache );
+        ImageLoader Imlod = new ImageLoader(requestQueue , cache );
+
         ImageLoader.ImageListener Imlisten = Imlod.getImageListener(networkImageView, R.drawable.clear_dark, R.drawable.boot_camp_dark);
 
         //Imlod.get(url, Imlisten);

@@ -36,13 +36,7 @@ public class ImageLruCache extends LruCache<String, Bitmap> implements ImageLoad
     public static int getDefaultLruCacheSize() {
         final int maxMemory =
                 (int) (Runtime.getRuntime().maxMemory() / 1024);
-        final int cacheSize = maxMemory / 8;
+        final int cacheSize = maxMemory / 8 ;
         return cacheSize;
     }
-//    public static ImageLruCache getImageLruCache()
-//    {
-//
-//        return this;
-//    }
-
 }

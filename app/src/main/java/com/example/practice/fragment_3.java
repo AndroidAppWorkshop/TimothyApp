@@ -1,19 +1,15 @@
 package com.example.practice;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.example.practice.R;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.R.integer;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +50,7 @@ public class fragment_3  extends Fragment implements OnClickListener {
             @Override
             public void onResponse(JSONArray jsonArray) {
 
-                txv.setText(parseJson.parseJsonData(jsonArray));
+                txv.setText(ParseforJsonArray.parseJsonData(jsonArray));
 
             }
         };

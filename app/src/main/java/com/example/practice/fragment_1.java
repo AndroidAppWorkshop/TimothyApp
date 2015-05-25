@@ -1,16 +1,9 @@
 package com.example.practice;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.practice.R;
-
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -55,7 +48,7 @@ public class fragment_1  extends Fragment implements OnClickListener{
             @Override
             public void onResponse(JSONArray jsonArray) {
 
-                txv.setText(parseJson.parseJsonData(jsonArray));
+                txv.setText(ParseforJsonArray.parseJsonData(jsonArray));
 
             }
         };
@@ -105,7 +98,7 @@ public class fragment_1  extends Fragment implements OnClickListener{
 	}
 	
 	private void setTabSelection(int i) {
-		
+
         resetBtn();       
         switch (i)  
         {  
