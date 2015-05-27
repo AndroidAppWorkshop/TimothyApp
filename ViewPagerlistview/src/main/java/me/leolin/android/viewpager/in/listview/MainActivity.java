@@ -134,6 +134,7 @@ public class MainActivity extends Activity {
 
                 textViewProductCount.setText(String.valueOf(Cart.getProductCountInCart(productId)));
 
+
                 Button btnAdd = (Button) productView.findViewById(R.id.btnAdd);
                 btnAdd.setOnClickListener(new View.OnClickListener() {
                     @Override

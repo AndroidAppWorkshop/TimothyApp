@@ -10,6 +10,7 @@ import android.view.ViewDebug;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -146,10 +147,12 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
                 }
                 textViewProductCount.setText(String.valueOf(count));
 
-                NetworkImageView image = (NetworkImageView) productView.findViewById(R.id.image);
-                image.setDefaultImageResId(R.drawable.clear_dark);
-                image.setImageUrl( Url_Value.urlArray[i - 3 * pagerPosition] ,Imlo );
+//                NetworkImageView image = (NetworkImageView) productView.findViewById(R.id.image);
+//                image.setDefaultImageResId(R.drawable.clear_dark);
+//                image.setImageUrl( Url_Value.urlArray[i - 3 * pagerPosition] ,Imlo );
 
+                    ImageView image = (ImageView) productView.findViewById(R.id.image);
+                    image.setBackgroundResource(productVo.getimage());
                 Button btnAdd = (Button) productView.findViewById(R.id.btnAdd);
                 btnAdd.setOnClickListener(new View.OnClickListener() {
                     @Override

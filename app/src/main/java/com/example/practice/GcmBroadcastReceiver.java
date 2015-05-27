@@ -35,14 +35,14 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE
                     .equals(messageType)) {
                 Log.i(getClass() + " GCM MESSAGE", extras.toString());
+
                 Intent i = new Intent(context, MainActivity.class);
                 i.setAction("android.intent.action.MAIN");
                 i.addCategory("android.intent.category.LAUNCHER");
                 MagicLenGCM.sendLocalNotification(context, NOTIFICATION_ID,
                         R.drawable.actionbar_menu, "From Jason Server ---", extras
                                 .getString("message"), "magiclen.org", false,
-                        PendingIntent.getActivity(context, 0, i,
-                                PendingIntent.FLAG_CANCEL_CURRENT));
+               PendingIntent.getActivity(context, 0, i,PendingIntent.FLAG_CANCEL_CURRENT));
             }
         }
         setResultCode(Activity.RESULT_OK);
