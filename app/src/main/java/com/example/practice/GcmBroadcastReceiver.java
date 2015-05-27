@@ -39,7 +39,7 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
                 i.setAction("android.intent.action.MAIN");
                 i.addCategory("android.intent.category.LAUNCHER");
                 MagicLenGCM.sendLocalNotification(context, NOTIFICATION_ID,
-                        R.drawable.sbak, "From Jason Server ---", extras
+                        R.drawable.actionbar_menu, "From Jason Server ---", extras
                                 .getString("message"), "magiclen.org", false,
                         PendingIntent.getActivity(context, 0, i,
                                 PendingIntent.FLAG_CANCEL_CURRENT));

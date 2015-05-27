@@ -102,19 +102,19 @@ public class fragment_3  extends Fragment implements OnClickListener {
         {  
         case 0:  
            
-        	course_image.setImageResource(R.drawable.one_1); 
+        	course_image.setImageResource(R.drawable.buttonbar_image_click7);
         	//course.setBackgroundColor(R.drawable.ic_tabbar_bg_click);
         	course_text.setTextColor(green);
             break;  
         case 1:  
           
-        	found_image.setImageResource(R.drawable.two_2); 
+        	found_image.setImageResource(R.drawable.buttonbar_image_click8);
         	//found.setBackgroundColor(R.drawable.ic_tabbar_bg_click);
         	found_text.setTextColor(green); 
             break;  
         case 2:  
            
-        	settings_image.setImageResource(R.drawable.thr3);  
+        	settings_image.setImageResource(R.drawable.buttonbar_image_click9);
         	//set.setBackgroundColor(R.drawable.ic_tabbar_bg_click);
         	settings_text.setTextColor(green);  
             break;

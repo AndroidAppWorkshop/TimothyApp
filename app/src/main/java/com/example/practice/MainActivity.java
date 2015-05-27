@@ -4,20 +4,14 @@ package com.example.practice;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.app.ActionBar;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,7 +21,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.astuetz.PagerSlidingTabStrip;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -59,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
     class PagerAdapter extends FragmentPagerAdapter  implements PagerSlidingTabStrip.IconTabProvider {
 
-        private final int[] icon = {R.drawable.cute, R.drawable.good, R.drawable.train};
+        private final int[] icon = {R.drawable.actionbartab_1, R.drawable.actionbartab_2, R.drawable.actionbartab3};
 
         public PagerAdapter(FragmentManager fm) {
             super(fm);

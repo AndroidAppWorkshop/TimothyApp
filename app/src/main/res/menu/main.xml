@@ -6,7 +6,7 @@
     <item
         android:id="@+id/MenuBtn01"
         android:orderInCategory="0"
-        android:icon="@drawable/sbak"
+        android:icon="@drawable/actionbar_menu"
         android:showAsAction="always"
         android:title="MenuBtn01"/>
 
