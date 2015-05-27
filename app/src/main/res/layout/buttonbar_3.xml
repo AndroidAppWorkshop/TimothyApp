@@ -28,7 +28,7 @@
                     android:layout_width="wrap_content"  
                     android:layout_height="wrap_content"  
                     android:layout_gravity="center_horizontal"  
-                    android:src="@drawable/one" />  
+                    android:src="@drawable/buttonbar_image_create7" />
   
                 <TextView  
                     android:id="@+id/course_text1"  
@@ -58,7 +58,7 @@
                     android:layout_width="wrap_content"  
                     android:layout_height="wrap_content"  
                     android:layout_gravity="center_horizontal"  
-                    android:src="@drawable/two" />  
+                    android:src="@drawable/buttonbar_image_create8" />
   
                 <TextView  
                     android:id="@+id/found_text2"  
@@ -89,7 +89,7 @@
                     android:layout_width="wrap_content"  
                     android:layout_height="wrap_content"  
                     android:layout_gravity="center_horizontal"  
-                    android:src="@drawable/thr" />  
+                    android:src="@drawable/buttonbar_image_create9" />
   
                 <TextView  
                     android:id="@+id/setting_text3"  
