@@ -29,7 +29,7 @@
                     android:layout_width="wrap_content"  
                     android:layout_height="wrap_content"  
                     android:layout_gravity="center_horizontal"  
-                    android:src="@drawable/ic_tabbar_course_normal" />  
+                    android:src="@drawable/buttonbar_image_create" />
   
                 <TextView  
                     android:id="@+id/course_text"  
