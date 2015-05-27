@@ -136,13 +136,13 @@ public class fragment_2  extends Fragment implements OnClickListener{
 		
 	}
 	private void resetBtn() {
-		course_image.setImageResource(R.drawable.d);  
+		course_image.setImageResource(R.drawable.buttonbar_image_create4);
         //course.setBackgroundColor(R.drawable.bottom_bar);  
         course_text.setTextColor(gray);  
-        found_image.setImageResource(R.drawable.e);  
+        found_image.setImageResource(R.drawable.buttonbar_image_create5);
         //found.setBackgroundColor(R.drawable.bottom_bar);  
         found_text.setTextColor(gray);  
-        settings_image.setImageResource(R.drawable.f);  
+        settings_image.setImageResource(R.drawable.buttonbar_image_create6);
         //set.setBackgroundColor(R.drawable.bottom_bar);  
         settings_text.setTextColor(gray);  
 	}

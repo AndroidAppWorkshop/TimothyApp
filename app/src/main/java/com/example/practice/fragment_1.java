@@ -130,10 +130,10 @@ public class fragment_1  extends Fragment implements OnClickListener{
 		course_image.setImageResource(R.drawable.buttonbar_image_create);
         //course.setBackgroundColor(R.drawable.bottom_bar);  
         course_text.setTextColor(gray);  
-        found_image.setImageResource(R.drawable.ic_tabbar_found_normal);  
+        found_image.setImageResource(R.drawable.buttonbar_image_create2);
        // found.setBackgroundColor(R.drawable.bottom_bar);  
         found_text.setTextColor(gray);  
-        settings_image.setImageResource(R.drawable.ic_tabbar_settings_normal);  
+        settings_image.setImageResource(R.drawable.buttonbar_image_create3);
         //set.setBackgroundColor(R.drawable.bottom_bar);  
         settings_text.setTextColor(gray);  
 	}
