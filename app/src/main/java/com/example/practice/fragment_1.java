@@ -31,7 +31,7 @@ public class fragment_1  extends Fragment implements OnClickListener{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		view = inflater.inflate(R.layout.layout1, container, false);
+		view = inflater.inflate(R.layout.fragment1, container, false);
 
 		initView(); 
 
