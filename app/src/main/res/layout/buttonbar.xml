@@ -9,7 +9,7 @@
      	    android:id="@+id/me1"
      	    android:layout_width="match_parent"
      	    android:layout_height="60dp"
-     	    android:background="@drawable/bottom_bar" >
+            android:background="#CC5B090C" >
   
         <RelativeLayout  
             android:id="@+id/course_layout"  

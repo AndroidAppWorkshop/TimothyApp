@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="tab_color">#5B090C</color>
+    <color name="green">#00ff00</color>
+    <color name="red">#ff0000</color>
+    <color name="blue">#0000ff</color>
+    <color name="action_bar_color">#A26530</color>
+    <color name="orange">#ff8c00</color>
+    <color name="white">#ffffff</color>
+    <color name="saddlebrown">#8b4513</color>
+    <color name="yellow">#ffff00</color>
+    <color name="ghostwhite">#f8f8ff</color>
+    <color name="dimgray">#696969</color>
+    <color name="black">#000000</color>
+    <color name="cornsilk">#fff8dc</color>
+
+</resources>

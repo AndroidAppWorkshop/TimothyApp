@@ -7,8 +7,8 @@
      	<LinearLayout
      	    android:id="@+id/me"
      	    android:layout_width="match_parent"
-     	    android:layout_height="60dp"     	   
-     	    android:background="@drawable/bottom_bar" >
+     	    android:layout_height="60dp"
+            android:background="#CC5B090C" >
   
         <RelativeLayout  
             android:id="@+id/course"  
