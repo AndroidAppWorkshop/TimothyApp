@@ -130,7 +130,6 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
                         continue;
                     }
 
-
                     TextView textViewProductName = (TextView) productView.findViewById(R.id.textViewProductName);
                     textViewProductName.setText(productVo.getName());
 
@@ -147,12 +146,10 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
                 }
                 textViewProductCount.setText(String.valueOf(count));
 
-//                NetworkImageView image = (NetworkImageView) productView.findViewById(R.id.image);
-//                image.setDefaultImageResId(R.drawable.clear_dark);
-//                image.setImageUrl( Url_Value.urlArray[i - 3 * pagerPosition] ,Imlo );
 
-                    ImageView image = (ImageView) productView.findViewById(R.id.image);
-                    image.setBackgroundResource(productVo.getimage());
+                NetworkImageView image = (NetworkImageView) productView.findViewById(R.id.image);
+                image.setImageUrl(productVo.getimage() , Imlo );
+
                 Button btnAdd = (Button) productView.findViewById(R.id.btnAdd);
                 btnAdd.setOnClickListener(new View.OnClickListener() {
                     @Override

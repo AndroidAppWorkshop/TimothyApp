@@ -13,13 +13,6 @@
     android:layout_weight="1"
     >
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Message..."
-        android:ems="10"
-        android:id="@+id/Message" />
 </LinearLayout>
     <EditText
         android:layout_width="match_parent"

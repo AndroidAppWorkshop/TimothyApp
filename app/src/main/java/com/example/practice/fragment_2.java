@@ -36,7 +36,7 @@ public class fragment_2  extends Fragment implements OnClickListener{
 	private LinearLayout me;
     RequestQueue RQueue;
 	View view;
-    String URL = Url_Value.fragUrl[1];
+    String URL = UrlValue.fragUrl[1];
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

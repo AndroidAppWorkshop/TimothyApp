@@ -30,7 +30,7 @@ public class fragment_3  extends Fragment implements OnClickListener {
 	int green=Color.GREEN;
 	View view;	
 	private LinearLayout me3;
-    String URL = Url_Value.fragUrl[2];
+    String URL = UrlValue.fragUrl[2];
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

@@ -5,12 +5,12 @@ public class ProductVo {
     private String id;
     private String name;
     private int price;
-    private int image;
-    public ProductVo(String id, String name, int price,int image) {
+    private String image;
+    public ProductVo(String id, String name, int price,String ImageUrl) {
         this.id = id;
         this.name = name;
         this.price= price;
-        this.image=image;
+        this.image=ImageUrl;
     }
 
     public String getId() {
@@ -37,8 +37,7 @@ public class ProductVo {
         this.price = price;
     }
 
-    public int getimage() {
+    public String getimage() {
         return image;
     }
-
 }

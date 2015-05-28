@@ -17,6 +17,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -47,7 +48,6 @@ public class MagicLenGCM {
          * @param regID       傳回註冊到的regID
          */
         public void gcmRegistered(boolean successfull, String regID);
-
         /**
          * GCM註冊成功，將結果寫入App Server
          *
@@ -55,12 +55,8 @@ public class MagicLenGCM {
          * @return 是否傳送App Server成功
          */
         public boolean gcmSendRegistrationIdToAppServer(String regID);
-
     }
 
-    /**
-     * 用來當作SharedPreferences的Key.
-     */
     private static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
     /**
@@ -68,19 +64,6 @@ public class MagicLenGCM {
      */
     public final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
-
-    /**
-     * 發出Local端的通知(顯示在通知欄上)
-     *
-     * @param context           Context
-     * @param notifyID          通知ID(重複會被覆蓋)
-     * @param drawableSmallIcon 小圖示(用Drawable ID來設定)
-     * @param title             標題
-     * @param msg               訊息
-     * @param info              附加文字
-     * @param autoCancel        是否按下後就消失
-     * @param pendingIntent     按下後要使用什麼Intent
-     */
     public static void sendLocalNotification(Context context, int notifyID,
                                              int drawableSmallIcon, String title, String msg, String info,
                                              boolean autoCancel, PendingIntent pendingIntent) {
@@ -102,13 +85,17 @@ public class MagicLenGCM {
 
     private Activity activity;
     private MagicLenGCMListener listener;
-
+    private RequestQueue queue ;
+    private String REGIDforSend ="";
+    private String regidforlocal ="";
     public MagicLenGCM(Activity activity) {
         this(activity, null);
     }
-
     public MagicLenGCM(Activity activity, MagicLenGCMListener listener) {
+        queue = Volley.newRequestQueue(activity);
+
         this.activity = activity;
+        GCMPPush( openGCM() );
         setMagicLenGCMListener(listener);
     }
 
@@ -120,16 +107,11 @@ public class MagicLenGCM {
         this.listener = listener;
     }
 
-    public GCMState startGCM() {
-        return openGCM();
-    }
-
-    public GCMState openGCM() {
+    private GCMState openGCM() {
         switch (checkPlayServices()) {
             case SUPPROT:
-                String regid = getRegistrationId();
-                if (regid.isEmpty()) {
-                    registerInBackground();
+                regidforlocal = getRegistrationId();
+                if (regidforlocal.isEmpty()) {
                     return GCMState.NEED_REGISTER;
                 } else {
                     return GCMState.AVAILABLE;
@@ -140,8 +122,28 @@ public class MagicLenGCM {
                 return GCMState.PLAY_SERVICES_UNSUPPORT;
         }
     }
+    public void GCMPPush(GCMState GCMState)
+    {
+        switch (GCMState)
+        {
+            case NEED_REGISTER:
+                registerInBackground();
+                REGIDforSend = getRegistrationId();
+                break;
+            case AVAILABLE:
+                REGIDforSend = regidforlocal;
+                break;
+            case PLAY_SERVICES_NEED_PLAY_SERVICE:
+                break;
+            case PLAY_SERVICES_UNSUPPORT:
+                break;
+            default:
+                break;
+        }
 
-    public String getRegistrationId() {
+    }
+
+    private String getRegistrationId() {
         final SharedPreferences prefs = getGCMPreferences();
         String registrationId = prefs.getString(PROPERTY_REG_ID, "");
         if (registrationId.isEmpty()) {
@@ -156,7 +158,7 @@ public class MagicLenGCM {
         return registrationId;
     }
 
-    public int getAppVersion() {
+    private int getAppVersion() {
         try {
             PackageInfo packageInfo = activity.getPackageManager()
                     .getPackageInfo(activity.getPackageName(), 0);
@@ -176,7 +178,7 @@ public class MagicLenGCM {
      *
      * @return 傳回Google Play Service可用狀態
      */
-    public PlayServicesState checkPlayServices() {
+    private PlayServicesState checkPlayServices() {
         int resultCode = GooglePlayServicesUtil
                 .isGooglePlayServicesAvailable(activity);
         if (resultCode != ConnectionResult.SUCCESS) {
@@ -232,7 +234,6 @@ public class MagicLenGCM {
             }
         }
     }
-
     private void storeRegistrationId(String regId) {
         final SharedPreferences prefs = getGCMPreferences();
         int appVersion = getAppVersion();
@@ -241,10 +242,10 @@ public class MagicLenGCM {
         editor.putInt(PROPERTY_APP_VERSION, appVersion);
         editor.commit();
     }
-    public void SendMessage(RequestQueue queue , String message)
+    public void SendMessage(String message)
     {
         Map<String,String> params = new HashMap<String, String>();
-        params.put("RegistrationId", getRegistrationId() );
+        params.put("RegistrationId", REGIDforSend);
         params.put("Message", message ) ;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,"http://jasonchi.ddns.net:8080/api/PushNotification", new JSONObject(params),
@@ -270,5 +271,9 @@ public class MagicLenGCM {
             }
         };
         queue.add(jsonObjectRequest);
+    }
+    public String getSendREGID()
+    {
+        return REGIDforSend;
     }
 }

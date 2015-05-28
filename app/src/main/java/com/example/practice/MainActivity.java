@@ -25,21 +25,18 @@ import com.astuetz.PagerSlidingTabStrip;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    private List<Fragment> mFragments = new ArrayList<Fragment>();
-    String[] strA = {" PageNotification  ", " NetImage ", " MenuClass "};
+    String[] strA = { " NetImage ", " MenuClass "};
     ListView LV;
     DrawerLayout DL;
     Artgine Artgine = new Artgine();
     Menu mMenu;
     ViewPager viewPager;
 
-    RequestQueue mRequestQueue;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //init();
+
         DL = (DrawerLayout) findViewById(R.id.DraOut);
         LV = (ListView) findViewById(R.id.LV);
         LV.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, strA));
@@ -52,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
     class PagerAdapter extends FragmentPagerAdapter  implements PagerSlidingTabStrip.IconTabProvider {
 
-        private final int[] icon = {R.drawable.actionbartab_1, R.drawable.actionbartab_2, R.drawable.actionbartab3};
+        private final int[] icon = {R.drawable.actionbartab_1, R.drawable.actionbartab_2, R.drawable.actionbartab3 , R.drawable.actionbar_pushicon };
 
         public PagerAdapter(FragmentManager fm) {
             super(fm);
@@ -66,8 +63,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 return new fragment_2();
             } else if (position == 2) {
                 return new fragment_3();
-            }
-            return null;
+            }else
+            return new PushNotificationActivity();
         }
 
         @Override
@@ -83,23 +80,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-//    private void init() {
-//        mRequestQueue = Volley.newRequestQueue(this);
-//        fragment_1 fag = new fragment_1();
-//        fragment_2 fag2 = new fragment_2();
-//        fragment_3 fag3 = new fragment_3();
-//        mFragments.add(fag);
-//        mFragments.add(fag2);
-//        mFragments.add(fag3);
-//    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main , menu);
         mMenu = menu;
-        getMenuInflater().inflate(R.menu.main, menu);
-
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -115,7 +102,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         android.support.v4.app.FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
@@ -123,24 +109,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Fragment Fra;
         Intent it;
         switch (position) {
+
             case 0:
-                it = new Intent(this, PushNotificationActivity.class);
-                startActivity(it);
-                break;
-            case 1:
                 Fra = new NetImage();
                 ft1.replace(R.id.DraOut, Fra).commit();
                 break;
-            case 2:
+            case 1:
                 it = new Intent(this, MenuListActivity.class);
                 startActivity(it);
                 break;
             default:
-                it = new Intent(this, PushNotificationActivity.class);
-                startActivity(it);
                 break;
         }
-
     }
-
 }

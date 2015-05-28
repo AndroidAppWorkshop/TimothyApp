@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -34,32 +35,34 @@ import java.util.Map;
 import java.util.Objects;
 
 
-public class PushNotificationActivity extends Activity implements View.OnClickListener{
+public class PushNotificationActivity extends Fragment implements View.OnClickListener{
 
     Button send;
     EditText Message;
     RequestQueue mQueue;
     String regId , MessageText ;
     MagicLenGCM magicLenGCM;
+
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.pushnoitfication);
-        send = (Button) findViewById(R.id.Send);
-        Message = (EditText) findViewById(R.id.RegistrationId);
-        mQueue = Volley.newRequestQueue(this);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.pushnoitfication , container , false);
+        send = (Button) view.findViewById(R.id.Send);
+        Message = (EditText) view.findViewById(R.id.RegistrationId);
+
         send.setOnClickListener(this);
-        magicLenGCM = new MagicLenGCM(this);
-        magicLenGCM.openGCM();
-        regId = magicLenGCM.getRegistrationId();
-        MessageText = Message.getText().toString();
+
+        magicLenGCM = new MagicLenGCM(getActivity());
+
+        return view;
     }
+
     @Override
     public void onClick(final View view) {
-        magicLenGCM.SendMessage( mQueue , MessageText );
-    }
-    private void findV(Activity act ,Object obj, int Res )
-    {
-        act.findViewById(Res);
+
+            if(!Message.getText().toString().trim().isEmpty())
+                magicLenGCM.SendMessage(Message.getText().toString() );
+
+            Toast.makeText(getActivity() ,"RegID  : "+magicLenGCM.getSendREGID() , Toast.LENGTH_SHORT ).show();
     }
 }

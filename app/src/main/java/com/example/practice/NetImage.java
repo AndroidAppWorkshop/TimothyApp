@@ -32,9 +32,6 @@ public class NetImage extends Fragment {
 
         tx1 = (TextView) v.findViewById(R.id.TextV01);
 
-        // Retrieves an image specified by the URL, displays it in the UI.
-
-        // Access the RequestQueue through your singleton class.
         return v;
     }
 
@@ -46,7 +43,7 @@ public class NetImage extends Fragment {
 
         requestQueue = Volley.newRequestQueue(context);
 
-        String url = Url_Value.urlArray[0];
+        String url = UrlValue.urlArray[0];
 
         ImageLruCache cache = new ImageLruCache();
 
@@ -54,54 +51,7 @@ public class NetImage extends Fragment {
 
         ImageLoader.ImageListener Imlisten = Imlod.getImageListener(networkImageView, R.drawable.clear_dark, R.drawable.boot_camp_dark);
 
-        //Imlod.get(url, Imlisten);
         networkImageView.setDefaultImageResId(R.drawable.clear_dark);
         networkImageView.setImageUrl(url ,Imlod );
     }
-
 }
-
-//    private static MySingleton mInstance;
-//    private RequestQueue mRequestQueue;
-//    private ImageLoader mImageLoader;
-//    private static Context mCtx;
-//
-//    private MySingleton(Context context) {
-//        mCtx = context;
-//        mRequestQueue = getRequestQueue();
-//
-//        mImageLoader = new ImageLoader(mRequestQueue,
-//                new ImageLoader.ImageCache() {
-//                    private final LruCache<String, Bitmap>
-//                            cache = new LruCache<String, Bitmap>(20);
-//
-//                    @Override
-//                    public Bitmap getBitmap(String url) {
-//                        return cache.get(url);
-//                    }
-//
-//                    @Override
-//                    public void putBitmap(String url, Bitmap bitmap) {
-//                        cache.put(url, bitmap);
-//                    }
-//                });
-//    }
-//
-//    public RequestQueue getRequestQueue() {
-//        if (mRequestQueue == null) {
-//            // getApplicationContext() is key, it keeps you from leaking the
-//            // Activity or BroadcastReceiver if someone passes one in.
-//            mRequestQueue = Volley.newRequestQueue(mCtx.getApplicationContext());
-//        }
-//        return mRequestQueue;
-//    }
-//
-//    public <T> void addToRequestQueue(Request<T> req) {
-//        getRequestQueue().add(req);
-//    }
-//
-//    public ImageLoader getImageLoader() {
-//        return mImageLoader;
-//    }
-//}
-//}

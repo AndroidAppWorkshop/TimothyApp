@@ -42,7 +42,9 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
                 MagicLenGCM.sendLocalNotification(context, NOTIFICATION_ID,
                         R.drawable.actionbar_menu, "From Jason Server ---", extras
                                 .getString("message"), "magiclen.org", false,
-               PendingIntent.getActivity(context, 0, i,PendingIntent.FLAG_CANCEL_CURRENT));
+
+                PendingIntent.getActivity(context, 0, i,PendingIntent.FLAG_CANCEL_CURRENT));
+
             }
         }
         setResultCode(Activity.RESULT_OK);
