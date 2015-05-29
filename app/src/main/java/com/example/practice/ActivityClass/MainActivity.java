@@ -1,8 +1,5 @@
-package com.example.practice;
+package com.example.practice.ActivityClass;
 
-
-import java.util.ArrayList;
-import java.util.List;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -20,15 +17,21 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.android.volley.RequestQueue;
 import com.astuetz.PagerSlidingTabStrip;
+import com.example.practice.ToolsAndTable.Artgine;
+import com.example.practice.FragmentsPage.fragment_1;
+import com.example.practice.FragmentsPage.fragment_2;
+import com.example.practice.FragmentsPage.fragment_3;
+import com.example.practice.FragmentsPage.NetImage;
+import com.example.practice.GCMPushNotification.PushNotificationFragment;
+import com.example.practice.R;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     String[] strA = { " NetImage ", " MenuClass "};
     ListView LV;
     DrawerLayout DL;
-    Artgine Artgine = new Artgine();
+    com.example.practice.ToolsAndTable.Artgine Artgine = new Artgine();
     Menu mMenu;
     ViewPager viewPager;
 
@@ -64,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             } else if (position == 2) {
                 return new fragment_3();
             }else
-            return new PushNotificationActivity();
+            return new PushNotificationFragment();
         }
 
         @Override

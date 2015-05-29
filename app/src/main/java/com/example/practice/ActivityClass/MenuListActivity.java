@@ -1,4 +1,4 @@
-package com.example.practice;
+package com.example.practice.ActivityClass;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,18 +6,24 @@ import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.ViewDebug;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
+import com.example.practice.MenuListClass.CategoryVo;
+import com.example.practice.MenuListClass.ImageLruCache;
+import com.example.practice.MenuListClass.ProductRepository;
+import com.example.practice.MenuListClass.ProductVo;
+import com.example.practice.R;
+import com.example.practice.ToolsAndTable.UrlValue;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,12 +113,15 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
         public ProductPagerAdapter(List<ProductVo> products) {
             this.products = products;
         }
-
+        NetworkImageView image ;
+        RequestQueue queue ;
+        ImageLruCache cache;
+        ImageLoader ImageLoader;
         @Override
         public Object instantiateItem(ViewGroup container, int pagerPosition) {
-            ImageLruCache cache = new ImageLruCache();
-            RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-            ImageLoader Imlo = new ImageLoader(queue , cache);
+            cache = new ImageLruCache();
+            queue = Volley.newRequestQueue(getApplicationContext());
+            ImageLoader = new ImageLoader(queue , cache);
             View inflate = getLayoutInflater().inflate(R.layout.pageritem_container, null);
                 LinearLayout pagerContainer = (LinearLayout) inflate.findViewById(R.id.pagerContainer);
                 //1~3頁
@@ -146,10 +155,8 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
                 }
                 textViewProductCount.setText(String.valueOf(count));
 
-
-                NetworkImageView image = (NetworkImageView) productView.findViewById(R.id.image);
-                image.setImageUrl(productVo.getimage() , Imlo );
-
+                image = (NetworkImageView) productView.findViewById(R.id.image);
+                image.setImageUrl(productVo.getimage() , ImageLoader );
                 Button btnAdd = (Button) productView.findViewById(R.id.btnAdd);
                 btnAdd.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -207,6 +214,7 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
         }
+
     }
 
 

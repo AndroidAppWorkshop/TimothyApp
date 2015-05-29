@@ -1,4 +1,4 @@
-package com.example.practice;
+package com.example.practice.FragmentsPage;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,6 +13,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
+import com.example.practice.MenuListClass.ImageLruCache;
+import com.example.practice.R;
+import com.example.practice.ToolsAndTable.UrlValue;
 
 /**
  * Created by h94u04 on 2015/5/6.
@@ -51,7 +54,9 @@ public class NetImage extends Fragment {
 
         ImageLoader.ImageListener Imlisten = Imlod.getImageListener(networkImageView, R.drawable.clear_dark, R.drawable.boot_camp_dark);
 
-        networkImageView.setDefaultImageResId(R.drawable.clear_dark);
-        networkImageView.setImageUrl(url ,Imlod );
+        ImageLoader.ImageContainer container = Imlod.get(url , Imlisten , 200 ,200);
+        networkImageView.setImageBitmap( container.getBitmap() );
+//        networkImageView.setDefaultImageResId(R.drawable.clear_dark);
+//        networkImageView.setImageUrl(url ,Imlod );
     }
 }

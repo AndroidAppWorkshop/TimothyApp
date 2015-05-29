@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.practice.MainActivity"
+            android:name=".ActivityClass.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,16 +26,16 @@
         </activity>
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".ActivityClass.LoginActivity"
             android:label="@string/activity_login" >
         </activity>
 
-        <activity android:name="com.example.practice.PushNotificationActivity" />
+        <activity android:name=".GCMPushNotification.PushNotificationFragment" />
 
         <activity android:name="org.achartengine.GraphicalActivity" />
-        <activity android:name=".MenuListActivity" />
+        <activity android:name=".ActivityClass.MenuListActivity" />
         <receiver
-            android:name = "com.example.practice.GcmBroadcastReceiver"
+            android:name = ".GCMPushNotification.GcmBroadcastReceiver"
             android:permission = "com.google.android.c2dm.permission.SEND"  >
             <intent-filter>
                 <action  android:name = "com.google.android.c2dm.intent.RECEIVE"  />

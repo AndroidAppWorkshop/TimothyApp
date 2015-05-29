@@ -1,4 +1,4 @@
-package com.example.practice;
+package com.example.practice.ToolsAndTable;
 
 import android.util.Log;
 
@@ -14,13 +14,13 @@ public class ServerRequest implements Response.ErrorListener , Response.Listener
     RequestQueue RQueue ;
     String URL ;
     Response.Listener<JSONArray> listener;
-    ServerRequest(RequestQueue RQueue, String URL , Response.Listener<JSONArray> listener)
+    public ServerRequest(RequestQueue RQueue, String URL, Response.Listener<JSONArray> listener)
     {
         this.RQueue = RQueue;
         this.URL = URL ;
         this.listener =listener;
     }
-    void MgetRequest()
+    public void MgetRequest()
     {
         RQueue.add( new JsonArrayRequest( Request.Method.GET , URL , listener , this ));
     }

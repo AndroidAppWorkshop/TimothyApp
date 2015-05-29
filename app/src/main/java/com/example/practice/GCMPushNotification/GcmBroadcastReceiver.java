@@ -1,4 +1,4 @@
-package com.example.practice;
+package com.example.practice.GCMPushNotification;
 
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
+import com.example.practice.ActivityClass.MainActivity;
+import com.example.practice.R;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 /**
@@ -44,7 +46,6 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
                                 .getString("message"), "magiclen.org", false,
 
                 PendingIntent.getActivity(context, 0, i,PendingIntent.FLAG_CANCEL_CURRENT));
-
             }
         }
         setResultCode(Activity.RESULT_OK);

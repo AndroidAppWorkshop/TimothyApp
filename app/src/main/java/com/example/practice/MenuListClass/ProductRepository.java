@@ -1,5 +1,7 @@
-package com.example.practice;
+package com.example.practice.MenuListClass;
 
+
+import com.example.practice.ToolsAndTable.UrlValue;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -10,7 +12,7 @@ public class ProductRepository {
 
     public ProductRepository() {
         CategoryVo drinkCategories = new CategoryVo("cat_1", "飲料");
-        drinkCategories.getProductVos().add(new ProductVo("prod_1-1", "咖啡", 45,UrlValue.ListImageWilson));
+        drinkCategories.getProductVos().add(new ProductVo("prod_1-1", "咖啡", 45, UrlValue.ListImageWilson));
         drinkCategories.getProductVos().add(new ProductVo("prod_1-2", "紅茶", 20,UrlValue.ListImageJason));
         drinkCategories.getProductVos().add(new ProductVo("prod_1-3", "奶茶", 40,UrlValue.ListImageJason));
         drinkCategories.getProductVos().add(new ProductVo("prod_1-4", "果汁", 60,UrlValue.ListImageWilson));

@@ -1,9 +1,14 @@
-package com.example.practice;
+package com.example.practice.FragmentsPage;
 
 import org.json.JSONArray;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.practice.ToolsAndTable.ParseforJsonArray;
+import com.example.practice.R;
+import com.example.practice.ToolsAndTable.ServerRequest;
+import com.example.practice.ToolsAndTable.UrlValue;
+
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;

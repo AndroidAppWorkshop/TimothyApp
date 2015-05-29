@@ -1,4 +1,4 @@
-package com.example.practice;
+package com.example.practice.GCMPushNotification;
 
 import android.app.Activity;
 import android.app.Notification;
@@ -93,7 +93,6 @@ public class MagicLenGCM {
     }
     public MagicLenGCM(Activity activity, MagicLenGCMListener listener) {
         queue = Volley.newRequestQueue(activity);
-
         this.activity = activity;
         GCMPPush( openGCM() );
         setMagicLenGCMListener(listener);
@@ -131,11 +130,13 @@ public class MagicLenGCM {
                 REGIDforSend = getRegistrationId();
                 break;
             case AVAILABLE:
-                REGIDforSend = regidforlocal;
+                REGIDforSend = regidforlocal      ;
                 break;
             case PLAY_SERVICES_NEED_PLAY_SERVICE:
+
                 break;
             case PLAY_SERVICES_UNSUPPORT:
+
                 break;
             default:
                 break;

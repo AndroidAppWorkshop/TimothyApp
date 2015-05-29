@@ -1,7 +1,7 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.practice.MainActivity" >
+    tools:context="com.example.practice.ActivityClass.MainActivity" >
 
     <item
         android:id="@+id/MenuBtn01"
