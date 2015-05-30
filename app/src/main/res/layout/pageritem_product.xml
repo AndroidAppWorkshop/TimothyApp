@@ -10,35 +10,51 @@
               android:background="@drawable/rectangle"
     tools:showIn="@layout/pageritem_container">
 
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="0dp"
+              android:layout_weight="1"
               android:id="@+id/textViewProductName"
-        android:textSize="25dp" />
+              android:textSize="@dimen/abc_text_size_menu_material" />
     <com.android.volley.toolbox.NetworkImageView
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="3"
         android:layout_gravity="center_horizontal"
         android:id="@+id/image" />
-    <LinearLayout android:orientation="horizontal" android:layout_width="match_parent"
-                  android:layout_height="wrap_content">
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:text="價格："
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="價格："
                 />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:id="@+id/textViewProductPrice"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewProductPrice"
                 />
     </LinearLayout>
 
     <LinearLayout android:orientation="horizontal" android:layout_width="match_parent"
-                  android:layout_height="wrap_content">
+                  android:layout_height="0dp"
+                  android:layout_weight="1">
+
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:text="數量："
                 />
+
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:id="@+id/textViewProductCount"
                 />
+
     </LinearLayout>
     <LinearLayout android:orientation="horizontal"
                   android:layout_width="match_parent"
-                  android:layout_height="wrap_content">
+                  android:layout_height="0dp"
+                  android:layout_weight="1.5">
         <Button android:id="@+id/btnAdd" android:text="+"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
