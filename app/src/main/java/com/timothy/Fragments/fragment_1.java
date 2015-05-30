@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.timothy.Tools.JSONHelper;
+import com.timothy.Tools.JsonHelper;
 import com.timothy.R;
 import com.timothy.Tools.ServerRequest;
 import com.timothy.Tools.UriResources;
@@ -53,7 +53,7 @@ public class fragment_1  extends Fragment implements OnClickListener{
             @Override
             public void onResponse(JSONArray jsonArray) {
 
-                txv.setText(JSONHelper.readLine(jsonArray));
+                txv.setText(JsonHelper.readLine(jsonArray));
 
             }
         };
