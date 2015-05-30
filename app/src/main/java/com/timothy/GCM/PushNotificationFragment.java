@@ -1,4 +1,4 @@
-package com.example.practice.GCMPushNotification;
+package com.timothy.GCM;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
-import com.example.practice.R;
+import com.timothy.R;
 
 
 public class PushNotificationFragment extends Fragment implements View.OnClickListener{

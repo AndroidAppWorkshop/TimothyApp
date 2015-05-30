@@ -1,4 +1,4 @@
-package com.example.practice.MenuListClass;
+package com.timothy.Menu;
 
 //單品class
 public class ProductVo {

@@ -1,4 +1,4 @@
-package com.example.practice.GCMPushNotification;
+package com.timothy.GCM;
 
 import android.app.Activity;
 import android.app.Notification;

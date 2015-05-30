@@ -1,4 +1,4 @@
-package com.example.practice.ToolsAndTable;
+package com.timothy.Tools;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.practice.R;
+import com.timothy.R;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.chart.PointStyle;

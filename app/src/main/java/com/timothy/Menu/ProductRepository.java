@@ -1,7 +1,7 @@
-package com.example.practice.MenuListClass;
+package com.timothy.Menu;
 
 
-import com.example.practice.ToolsAndTable.UrlValue;
+import com.timothy.Tools.UrlValue;
 
 import java.util.LinkedList;
 import java.util.List;

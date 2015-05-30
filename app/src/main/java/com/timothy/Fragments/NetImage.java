@@ -1,4 +1,4 @@
-package com.example.practice.FragmentsPage;
+package com.timothy.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,9 +13,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
-import com.example.practice.MenuListClass.ImageLruCache;
-import com.example.practice.R;
-import com.example.practice.ToolsAndTable.UrlValue;
+import com.timothy.Menu.ImageLruCache;
+import com.timothy.R;
+import com.timothy.Tools.UrlValue;
 
 /**
  * Created by h94u04 on 2015/5/6.

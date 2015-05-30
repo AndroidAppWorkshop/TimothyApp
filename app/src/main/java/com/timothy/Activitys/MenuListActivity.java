@@ -1,4 +1,4 @@
-package com.example.practice.ActivityClass;
+package com.timothy.Activitys;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,16 +13,14 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
-import com.example.practice.MenuListClass.CategoryVo;
-import com.example.practice.MenuListClass.ImageLruCache;
-import com.example.practice.MenuListClass.ProductRepository;
-import com.example.practice.MenuListClass.ProductVo;
-import com.example.practice.R;
-import com.example.practice.ToolsAndTable.UrlValue;
+import com.timothy.Menu.CategoryVo;
+import com.timothy.Menu.ImageLruCache;
+import com.timothy.Menu.ProductRepository;
+import com.timothy.Menu.ProductVo;
+import com.timothy.R;
 
 import java.util.HashMap;
 import java.util.List;

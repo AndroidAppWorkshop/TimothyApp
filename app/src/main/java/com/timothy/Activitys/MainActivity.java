@@ -1,4 +1,4 @@
-package com.example.practice.ActivityClass;
+package com.timothy.Activitys;
 
 
 import android.content.Intent;
@@ -18,20 +18,20 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.example.practice.ToolsAndTable.Artgine;
-import com.example.practice.FragmentsPage.fragment_1;
-import com.example.practice.FragmentsPage.fragment_2;
-import com.example.practice.FragmentsPage.fragment_3;
-import com.example.practice.FragmentsPage.NetImage;
-import com.example.practice.GCMPushNotification.PushNotificationFragment;
-import com.example.practice.R;
+import com.timothy.Tools.Artgine;
+import com.timothy.Fragments.fragment_1;
+import com.timothy.Fragments.fragment_2;
+import com.timothy.Fragments.fragment_3;
+import com.timothy.Fragments.NetImage;
+import com.timothy.GCM.PushNotificationFragment;
+import com.timothy.R;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     String[] strA = { " NetImage ", " MenuClass "};
     ListView LV;
     DrawerLayout DL;
-    com.example.practice.ToolsAndTable.Artgine Artgine = new Artgine();
+    com.timothy.Tools.Artgine Artgine = new Artgine();
     Menu mMenu;
     ViewPager viewPager;
 

@@ -1,4 +1,4 @@
-package com.example.practice.ActivityClass;
+package com.timothy.Activitys;
 
 
 import android.app.Activity;
@@ -17,7 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.practice.R;
+import com.timothy.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;

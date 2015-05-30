@@ -1,4 +1,4 @@
-package com.example.practice.MenuListClass;
+package com.timothy.Menu;
 
 
 import java.util.LinkedList;
