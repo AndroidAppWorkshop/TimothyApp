@@ -8,7 +8,7 @@ import com.android.volley.toolbox.Volley;
 import com.timothy.Tools.ParseforJsonArray;
 import com.timothy.R;
 import com.timothy.Tools.ServerRequest;
-import com.timothy.Tools.UrlValue;
+import com.timothy.Tools.UriResources;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -34,7 +34,7 @@ public class fragment_3  extends Fragment implements OnClickListener {
 	int green=Color.GREEN;
 	View view;	
 	private LinearLayout me3;
-    String URL = UrlValue.fragUrl[2];
+    String URL = UriResources.Test.OpenData3;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
