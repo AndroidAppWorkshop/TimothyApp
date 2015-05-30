@@ -15,7 +15,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.timothy.Menu.ImageLruCache;
 import com.timothy.R;
-import com.timothy.Tools.UrlValue;
+import com.timothy.Tools.UriResources;
 
 /**
  * Created by h94u04 on 2015/5/6.
@@ -46,7 +46,7 @@ public class NetImage extends Fragment {
 
         requestQueue = Volley.newRequestQueue(context);
 
-        String url = UrlValue.urlArray[0];
+        String url = UriResources.Test.NetImageTest;
 
         ImageLruCache cache = new ImageLruCache();
 
