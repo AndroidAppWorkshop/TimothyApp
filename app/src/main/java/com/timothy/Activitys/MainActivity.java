@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.timothy.DrawerList.DrawerAdapter;
+import com.timothy.DrawerList.DrawerItem;
 import com.timothy.Tools.Artgine;
 import com.timothy.Fragments.fragment_1;
 import com.timothy.Fragments.fragment_2;
@@ -26,9 +29,11 @@ import com.timothy.Fragments.NetImage;
 import com.timothy.GCM.PushNotificationFragment;
 import com.timothy.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    String[] strA = { " NetImage ", " MenuClass "};
     ListView LV;
     DrawerLayout DL;
     com.timothy.Tools.Artgine Artgine = new Artgine();
@@ -42,14 +47,26 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         DL = (DrawerLayout) findViewById(R.id.DraOut);
         LV = (ListView) findViewById(R.id.LV);
-        LV.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, strA));
+        LV.setAdapter(new DrawerAdapter(this, R.layout.drawerlist , getList()));
         LV.setOnItemClickListener(this);
+        DL.setDrawerShadow(R.drawable.drawershadow, GravityCompat.START);
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabsStrip.setViewPager(viewPager);
 
     }
+
+    private List<DrawerItem> getList() {
+        List<DrawerItem> list = new ArrayList<>();
+        String[] DraName= {" NetImage ", " MenuClass "};
+        int[] DraIcon = {R.drawable.testicon , R.drawable.menuicon};
+        for (int position = 0; position < DraName.length; position++) {
+            list.add(new DrawerItem(DraName[position] , DraIcon[position]));
+        }
+        return list;
+    }
+
     class PagerAdapter extends FragmentPagerAdapter  implements PagerSlidingTabStrip.IconTabProvider {
 
         private final int[] icon = {R.drawable.actionbartab_1, R.drawable.actionbartab_2, R.drawable.actionbartab3 , R.drawable.actionbar_pushicon };
