@@ -6,7 +6,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class JSONHelper {
+public class JsonHelper {
+
+    private static final String NEWLINE = "\n";
+    private static final String COLON = ":";
 
     public static StringBuilder readLine(JSONArray jsonArray) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -18,9 +21,9 @@ public class JSONHelper {
                 iterator = jsonObject.keys();
                 while (iterator.hasNext()) {
                     String str = iterator.next().toString();
-                    stringBuilder.append(str + ":" + jsonObject.get(str) + "\n");
+                    stringBuilder.append(str + COLON + jsonObject.get(str) + NEWLINE);
                 }
-                stringBuilder.append("\n");
+                stringBuilder.append(NEWLINE);
             }
         } catch (JSONException e) {
             e.printStackTrace();
