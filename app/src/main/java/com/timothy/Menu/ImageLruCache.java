@@ -7,11 +7,15 @@ import android.util.LruCache;
 import com.android.volley.toolbox.ImageLoader;
 
 public class ImageLruCache extends LruCache<String, Bitmap> implements ImageLoader.ImageCache {
-    private final String TAG = this.getClass().getSimpleName();
+    public static int getDefaultLruCacheSize() {
+        final int maxMemory =
+                (int) (Runtime.getRuntime().maxMemory() / 1024);
+        final int cacheSize = maxMemory / 8 ;
+        return cacheSize;
+    }
 
     public ImageLruCache() {
         super(getDefaultLruCacheSize());
-
     }
 
     @Override
@@ -21,22 +25,11 @@ public class ImageLruCache extends LruCache<String, Bitmap> implements ImageLoad
 
     @Override
     public Bitmap getBitmap(String url) {
-        Log.v(TAG, "Retrieved item from Mem Cache");
-
         return get(url);
     }
 
     @Override
     public void putBitmap(String url, Bitmap bitmap) {
-        Log.v(TAG, "Added item to Mem Cache");
-
         put(url, bitmap);
-    }
-
-    public static int getDefaultLruCacheSize() {
-        final int maxMemory =
-                (int) (Runtime.getRuntime().maxMemory() / 1024);
-        final int cacheSize = maxMemory / 8 ;
-        return cacheSize;
     }
 }
