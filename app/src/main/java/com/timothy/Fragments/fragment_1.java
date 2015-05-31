@@ -45,7 +45,7 @@ public class fragment_1 extends Fragment implements OnClickListener {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        BaseApplication.getInstance(getActivity()).addToRequestQueue(
+        BaseApplication.getInstance().addToRequestQueue(
                 new JsonArrayRequest(
                         Request.Method.GET,
                         UriResources.Test.OpenData1,
