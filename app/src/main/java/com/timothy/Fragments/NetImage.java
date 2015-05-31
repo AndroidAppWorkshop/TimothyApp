@@ -13,7 +13,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
-import com.timothy.Menu.ImageLruCache;
+import com.timothy.Cache.LruBitmapCache;
 import com.timothy.R;
 import com.timothy.Tools.UriResources;
 
@@ -48,7 +48,7 @@ public class NetImage extends Fragment {
 
         String url = UriResources.Test.NetImageTest;
 
-        ImageLruCache cache = new ImageLruCache();
+        LruBitmapCache cache = new LruBitmapCache();
 
         ImageLoader Imlod = new ImageLoader(requestQueue , cache );
 
