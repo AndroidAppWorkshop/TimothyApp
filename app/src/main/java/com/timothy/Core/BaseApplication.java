@@ -1,17 +1,14 @@
 package com.timothy.Core;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
 import android.text.TextUtils;
-import android.util.LruCache;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.timothy.Menu.ImageLruCache;
+import com.timothy.Menu.LruBitmapCache;
 
 /**
  * Created by Wilson on 2015/5/31.
@@ -49,7 +46,7 @@ public class BaseApplication extends Application {
     public ImageLoader getImageLoader() {
         if (this.imageLoader == null) {
             this.imageLoader = new ImageLoader(getRequestQueue(),
-                    new ImageLruCache());
+                    new LruBitmapCache());
         }
 
         return this.imageLoader;

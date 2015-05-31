@@ -17,7 +17,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.timothy.Menu.CategoryVo;
-import com.timothy.Menu.ImageLruCache;
+import com.timothy.Menu.LruBitmapCache;
 import com.timothy.Menu.ProductRepository;
 import com.timothy.Menu.ProductVo;
 import com.timothy.R;
@@ -113,11 +113,11 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
         }
         NetworkImageView image ;
         RequestQueue queue ;
-        ImageLruCache cache;
+        LruBitmapCache cache;
         ImageLoader ImageLoader;
         @Override
         public Object instantiateItem(ViewGroup container, int pagerPosition) {
-            cache = new ImageLruCache();
+            cache = new LruBitmapCache();
             queue = Volley.newRequestQueue(getApplicationContext());
             ImageLoader = new ImageLoader(queue , cache);
             View inflate = getLayoutInflater().inflate(R.layout.pageritem_container, null);
