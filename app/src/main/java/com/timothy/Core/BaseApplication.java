@@ -43,7 +43,6 @@ public class BaseApplication extends Application{
                     }
                 });
     }
-
     public static synchronized BaseApplication getInstance(Context context) {
         if (singleton == null) {
             singleton = new BaseApplication(context);

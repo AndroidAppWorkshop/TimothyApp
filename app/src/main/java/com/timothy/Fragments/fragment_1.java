@@ -58,6 +58,7 @@ public class fragment_1 extends Fragment implements OnClickListener {
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
+
                             }
                         }
                 )

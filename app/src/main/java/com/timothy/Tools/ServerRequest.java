@@ -9,7 +9,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import org.json.JSONArray;
 
-public class ServerRequest implements Response.ErrorListener , Response.Listener<JSONArray>
+public class ServerRequest implements Response.ErrorListener
 {
     RequestQueue RQueue ;
     String URL ;
@@ -27,10 +27,5 @@ public class ServerRequest implements Response.ErrorListener , Response.Listener
     @Override
     public void onErrorResponse(VolleyError volleyError) {
         Log.e("Error Report : ", volleyError.toString() );
-    }
-
-    @Override
-    public void onResponse(JSONArray jsonArray) {
-
     }
 }
