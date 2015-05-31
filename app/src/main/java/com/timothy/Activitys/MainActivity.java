@@ -18,7 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.timothy.Tools.Artgine;
+import com.timothy.Fragments.Artgine;
 import com.timothy.Fragments.fragment_1;
 import com.timothy.Fragments.fragment_2;
 import com.timothy.Fragments.fragment_3;
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     String[] strA = { " NetImage ", " MenuClass "};
     ListView LV;
     DrawerLayout DL;
-    com.timothy.Tools.Artgine Artgine = new Artgine();
+    com.timothy.Fragments.Artgine Artgine = new Artgine();
     Menu mMenu;
     ViewPager viewPager;
 
