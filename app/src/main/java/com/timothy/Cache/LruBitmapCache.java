@@ -1,7 +1,6 @@
-package com.timothy.Menu;
+package com.timothy.Cache;
 
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.util.LruCache;
 
 import com.android.volley.toolbox.ImageLoader;

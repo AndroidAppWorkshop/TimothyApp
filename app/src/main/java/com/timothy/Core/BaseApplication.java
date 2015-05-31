@@ -8,7 +8,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.timothy.Menu.LruBitmapCache;
+import com.timothy.Cache.LruBitmapCache;
 
 /**
  * Created by Wilson on 2015/5/31.
