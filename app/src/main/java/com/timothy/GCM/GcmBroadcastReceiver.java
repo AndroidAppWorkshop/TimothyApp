@@ -12,12 +12,6 @@ import com.timothy.Activitys.MainActivity;
 import com.timothy.R;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
-/**
- * 接收來自GCM的訊息
- *
- * @author magiclen
- *
- */
 public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
 
     public static final int NOTIFICATION_ID = 0;

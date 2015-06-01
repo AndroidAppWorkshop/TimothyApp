@@ -1,4 +1,4 @@
-package com.timothy.GCM;
+package com.timothy.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
+import com.timothy.GCM.MagicLenGCM;
 import com.timothy.R;
 
 
@@ -18,8 +19,6 @@ public class PushNotificationFragment extends Fragment implements View.OnClickLi
 
     Button send;
     EditText Message;
-    RequestQueue mQueue;
-    String regId , MessageText ;
     MagicLenGCM magicLenGCM;
 
     @Nullable
@@ -44,4 +43,5 @@ public class PushNotificationFragment extends Fragment implements View.OnClickLi
 
             Toast.makeText(getActivity() ,"RegID  : "+magicLenGCM.getSendREGID() , Toast.LENGTH_SHORT ).show();
     }
+    
 }

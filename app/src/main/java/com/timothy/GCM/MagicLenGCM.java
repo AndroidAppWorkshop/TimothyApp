@@ -41,27 +41,15 @@ public class MagicLenGCM {
     }
 
     public static interface MagicLenGCMListener {
-        /**
-         * GCM註冊結束
-         *
-         * @param successfull 是否註冊成功
-         * @param regID       傳回註冊到的regID
-         */
+
         public void gcmRegistered(boolean successfull, String regID);
-        /**
-         * GCM註冊成功，將結果寫入App Server
-         *
-         * @param regID 傳回註冊到的regID
-         * @return 是否傳送App Server成功
-         */
+
         public boolean gcmSendRegistrationIdToAppServer(String regID);
     }
 
     private static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
-    /**
-     * 使用MagicLenGCM的Activity可以實作這個ActivityResult號碼
-     */
+
     public final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     public static void sendLocalNotification(Context context, int notifyID,
@@ -174,11 +162,6 @@ public class MagicLenGCM {
                 .getSimpleName(), Context.MODE_PRIVATE);
     }
 
-    /**
-     * 檢查Google Play Service可用狀態
-     *
-     * @return 傳回Google Play Service可用狀態
-     */
     private PlayServicesState checkPlayServices() {
         int resultCode = GooglePlayServicesUtil
                 .isGooglePlayServicesAvailable(activity);
@@ -194,9 +177,6 @@ public class MagicLenGCM {
         return PlayServicesState.SUPPROT;
     }
 
-    /**
-     * 在背景註冊GCM
-     */
     private void registerInBackground() {
         new AsyncTaskRegister().execute();
     }

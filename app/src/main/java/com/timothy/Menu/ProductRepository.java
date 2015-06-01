@@ -40,5 +40,3 @@ public class ProductRepository {
         return categoryVos;
     }
 }
-//1.新增一個乾淨的List<ProductVo> productVos,drink內的List<ProductVo> 開始新增它
-//2.新增完後把這個add進去 List<CategoryVo> categoryVos
