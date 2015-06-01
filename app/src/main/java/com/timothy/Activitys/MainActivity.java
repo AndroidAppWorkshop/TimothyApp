@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -14,24 +15,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
 import com.astuetz.PagerSlidingTabStrip;
-import com.timothy.Tools.Artgine;
+import com.timothy.DrawerList.DrawerAdapter;
+import com.timothy.DrawerList.DrawerItem;
 import com.timothy.Fragments.fragment_1;
 import com.timothy.Fragments.fragment_2;
 import com.timothy.Fragments.fragment_3;
 import com.timothy.Fragments.NetImage;
-import com.timothy.GCM.PushNotificationFragment;
+import com.timothy.Fragments.PushNotificationFragment;
 import com.timothy.R;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    String[] strA = { " NetImage ", " MenuClass "};
     ListView LV;
     DrawerLayout DL;
-    com.timothy.Fragments.Artgine Artgine = new Artgine();
     Menu mMenu;
     ViewPager viewPager;
 
@@ -42,10 +42,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         DL = (DrawerLayout) findViewById(R.id.DraOut);
         LV = (ListView) findViewById(R.id.LV);
-        LV.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, strA));
+        LV.setAdapter(new DrawerAdapter(this, R.layout.drawerlist , getList()));
         LV.setOnItemClickListener(this);
         DL.setDrawerShadow(R.drawable.drawershadow, GravityCompat.END );
-        DL.setOverScrollMode(3);
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
@@ -54,10 +53,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
     private List<DrawerItem> getList() {
         List<DrawerItem> list = new ArrayList<>();
-        String[] DraName= {" NetImage ", " MenuClass "};
+        String[] DraName= { " NetImage ", " MenuClass " };
         int[] DraIcon = {R.drawable.testicon , R.drawable.menuicon};
         for (int position = 0; position < DraName.length; position++) {
-            list.add(new DrawerItem(DraName[position] , DraIcon[position]));
+            list.add(new DrawerItem( DraName[position] , DraIcon[position]));
         }
         return list;
     }
@@ -87,12 +86,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             return icon.length;
         }
 
-
         @Override
         public int getPageIconResId(int position) {
             return icon[position];
         }
-
     }
 
     @Override
@@ -101,7 +98,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mMenu = menu;
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
