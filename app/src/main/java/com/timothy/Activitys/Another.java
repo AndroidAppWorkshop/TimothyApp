@@ -10,8 +10,10 @@ import com.timothy.R;
 /**
  * Created by h94u04 on 2015/6/3.
  */
+
 public class Another extends Activity{
     TextView tv ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
