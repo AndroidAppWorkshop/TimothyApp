@@ -11,16 +11,28 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
+import com.timothy.Menu.Cart;
+import com.timothy.Menu.CartActivity;
 import com.timothy.Menu.CategoryVo;
 import com.timothy.Cache.LruBitmapCache;
+
 import com.timothy.Menu.ProductRepository;
 import com.timothy.Menu.ProductVo;
 import com.timothy.R;
+import com.timothy.Tools.UriResources;
+
+import org.json.JSONArray;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,27 +42,60 @@ import java.util.Map;
 public class MenuListActivity extends Activity implements View.OnClickListener {
 
     private ProductRepository productRepository = new ProductRepository();//做分類
-    private Map<String, Integer> productCountMap = new HashMap<String, Integer>();
-    private int totalPrice = 0,total=0;
+    private final Cart cart =new Cart();//new 購物車
+    private int total=0;
     private TextView textViewPriceSum;
     private TextView textViewTotal;
-    Button commit;
-
-    @Override
+    private ProgressBar progressBar;
+    private Button commit;
+    private ListView listView;
+    RequestQueue mQueue;
+     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menulayout);
-        ListView listView = (ListView) findViewById(R.id.listview);
-        listView.setAdapter(new ListViewAdapter());
+        listView = (ListView) findViewById(R.id.listview);
         textViewPriceSum = (TextView) findViewById(R.id.textViewTotalPrice);
         textViewTotal = (TextView) findViewById(R.id.textViewTotal);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
         commit = (Button)findViewById(R.id.button1);
         commit.setOnClickListener(this);
+        mQueue = Volley.newRequestQueue(this);
+
+        progressBar.setVisibility(View.VISIBLE);
+        JsonArrayRequest request =new JsonArrayRequest(UriResources.Server.Product,new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                progressBar.setVisibility(View.GONE);
+                productRepository.refreshdata(jsonArray);
+                renderlistview();
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError)
+            {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(MenuListActivity.this,volleyError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+         mQueue.add(request);
+    }
+
+    private void renderlistview() {
+        listView.setAdapter(new ListViewAdapter());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        cart.getProductInCart().clear();
     }
 
     @Override
     public void onClick(View v) {
-        Intent it = new Intent(this , MainActivity.class );
+        Intent it = new Intent(this , CartActivity.class );
+        it.putExtra("Data",cart);
         startActivity(it);
     }
 
@@ -121,7 +166,7 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
             queue = Volley.newRequestQueue(getApplicationContext());
             ImageLoader = new ImageLoader(queue , cache);
             View inflate = getLayoutInflater().inflate(R.layout.pageritem_container, null);
-                LinearLayout pagerContainer = (LinearLayout) inflate.findViewById(R.id.pagerContainer);
+            LinearLayout pagerContainer = (LinearLayout) inflate.findViewById(R.id.pagerContainer);
 
                 int start = 3 * pagerPosition + 0;// 012,345,678
                 int end = 3 * pagerPosition + 2;
@@ -129,7 +174,7 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
                 for (int i = start; i <= end; i++) {
                     View productView = pagerContainer.findViewById(pagerItemProductViewIds[i - 3 * pagerPosition]);
 
-                    ProductVo productVo ;
+                    ProductVo productVo = null;
                     try {
                         productVo = products.get(i);
                     } catch (Exception e) {
@@ -146,52 +191,44 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
 
                     final TextView textViewProductCount = (TextView) productView.findViewById(R.id.textViewProductCount);
                     final String productId = productVo.getId();
-                    Integer count = productCountMap.get(productId);
-                if (count == null) {
-                    count = 0;
-                    productCountMap.put(productId, count);
-                }
-                textViewProductCount.setText(String.valueOf(count));
 
-                image = (NetworkImageView) productView.findViewById(R.id.image);
-                image.setImageUrl(productVo.getimage() , ImageLoader );
+
+                textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(productId)));
+
+//                image = (NetworkImageView) productView.findViewById(R.id.image);
+//                image.setImageUrl(productVo.getimage() , ImageLoader );
+
                 Button btnAdd = (Button) productView.findViewById(R.id.btnAdd);
-                btnAdd.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Integer count = productCountMap.get(productId);
-                        count = count + 1;
-                        productCountMap.put(productId, count);
-                        textViewProductCount.setText(String.valueOf(count));
 
-                        totalPrice += price;
-                        textViewPriceSum.setText(String.valueOf(totalPrice));
-                        total+=1;
-                        textViewTotal.setText(String.valueOf(total));
-                    }
-                });
+                  btnAdd.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            total+=1;
+                            textViewTotal.setText(String.valueOf(total));
+                            cart.addToCart(productId, 1);
 
-                Button btnDecrease = (Button) productView.findViewById(R.id.btnDecrease);
-                btnDecrease.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Integer count = productCountMap.get(productId);
-                        if (count.intValue() == 0) {
-                            return;
+                            textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(productId)));
+                            textViewPriceSum.setText(String.valueOf(cart.calculateSumPrice()));
                         }
+                    });
 
-                        count = count - 1;
-                        productCountMap.put(productId, count);
-                        textViewProductCount.setText(String.valueOf(count));
+                    Button btnDecrease = (Button) productView.findViewById(R.id.btnDecrease);
+                    btnDecrease.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(total>0) {
+                                total -= 1;
+                            }
+                            textViewTotal.setText(String.valueOf(total));
+                            cart.addToCart(productId, -1);
 
-                        totalPrice -= price;
-                        textViewPriceSum.setText(String.valueOf(totalPrice));
-                        total-=1;
-                        textViewTotal.setText(String.valueOf(total));
-                    }
-                });
+                            textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(productId)));
+                            textViewPriceSum.setText(String.valueOf(cart.calculateSumPrice()));
+                        }
+                    });
 
-            }
+
+                }
 
 
             container.addView(inflate);
