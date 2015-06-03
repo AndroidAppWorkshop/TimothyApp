@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GCM_Android/GCM_Android.iml" filepath="$PROJECT_DIR$/GCM_Android/GCM_Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/TimothyApp.iml" filepath="$PROJECT_DIR$/TimothyApp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ViewPagerlistview/ViewPagerlistview.iml" filepath="$PROJECT_DIR$/ViewPagerlistview/ViewPagerlistview.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

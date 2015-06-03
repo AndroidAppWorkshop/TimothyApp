@@ -53,6 +53,15 @@ public class Cart implements Parcelable{
         return productInCart;
     }
 
+    public  int calculateSumCount(){
+        int count=0;
+        for (Map.Entry<String, Integer> entry : productInCart.entrySet()) {
+            int countInMap = entry.getValue();
+            count+=countInMap;
+        }
+        return count;
+    }
+
     public  int calculateSumPrice() {
         int sum = 0;
         ProductRepository productRepository = new ProductRepository();
