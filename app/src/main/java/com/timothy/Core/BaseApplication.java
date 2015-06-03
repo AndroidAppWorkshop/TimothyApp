@@ -2,6 +2,7 @@ package com.timothy.Core;
 
 import android.app.Application;
 import android.content.res.Configuration;
+import android.support.v4.view.MenuItemCompat;
 import android.text.TextUtils;
 
 import com.android.volley.Request;
@@ -22,6 +23,9 @@ public class BaseApplication extends Application {
     public static synchronized BaseApplication getInstance() {
         return instance;
     }
+
+    @Override
+    public void onCreate() {    super.onCreate()    ;  instance = this ;   }
 
     public RequestQueue getRequestQueue() {
         if (this.requestQueue == null) {
@@ -50,26 +54,5 @@ public class BaseApplication extends Application {
         }
 
         return this.imageLoader;
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        instance = this;
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-    }
-
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
     }
 }

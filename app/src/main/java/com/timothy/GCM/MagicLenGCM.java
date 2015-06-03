@@ -52,16 +52,22 @@ public class MagicLenGCM {
 
     public final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
-    public static void sendLocalNotification(Context context, int notifyID,
-                                             int drawableSmallIcon, String title, String msg, String info,
-                                             boolean autoCancel, PendingIntent pendingIntent) {
+    public static void sendLocalNotification(Context context,
+                                             int notifyID,
+                                             int drawableSmallIcon,
+                                             String title, String msg, String info,
+                                             boolean autoCancel, PendingIntent pendingIntent)
+    {
         NotificationManager mNotificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
-                context).setSmallIcon(drawableSmallIcon).setContentTitle(title)
-                .setContentText(msg).setAutoCancel(autoCancel)
-                .setContentInfo(info).setDefaults(Notification.DEFAULT_ALL);
+                context).setSmallIcon(drawableSmallIcon)
+                .setContentTitle(title)
+                .setContentText(msg)
+                .setAutoCancel(autoCancel)
+                .setContentInfo(info)
+                .setDefaults(Notification.DEFAULT_ALL);
 
         if (msg.length() > 10) {
             mBuilder.setStyle(new NotificationCompat.BigTextStyle()

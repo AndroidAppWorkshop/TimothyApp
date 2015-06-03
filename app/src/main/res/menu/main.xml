@@ -1,12 +1,13 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.timothy.Activitys.MainActivity" >
+    tools:context="com.timothy.Activitys.MainActivity"
+    xmlns:ActionBar="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/MenuBtn01"
         android:orderInCategory="0"
         android:icon="@drawable/actionbar_menu"
-        android:showAsAction="ifRoom"
+        ActionBar:showAsAction="ifRoom"
         android:title="MenuBtn01"/>
 </menu>

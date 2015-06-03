@@ -24,7 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name="com.timothy.Activitys.Another"></activity>
         <activity android:name="com.timothy.Activitys.LoginActivity"></activity>
 
         <activity android:name="org.achartengine.GraphicalActivity" />

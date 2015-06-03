@@ -14,6 +14,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.timothy.Cache.LruBitmapCache;
+import com.timothy.Core.BaseApplication;
 import com.timothy.R;
 import com.timothy.Tools.UriResources;
 
@@ -42,21 +43,13 @@ public class NetImage extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        context = getActivity();
+//        ImageLoader Imlod = new ImageLoader(requestQueue , cache );
 
-        requestQueue = Volley.newRequestQueue(context);
+//        ImageLoader.ImageListener Imlisten = Imlod.getImageListener(networkImageView, R.drawable.clear_dark, R.drawable.boot_camp_dark);
+//
+//        ImageLoader.ImageContainer container = Imlod.get(url , Imlisten , 200 ,200);
+//        networkImageView.setImageBitmap( container.getBitmap() );
 
-        String url = UriResources.Test.NetImageTest;
-
-        LruBitmapCache cache = new LruBitmapCache();
-
-        ImageLoader Imlod = new ImageLoader(requestQueue , cache );
-
-        ImageLoader.ImageListener Imlisten = Imlod.getImageListener(networkImageView, R.drawable.clear_dark, R.drawable.boot_camp_dark);
-
-        ImageLoader.ImageContainer container = Imlod.get(url , Imlisten , 200 ,200);
-        networkImageView.setImageBitmap( container.getBitmap() );
-//        networkImageView.setDefaultImageResId(R.drawable.clear_dark);
-//        networkImageView.setImageUrl(url ,Imlod );
+        networkImageView.setImageUrl( UriResources.Test.NetImageTest , BaseApplication.getInstance().getImageLoader() );
     }
 }

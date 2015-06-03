@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
+import com.timothy.Activitys.Another;
 import com.timothy.Activitys.MainActivity;
 import com.timothy.R;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -32,14 +33,17 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
                     .equals(messageType)) {
                 Log.i(getClass() + " GCM MESSAGE", extras.toString());
 
-                Intent i = new Intent(context, MainActivity.class);
-                i.setAction("android.intent.action.MAIN");
-                i.addCategory("android.intent.category.LAUNCHER");
-                MagicLenGCM.sendLocalNotification(context, NOTIFICATION_ID,
-                        R.drawable.actionbar_menu, "From Jason Server ---", extras
-                                .getString("message"), "magiclen.org", false,
+                MagicLenGCM.sendLocalNotification(context,
 
-                PendingIntent.getActivity(context, 0, i,PendingIntent.FLAG_CANCEL_CURRENT));
+                        NOTIFICATION_ID,R.drawable.actionbar_menu,
+
+                        "From Jason Server ---",
+
+                        extras.getString("message"),
+
+                        " -Timothy- ", true ,
+
+                PendingIntent.getActivity(context, NOTIFICATION_ID , new Intent(context, Another.class) , 0 ));
             }
         }
         setResultCode(Activity.RESULT_OK);
