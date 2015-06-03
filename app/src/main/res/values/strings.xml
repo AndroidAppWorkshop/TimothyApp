@@ -2,4 +2,5 @@
 <resources>
 
     <string name="app_name">TimothyCoffee</string>
+    <string name="activity_cart">CartActivity</string>
 </resources>

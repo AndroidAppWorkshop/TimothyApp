@@ -6,11 +6,11 @@ public class ProductVo {
     private String name;
     private int price;
     private String image;
-    public ProductVo(String id, String name, int price,String ImageUrl) {
+    public ProductVo(String id, String name, int price) {
         this.id = id;
         this.name = name;
         this.price= price;
-        this.image=ImageUrl;
+        //this.image=ImageUrl;
     }
 
     public String getId() {
