@@ -15,9 +15,9 @@ public class Cart implements Parcelable{
         @Override
         public Cart createFromParcel(Parcel source) {
 
-            Cart toBeTransferred = new Cart();
-            source.readMap(toBeTransferred.productInCart,ClassLoader.getSystemClassLoader());
-            return toBeTransferred;
+            Cart cart = new Cart();
+            source.readMap(cart.productInCart,ClassLoader.getSystemClassLoader());
+            return cart;
         }
 
         @Override

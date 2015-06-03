@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.timothy.R;
 
@@ -39,6 +40,8 @@ public class CartActivity extends Activity {
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, productDisplayList);
         ListView listView = (ListView) findViewById(R.id.cartlistview);
         listView.setAdapter(arrayAdapter);
+        TextView price=(TextView)findViewById(R.id.textView2);
+        price.setText(String.valueOf(cart.calculateSumPrice()));
     }
 
 

@@ -1,14 +1,33 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context="me.leolin.sample.listviewwithviewpager.app.CartActivity">
+                android:orientation="vertical"
+                android:weightSum="1">
 
         <ListView
                 android:id="@+id/cartlistview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="464dp">
 
          </ListView>
 
-</RelativeLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="價格:"
+            android:id="@+id/textView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/textView2" />
+    </LinearLayout>
+
+</LinearLayout>
