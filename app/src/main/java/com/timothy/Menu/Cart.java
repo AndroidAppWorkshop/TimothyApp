@@ -17,6 +17,7 @@ public class Cart implements Parcelable{
 
             Cart cart = new Cart();
             source.readMap(cart.productInCart,ClassLoader.getSystemClassLoader());
+
             return cart;
         }
 

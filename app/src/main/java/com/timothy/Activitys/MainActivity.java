@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         LV = (ListView) findViewById(R.id.LV);
         LV.setAdapter(new DrawerAdapter(this, R.layout.drawerlist , getList()));
         LV.setOnItemClickListener(this);
-        DL.setDrawerShadow(R.drawable.drashadow, GravityCompat.END );
+        DL.setDrawerShadow(R.drawable.drashadow, GravityCompat.END );//??
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);

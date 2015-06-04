@@ -203,12 +203,10 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
                   btnAdd.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
-                            textViewTotal.setText(String.valueOf(cart.calculateSumCount()));
                             cart.addToCart(productId, 1);
-
                             textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(productId)));
                             textViewPriceSum.setText(String.valueOf(cart.calculateSumPrice()));
+                            textViewTotal.setText(String.valueOf(cart.calculateSumCount()));
                         }
                     });
 
@@ -217,11 +215,10 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
                         @Override
                         public void onClick(View v) {
 
-                            textViewTotal.setText(String.valueOf(cart.calculateSumCount()));
                             cart.addToCart(productId, -1);
-
                             textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(productId)));
                             textViewPriceSum.setText(String.valueOf(cart.calculateSumPrice()));
+                            textViewTotal.setText(String.valueOf(cart.calculateSumCount()));
                         }
                     });
 
