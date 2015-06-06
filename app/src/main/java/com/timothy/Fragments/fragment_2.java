@@ -54,7 +54,7 @@ public class fragment_2  extends Fragment implements OnClickListener{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.e("DATA Report", this.toString() + "Fragmen Has be Calllllllllllllllllll ! ");
+
 
         RQueue = Volley.newRequestQueue(getActivity());
 
