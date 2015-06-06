@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.timothy"
-    android:versionCode="1"
-    android:versionName="1.0">
+    package="com.timothy">
 
-    <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="19" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
+    <permission
+        android:name="com.timothy.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.timothy.permission.C2D_MESSAGE" />
 
     <application
         android:name=".Core.BaseApplication"
@@ -25,9 +28,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.timothy.Activitys.Another"></activity>
-        <activity android:name="com.timothy.Activitys.LoginActivity"></activity>
-
+        <activity android:name="com.timothy.Activitys.Another" />
+        <activity android:name="com.timothy.Activitys.LoginActivity" />
         <activity android:name="org.achartengine.GraphicalActivity" />
         <activity android:name="com.timothy.Activitys.MenuListActivity" />
         <activity android:name="com.timothy.Menu.CartActivity"/>
@@ -43,15 +45,5 @@
             </intent-filter>
         </receiver>
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-
-    <permission
-        android:name="com.timothy.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-    <uses-permission android:name="com.timothy.permission.C2D_MESSAGE" />
 
 </manifest>
