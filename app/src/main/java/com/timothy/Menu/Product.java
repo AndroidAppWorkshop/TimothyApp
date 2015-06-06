@@ -1,12 +1,12 @@
 package com.timothy.Menu;
 
 //單品class
-public class ProductVo {
+public class Product {
     private String id;
     private String name;
     private int price;
     private String image;
-    public ProductVo(String id, String name, int price) {
+    public Product(String id, String name, int price) {
         this.id = id;
         this.name = name;
         this.price= price;

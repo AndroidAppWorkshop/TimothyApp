@@ -71,9 +71,9 @@ public class Cart implements Parcelable{
             String productId = entry.getKey();
             int count = entry.getValue();
 
-            ProductVo productVo = productRepository.findProductById(productId);
-            if (productVo != null) {
-                sum += productVo.getPrice() * count;
+            Product product = productRepository.findProductById(productId);
+            if (product != null) {
+                sum += product.getPrice() * count;
             }
         }
         return sum;

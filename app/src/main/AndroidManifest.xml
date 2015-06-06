@@ -7,7 +7,7 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="19" />
-    <uses-permission android:name="android.permission.INTERNET" />
+
 
     <application
         android:name=".Core.BaseApplication"
@@ -29,10 +29,8 @@
 
         <activity android:name="org.achartengine.GraphicalActivity" />
         <activity android:name="com.timothy.Activitys.MenuListActivity" />
-        <activity
-            android:name="com.timothy.Menu.CartActivity"
-            android:label="@string/activity_cart" >
-        </activity>
+        <activity android:name="com.timothy.Menu.CartActivity"/>
+
         <receiver
             android:name="com.timothy.GCM.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">

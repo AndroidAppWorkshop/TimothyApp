@@ -24,19 +24,17 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.timothy.Menu.Cart;
 import com.timothy.Menu.CartActivity;
-import com.timothy.Menu.CategoryVo;
+import com.timothy.Menu.Category;
 import com.timothy.Cache.LruBitmapCache;
 
+import com.timothy.Menu.Product;
 import com.timothy.Menu.ProductRepository;
-import com.timothy.Menu.ProductVo;
 import com.timothy.R;
 import com.timothy.Tools.UriResources;
 
 import org.json.JSONArray;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class MenuListActivity extends Activity implements View.OnClickListener {
@@ -101,7 +99,7 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
 
     private class ListViewAdapter extends BaseAdapter {
 
-        private List<CategoryVo> categories = productRepository.getAllCategories();
+        private List<Category> categories = productRepository.getAllCategories();
 
         public int getCount() {
             return categories.size();
@@ -131,11 +129,11 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
 
-            CategoryVo categoryVo = categories.get(position);
+            Category category = categories.get(position);
 
-            viewHolder.textViewVategoryTitle.setText(categoryVo.getName());
+            viewHolder.textViewVategoryTitle.setText(category.getName());
 
-            ProductPagerAdapter adapter = new ProductPagerAdapter(categoryVo.getProductVos());
+            ProductPagerAdapter adapter = new ProductPagerAdapter(category.getProducts());
 
             viewHolder.viewPagerProduct.setAdapter(adapter);
 
@@ -151,9 +149,9 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
 
     private class ProductPagerAdapter extends PagerAdapter {
 
-        private List<ProductVo> products;
+        private List<Product> products;
 
-        public ProductPagerAdapter(List<ProductVo> products) {
+        public ProductPagerAdapter(List<Product> products) {
             this.products = products;
         }
         NetworkImageView image ;
@@ -174,23 +172,23 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
                 for (int i = start; i <= end; i++) {
                     View productView = pagerContainer.findViewById(pagerItemProductViewIds[i - 3 * pagerPosition]);
 
-                    ProductVo productVo = null;
+                    Product product = null;
                     try {
-                        productVo = products.get(i);
+                        product = products.get(i);
                     } catch (Exception e) {
                         productView.setVisibility(View.INVISIBLE);
                         continue;
                     }
 
                     TextView textViewProductName = (TextView) productView.findViewById(R.id.textViewProductName);
-                    textViewProductName.setText(productVo.getName());
+                    textViewProductName.setText(product.getName());
 
                     TextView textViewProductPrice = (TextView) productView.findViewById(R.id.textViewProductPrice);
-                    final int price = productVo.getPrice();
+                    final int price = product.getPrice();
                     textViewProductPrice.setText(String.valueOf(price));
 
                     final TextView textViewProductCount = (TextView) productView.findViewById(R.id.textViewProductCount);
-                    final String productId = productVo.getId();
+                    final String productId = product.getId();
 
 
                 textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(productId)));

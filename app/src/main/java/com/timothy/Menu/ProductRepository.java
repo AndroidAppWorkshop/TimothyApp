@@ -1,10 +1,6 @@
 package com.timothy.Menu;
 
 
-import android.util.Log;
-
-import com.timothy.Tools.UriResources;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,20 +12,20 @@ import java.util.Map;
 
 public class ProductRepository {
 
-    private static final Map<String, CategoryVo> categoryVos = new LinkedHashMap<String, CategoryVo>();
+    private static final Map<String, Category> categoryVos = new LinkedHashMap<String, Category>();
 
-    public List<CategoryVo> getAllCategories() {
+    public List<Category> getAllCategories() {
         List list = new LinkedList();
         list.addAll(categoryVos.values());
         return list;
     }
 
 
-        public ProductVo  findProductById(String productId) {
-            for (CategoryVo categoryVo : categoryVos.values()) {
-                for (ProductVo productVo : categoryVo.getProductVos()) {
-                if (productId.equals(productVo.getId())) {
-                    return productVo;
+        public Product findProductById(String productId) {
+            for (Category category : categoryVos.values()) {
+                for (Product product : category.getProducts()) {
+                if (productId.equals(product.getId())) {
+                    return product;
                 }
             }
         }
@@ -44,18 +40,18 @@ public class ProductRepository {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 String categoryId = jsonObject.getString("CategoryID");
-                CategoryVo categoryVo;
+                Category category;
                 if (categoryVos.containsKey(categoryId)) {
-                    categoryVo = categoryVos.get(categoryId);
+                    category = categoryVos.get(categoryId);
                 } else {
-                    categoryVo = new CategoryVo(categoryId);
-                    categoryVos.put(categoryId, categoryVo);
+                    category = new Category(categoryId);
+                    categoryVos.put(categoryId, category);
                 }
-                categoryVo.setName(categoryId);
+                category.setName(categoryId);
 
 
-                ProductVo productVo = new ProductVo(jsonObject.getString("Id"), jsonObject.getString("Name"), jsonObject.getInt("Price"));
-                categoryVo.getProductVos().add(productVo);
+                Product product = new Product(jsonObject.getString("Id"), jsonObject.getString("Name"), jsonObject.getInt("Price"));
+                category.getProducts().add(product);
             }
         } catch (JSONException e) {
             e.printStackTrace();
