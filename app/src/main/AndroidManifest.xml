@@ -32,7 +32,7 @@
         <activity android:name="com.timothy.Activitys.LoginActivity" />
         <activity android:name="org.achartengine.GraphicalActivity" />
         <activity android:name="com.timothy.Activitys.MenuListActivity" />
-        <activity android:name=".Activitys.CartActivity"/>
+        <activity android:name="com.timothy.Activitys.CartActivity"/>
 
         <receiver
             android:name="com.timothy.GCM.GcmBroadcastReceiver"
