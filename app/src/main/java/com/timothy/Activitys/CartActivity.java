@@ -6,9 +6,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.timothy.Menu.Cart;
-import com.timothy.Menu.Product;
-import com.timothy.Menu.ProductRepository;
+import library.timothy.Shopping.Cart;
+import library.timothy.Shopping.Product;
+import library.timothy.Shopping.ProductRepository;
 import com.timothy.R;
 
 import java.util.LinkedList;

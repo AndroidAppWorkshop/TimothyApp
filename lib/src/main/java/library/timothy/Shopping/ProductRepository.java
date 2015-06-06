@@ -1,4 +1,4 @@
-package com.timothy.Menu;
+package library.timothy.Shopping;
 
 
 import org.json.JSONArray;
@@ -9,6 +9,9 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import library.timothy.Shopping.Category;
+import library.timothy.Shopping.Product;
 
 public class ProductRepository {
 

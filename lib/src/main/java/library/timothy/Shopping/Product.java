@@ -1,4 +1,4 @@
-package com.timothy.Menu;
+package library.timothy.Shopping;
 
 
 public class Product {

@@ -24,12 +24,12 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.timothy.Core.BaseApplication;
-import com.timothy.Menu.Cart;
-import com.timothy.Menu.Category;
+import library.timothy.Shopping.Cart;
+import library.timothy.Shopping.Category;
 import com.timothy.Cache.LruBitmapCache;
 
-import com.timothy.Menu.Product;
-import com.timothy.Menu.ProductRepository;
+import library.timothy.Shopping.Product;
+import library.timothy.Shopping.ProductRepository;
 import com.timothy.R;
 
 import library.timothy.Resources.UriResources;
