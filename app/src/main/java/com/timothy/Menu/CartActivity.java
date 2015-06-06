@@ -32,8 +32,8 @@ public class CartActivity extends Activity {
             String productId = entry.getKey();
             int count = entry.getValue();
             if (count > 0) {
-                ProductVo productVo = productRepository.findProductById(productId);
-                productDisplayList.add(productVo.getName() + ":" + count);
+                Product product = productRepository.findProductById(productId);
+                productDisplayList.add(product.getName() + ":" + count);
             }
         }
 

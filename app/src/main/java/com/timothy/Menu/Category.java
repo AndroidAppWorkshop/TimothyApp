@@ -5,12 +5,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 //分區
-public class CategoryVo {
+public class Category {
     private String id;
     private String name;
-    private List<ProductVo> productVos = new LinkedList<ProductVo>();
+    private List<Product> products = new LinkedList<Product>();
 
-    public CategoryVo(String id) {
+    public Category(String id) {
         this.id = id;
        // this.name = name;
     }
@@ -31,11 +31,11 @@ public class CategoryVo {
         this.name = name;
     }
 
-    public List<ProductVo> getProductVos() {
-        return productVos;
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public void setProductVos(List<ProductVo> productVos) {
-        this.productVos = productVos;
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }
