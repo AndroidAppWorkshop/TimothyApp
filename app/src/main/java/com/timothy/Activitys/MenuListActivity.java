@@ -23,7 +23,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.timothy.Menu.Cart;
-import com.timothy.Menu.CartActivity;
 import com.timothy.Menu.Category;
 import com.timothy.Cache.LruBitmapCache;
 

@@ -4,7 +4,7 @@ package com.timothy.Menu;
 import java.util.LinkedList;
 import java.util.List;
 
-//分區
+
 public class Category {
     private String id;
     private String name;

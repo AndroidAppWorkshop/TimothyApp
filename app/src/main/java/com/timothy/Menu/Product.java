@@ -1,6 +1,6 @@
 package com.timothy.Menu;
 
-//單品class
+
 public class Product {
     private String id;
     private String name;
