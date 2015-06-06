@@ -25,7 +25,10 @@ public class BaseApplication extends Application {
     }
 
     @Override
-    public void onCreate() {    super.onCreate()    ;  instance = this ;   }
+    public void onCreate() {
+        super.onCreate();
+        instance = this;
+    }
 
     public RequestQueue getRequestQueue() {
         if (this.requestQueue == null) {

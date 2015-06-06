@@ -7,8 +7,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.timothy.Core.BaseApplication;
+
 import library.timothy.Helpers.JsonHelper;
+
 import com.timothy.R;
+
 import library.timothy.Resources.UriResources;
 
 import android.support.annotation.Nullable;
@@ -22,7 +25,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class fragment_1 extends Fragment implements OnClickListener {
     private RelativeLayout course, found, set;
@@ -85,39 +87,17 @@ public class fragment_1 extends Fragment implements OnClickListener {
 
     @Override
     public void onClick(View v) {
+        resetBtn();
         switch (v.getId()) {
             case R.id.course_layout:
-                setTabSelection(0);
-                Toast.makeText(getActivity(), "�ڬO��{��", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.found_layout:
-                setTabSelection(1);
-                Toast.makeText(getActivity(), "�ڬO�o�{", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.setting_layout:
-                setTabSelection(2);
-                Toast.makeText(getActivity(), "�ڬO�]�m", Toast.LENGTH_SHORT).show();
-                break;
-
-            default:
-                break;
-        }
-
-    }
-
-    private void setTabSelection(int i) {
-
-        resetBtn();
-        switch (i) {
-            case 0:
                 course_image.setImageResource(R.drawable.buttonbar_image_click);
                 course_text.setTextColor(blue);
                 break;
-            case 1:
+            case R.id.found_layout:
                 found_image.setImageResource(R.drawable.buttonbar_image_click2);
                 found_text.setTextColor(blue);
                 break;
-            case 2:
+            case R.id.setting_layout:
                 settings_image.setImageResource(R.drawable.buttonbar_image_click3);
                 settings_text.setTextColor(blue);
                 break;
