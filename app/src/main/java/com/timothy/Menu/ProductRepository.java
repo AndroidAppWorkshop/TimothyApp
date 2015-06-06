@@ -1,10 +1,6 @@
 package com.timothy.Menu;
 
 
-import android.util.Log;
-
-import com.timothy.Tools.UriResources;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

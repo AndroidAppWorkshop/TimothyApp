@@ -10,13 +10,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.android.volley.toolbox.Volley;
-import com.timothy.Cache.LruBitmapCache;
 import com.timothy.Core.BaseApplication;
 import com.timothy.R;
-import com.timothy.Tools.UriResources;
+import library.timothy.Resources.UriResources;
 
 /**
  * Created by h94u04 on 2015/5/6.

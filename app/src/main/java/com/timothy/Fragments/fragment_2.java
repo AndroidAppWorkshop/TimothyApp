@@ -5,10 +5,10 @@ import org.json.JSONArray;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.timothy.Tools.JsonHelper;
+import library.timothy.Helpers.JsonHelper;
 import com.timothy.R;
 import com.timothy.Tools.ServerRequest;
-import com.timothy.Tools.UriResources;
+import library.timothy.Resources.UriResources;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;

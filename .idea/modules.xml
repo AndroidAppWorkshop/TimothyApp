@@ -5,7 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/GCM_Android/GCM_Android.iml" filepath="$PROJECT_DIR$/GCM_Android/GCM_Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/TimothyApp.iml" filepath="$PROJECT_DIR$/TimothyApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
     </modules>
   </component>
 </project>
-

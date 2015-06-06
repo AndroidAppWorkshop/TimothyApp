@@ -30,13 +30,11 @@ import com.timothy.Cache.LruBitmapCache;
 import com.timothy.Menu.ProductRepository;
 import com.timothy.Menu.ProductVo;
 import com.timothy.R;
-import com.timothy.Tools.UriResources;
+import library.timothy.Resources.UriResources;
 
 import org.json.JSONArray;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class MenuListActivity extends Activity implements View.OnClickListener {

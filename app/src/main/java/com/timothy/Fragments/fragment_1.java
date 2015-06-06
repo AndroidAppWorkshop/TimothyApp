@@ -7,9 +7,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.timothy.Core.BaseApplication;
-import com.timothy.Tools.JsonHelper;
+import library.timothy.Helpers.JsonHelper;
 import com.timothy.R;
-import com.timothy.Tools.UriResources;
+import library.timothy.Resources.UriResources;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;

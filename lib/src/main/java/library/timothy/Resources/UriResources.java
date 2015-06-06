@@ -1,4 +1,4 @@
-package com.timothy.Tools;
+package library.timothy.Resources;
 
 /**
  * Created by h94u04 on 2015/5/20.
