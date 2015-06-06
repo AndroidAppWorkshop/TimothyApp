@@ -1,4 +1,4 @@
-package com.timothy.Menu;
+package com.timothy.Activitys;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,6 +6,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.timothy.Menu.Cart;
+import com.timothy.Menu.Product;
+import com.timothy.Menu.ProductRepository;
 import com.timothy.R;
 
 import java.util.LinkedList;
