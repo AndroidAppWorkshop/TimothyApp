@@ -12,7 +12,6 @@ public class Category {
 
     public Category(String id) {
         this.id = id;
-       // this.name = name;
     }
 
     public String getId() {

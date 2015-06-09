@@ -29,7 +29,10 @@
         </activity>
 
         <activity android:name="com.timothy.Activitys.Another" />
-        <activity android:name="com.timothy.Activitys.LoginActivity" />
+        <activity
+            android:name="com.timothy.Activitys.LoginActivity">
+
+        </activity>
         <activity android:name="org.achartengine.GraphicalActivity" />
         <activity android:name="com.timothy.Activitys.MenuListActivity" />
         <activity android:name="com.timothy.Activitys.CartActivity"/>

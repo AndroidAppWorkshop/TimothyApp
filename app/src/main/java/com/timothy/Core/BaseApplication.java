@@ -11,9 +11,6 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.timothy.Cache.LruBitmapCache;
 
-/**
- * Created by Wilson on 2015/5/31.
- */
 public class BaseApplication extends Application {
     public static final String TAG = BaseApplication.class.getSimpleName();
     private static BaseApplication instance;
@@ -44,10 +41,6 @@ public class BaseApplication extends Application {
     public <T> void addToRequestQueue(Request<T> req, String tag){
         req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
         getRequestQueue().add(req);
-    }
-
-    public void cancelPendingRequests(Object tag){
-        getRequestQueue().cancelAll(tag);
     }
 
     public ImageLoader getImageLoader() {

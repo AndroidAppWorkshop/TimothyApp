@@ -1,8 +1,5 @@
 package com.timothy.DrawerList;
 
-/**
- * Created by h94u04 on 2015/5/31.
- */
 public class DrawerItem {
     String ItemName;
     int imgResID;
@@ -16,13 +13,7 @@ public class DrawerItem {
     public String getItemName() {
         return ItemName;
     }
-    public void setItemName(String itemName) {
-        ItemName = itemName;
-    }
     public int getImgResID() {
         return imgResID;
-    }
-    public void setImgResID(int imgResID) {
-        this.imgResID = imgResID;
     }
 }

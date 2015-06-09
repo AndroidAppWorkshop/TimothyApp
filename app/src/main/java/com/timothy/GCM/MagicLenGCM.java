@@ -135,7 +135,6 @@ public class MagicLenGCM {
             default:
                 break;
         }
-
     }
 
     private String getRegistrationId() {
@@ -250,10 +249,10 @@ public class MagicLenGCM {
         {
             @Override
             public Map<String, String> getHeaders() {
-                HashMap<String, String> headers = new HashMap<String, String>();
+                HashMap<String, String> headers = new HashMap<>();
                 headers.put("Accept", "application/json");
                 headers.put("Content-Type", "application/json; charset=utf-8");
-
+                headers.put("APIKey","TimothyAPI");
                 return headers;
             }
         };

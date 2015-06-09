@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -18,13 +17,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.timothy.R;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
-
 
 public class LoginActivity extends Activity
 {
@@ -58,10 +54,9 @@ public class LoginActivity extends Activity
 
     private void Login() {
 
-        Map<String,String> params = new HashMap<String, String>();
+        Map<String,String> params = new HashMap<>();
         params.put("Account", editTextAccount.getText().toString());
         params.put("Password", editTextPassword.getText().toString());
-
 
         JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.POST,"http://jasonchi.ddns.net:8080/api/Authenticate",
                new JSONObject(params),new Response.Listener<JSONObject>() {
@@ -74,7 +69,7 @@ public class LoginActivity extends Activity
                         result = response.getBoolean("success");
                     else
                     {
-                        //Log.d(LOG_TAG, "Login fail with status code=" + statusCode);
+                        Toast.makeText(getApplicationContext() , "Login Fail ! " , Toast.LENGTH_SHORT ).show();
                     }
                 }
                 catch (JSONException e)
@@ -99,23 +94,19 @@ public class LoginActivity extends Activity
                 progressBar.setVisibility(View.GONE);
                 Log.e("eror",error.toString());
             }
-        }
-        )
-
+        })
         {
             @Override
             public Map<String, String> getHeaders() {
                 HashMap<String, String> headers = new HashMap<String, String>();
-//                headers.put("Accept", "application/json");
                 headers.put("Content-Type", "application/json; charset=utf-8");
                 return headers;
             }
         };
-
         mQueue.add(jsonObjectRequest);
     }
     private void goToNextActivity() {
-        Intent intent = new Intent(this, MenuListActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }

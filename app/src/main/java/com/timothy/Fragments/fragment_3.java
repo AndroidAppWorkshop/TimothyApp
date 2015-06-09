@@ -32,7 +32,6 @@ public class fragment_3 extends Fragment implements OnClickListener {
     private RelativeLayout course, found, set;
     private ImageView course_image, found_image, settings_image;
     private TextView found_text, txv, settings_text, course_text;
-    private RequestQueue RQueue;
     private int gray = 0xFF7597B3;
     int green = Color.GREEN;
     View view;

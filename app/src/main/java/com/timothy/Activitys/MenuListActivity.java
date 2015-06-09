@@ -43,7 +43,6 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
 
     private ProductRepository productRepository = new ProductRepository();
     private final Cart cart = new Cart();
-    private int total = 0;
     private TextView textViewPriceSum;
     private TextView textViewTotal;
     private ProgressBar progressBar;
@@ -98,7 +97,7 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Intent it = new Intent(this, CartActivity.class);
+        Intent it = new Intent(this, MainActivity .class);
         it.putExtra("Data", cart);
         startActivity(it);
     }
@@ -161,7 +160,6 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
             this.products = products;
         }
 
-        NetworkImageView image;
         RequestQueue queue;
         LruBitmapCache cache;
         ImageLoader ImageLoader;
@@ -180,7 +178,7 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
             for (int i = start; i <= end; i++) {
                 View productView = pagerContainer.findViewById(pagerItemProductViewIds[i - 3 * pagerPosition]);
 
-                Product product = null;
+                Product product ;
                 try {
                     product = products.get(i);
                 } catch (Exception e) {

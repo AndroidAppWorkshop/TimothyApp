@@ -33,17 +33,21 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
                     .equals(messageType)) {
                 Log.i(getClass() + " GCM MESSAGE", extras.toString());
 
+                Intent it = new Intent(context, Another.class);
+
+                it.putExtra("Content", "this is a message from Intent "+ extras.getString("message") );
+
                 MagicLenGCM.sendLocalNotification(context,
 
-                        NOTIFICATION_ID,R.drawable.actionbar_menu,
+                        NOTIFICATION_ID, R.drawable.actionbar_menu,
 
                         "From Jason Server ---",
 
                         extras.getString("message"),
 
-                        " -Timothy- ", true ,
+                        " -Timothy- ", true,
 
-                PendingIntent.getActivity(context, NOTIFICATION_ID , new Intent(context, Another.class) , 0 ));
+                        PendingIntent.getActivity(context, NOTIFICATION_ID, it , PendingIntent.FLAG_UPDATE_CURRENT ));
             }
         }
         setResultCode(Activity.RESULT_OK);

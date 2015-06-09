@@ -13,9 +13,6 @@ import com.timothy.R;
 
 import java.util.List;
 
-/**
- * Created by h94u04 on 2015/5/31.
- */
 public class DrawerAdapter  extends ArrayAdapter<DrawerItem> {
     Context context;
     List<DrawerItem> drawerItemList;
@@ -31,7 +28,6 @@ public class DrawerAdapter  extends ArrayAdapter<DrawerItem> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
 
         DrawerItemHolder drawerHolder;
         View view = convertView;

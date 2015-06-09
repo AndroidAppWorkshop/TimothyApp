@@ -1,6 +1,5 @@
 package com.timothy.Activitys;
 
-
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,7 +8,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.Menu;
@@ -17,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toolbar;
 import com.astuetz.PagerSlidingTabStrip;
 import com.timothy.DrawerList.DrawerAdapter;
 import com.timothy.DrawerList.DrawerItem;
@@ -36,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     DrawerLayout DL;
     Menu mMenu;
     ViewPager viewPager;
-    Toolbar toolbar ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         LV = (ListView) findViewById(R.id.LV);
         LV.setAdapter(new DrawerAdapter(this, R.layout.drawerlist , getList()));
         LV.setOnItemClickListener(this);
-        DL.setDrawerShadow(R.drawable.drashadow, GravityCompat.END );//??
+        DL.setDrawerShadow(R.drawable.drashadow, GravityCompat.END );
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
@@ -81,10 +77,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 return new fragment_2();
             } else if (position == 2) {
                 return new fragment_3();
-            }else
+            }
             return new PushNotificationFragment();
         }
-
         @Override
         public int getCount() {
             return icon.length;
