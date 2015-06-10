@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private List<DrawerAdapter.DrawerItem> getList() {
         List<DrawerAdapter.DrawerItem> list = new ArrayList<>();
-        String[] DraName= { " NetImage ", " MenuClass " };
+        String[] DraName= { " NetImage " };
         int[] DraIcon = {R.drawable.testicon , R.drawable.menuicon};
         for (int position = 0; position < DraName.length; position++) {
             list.add(new DrawerAdapter.DrawerItem( DraName[position] , DraIcon[position]));
@@ -116,19 +116,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         android.support.v4.app.FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
         ft1.addToBackStack("HOME");
-        Intent it;
+
         switch (position) {
 
             case 0:
                 Fra = new NetImage();
                 ft1.replace(R.id.DraOut , Fra).commit();
                 break;
-            case 1:
-                if(Fra != null)
-                    ft1.detach(Fra);
-                it = new Intent(this, MenuListFragment.class);
-                startActivity(it);
-                break;
+
             default:
                 break;
         }
