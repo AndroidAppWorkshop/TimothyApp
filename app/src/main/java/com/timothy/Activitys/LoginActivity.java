@@ -24,8 +24,7 @@ import java.util.Map;
 
 public class LoginActivity extends Activity
 {
-    private static final String LOG_TAG = LoginActivity.class.getSimpleName();//??
-
+    private static final String LOG_TAG = LoginActivity.class.getSimpleName();
     private Button buttonLogin;
     private EditText editTextAccount;
     private EditText editTextPassword;
@@ -50,7 +49,6 @@ public class LoginActivity extends Activity
             }
         });
     }
-
 
     private void Login() {
 

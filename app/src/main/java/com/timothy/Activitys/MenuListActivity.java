@@ -97,7 +97,7 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Intent it = new Intent(this, MainActivity .class);
+        Intent it = new Intent(this, Cart.class);
         it.putExtra("Data", cart);
         startActivity(it);
     }

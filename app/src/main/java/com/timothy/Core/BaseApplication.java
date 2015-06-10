@@ -43,6 +43,10 @@ public class BaseApplication extends Application {
         getRequestQueue().add(req);
     }
 
+    public void cancelPendingRequests(Object tag){
+        getRequestQueue().cancelAll(tag);
+    }
+
     public ImageLoader getImageLoader() {
         if (this.imageLoader == null) {
             this.imageLoader = new ImageLoader(getRequestQueue(),

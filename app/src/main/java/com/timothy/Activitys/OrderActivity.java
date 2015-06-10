@@ -8,7 +8,7 @@ import android.os.PersistableBundle;
 import android.widget.TextView;
 import com.timothy.R;
 
-public class Another extends Activity{
+public class OrderActivity extends Activity{
     TextView tv ;
 
     @Override

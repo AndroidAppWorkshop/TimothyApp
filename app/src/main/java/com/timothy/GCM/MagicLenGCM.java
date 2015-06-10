@@ -31,14 +31,18 @@ import java.util.Map;
 public class MagicLenGCM {
 
     public final static String SENDER_ID = "707422521982";
+    private static final String PROPERTY_REG_ID = "registration_id";
+    private static final String PROPERTY_APP_VERSION = "appVersion";
+    public final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private Activity activity;
+    private MagicLenGCMListener listener;
+    private RequestQueue queue;
+    private String REGIDforSend = "";
+    private String regidforlocal = "";
 
-    public static enum PlayServicesState {
-        SUPPROT, NEED_PLAY_SERVICE, UNSUPPORT;
-    }
+    public static enum PlayServicesState {SUPPROT, NEED_PLAY_SERVICE, UNSUPPORT;}
 
-    public static enum GCMState {
-        PLAY_SERVICES_NEED_PLAY_SERVICE, PLAY_SERVICES_UNSUPPORT, NEED_REGISTER, AVAILABLE;
-    }
+    public static enum GCMState {PLAY_SERVICES_NEED_PLAY_SERVICE, PLAY_SERVICES_UNSUPPORT, NEED_REGISTER, AVAILABLE;}
 
     public static interface MagicLenGCMListener {
 
@@ -47,17 +51,11 @@ public class MagicLenGCM {
         public boolean gcmSendRegistrationIdToAppServer(String regID);
     }
 
-    private static final String PROPERTY_REG_ID = "registration_id";
-    private static final String PROPERTY_APP_VERSION = "appVersion";
-
-    public final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-
     public static void sendLocalNotification(Context context,
                                              int notifyID,
                                              int drawableSmallIcon,
                                              String title, String msg, String info,
-                                             boolean autoCancel, PendingIntent pendingIntent)
-    {
+                                             boolean autoCancel, PendingIntent pendingIntent) {
         NotificationManager mNotificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -77,18 +75,14 @@ public class MagicLenGCM {
         mNotificationManager.notify(notifyID, mBuilder.build());
     }
 
-    private Activity activity;
-    private MagicLenGCMListener listener;
-    private RequestQueue queue ;
-    private String REGIDforSend ="";
-    private String regidforlocal ="";
     public MagicLenGCM(Activity activity) {
         this(activity, null);
     }
+
     public MagicLenGCM(Activity activity, MagicLenGCMListener listener) {
         queue = Volley.newRequestQueue(activity);
         this.activity = activity;
-        GCMPPush( openGCM() );
+        GCMPPush(openGCM());
         setMagicLenGCMListener(listener);
     }
 
@@ -115,16 +109,15 @@ public class MagicLenGCM {
                 return GCMState.PLAY_SERVICES_UNSUPPORT;
         }
     }
-    public void GCMPPush(GCMState GCMState)
-    {
-        switch (GCMState)
-        {
+
+    public void GCMPPush(GCMState GCMState) {
+        switch (GCMState) {
             case NEED_REGISTER:
                 registerInBackground();
                 REGIDforSend = getRegistrationId();
                 break;
             case AVAILABLE:
-                REGIDforSend = regidforlocal      ;
+                REGIDforSend = regidforlocal;
                 break;
             case PLAY_SERVICES_NEED_PLAY_SERVICE:
 
@@ -168,12 +161,11 @@ public class MagicLenGCM {
     }
 
     private PlayServicesState checkPlayServices() {
-        int resultCode = GooglePlayServicesUtil
-                .isGooglePlayServicesAvailable(activity);
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(activity);
+
         if (resultCode != ConnectionResult.SUCCESS) {
             if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                GooglePlayServicesUtil.getErrorDialog(resultCode, activity,
-                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+                GooglePlayServicesUtil.getErrorDialog(resultCode, activity,PLAY_SERVICES_RESOLUTION_REQUEST).show();
                 return PlayServicesState.NEED_PLAY_SERVICE;
             } else {
                 return PlayServicesState.UNSUPPORT;
@@ -220,6 +212,7 @@ public class MagicLenGCM {
             }
         }
     }
+
     private void storeRegistrationId(String regId) {
         final SharedPreferences prefs = getGCMPreferences();
         int appVersion = getAppVersion();
@@ -228,13 +221,13 @@ public class MagicLenGCM {
         editor.putInt(PROPERTY_APP_VERSION, appVersion);
         editor.commit();
     }
-    public void SendMessage(String message)
-    {
-        Map<String,String> params = new HashMap<String, String>();
-        params.put("RegistrationId", REGIDforSend);
-        params.put("Message", message ) ;
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,"http://jasonchi.ddns.net:8080/api/PushNotification", new JSONObject(params),
+    public void SendMessage(String message) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("RegistrationId", REGIDforSend);
+        params.put("Message", message);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, "http://jasonchi.ddns.net:8080/api/PushNotification", new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -245,21 +238,19 @@ public class MagicLenGCM {
             public void onErrorResponse(VolleyError error) {
                 Log.e("錯誤", error.getMessage(), error);
             }
-        })
-        {
+        }) {
             @Override
             public Map<String, String> getHeaders() {
                 HashMap<String, String> headers = new HashMap<>();
                 headers.put("Accept", "application/json");
                 headers.put("Content-Type", "application/json; charset=utf-8");
-                headers.put("APIKey","TimothyAPI");
+                headers.put("APIKey", "TimothyAPI");
                 return headers;
             }
         };
         queue.add(jsonObjectRequest);
     }
-    public String getSendREGID()
-    {
+    public String getSendREGID() {
         return REGIDforSend;
     }
 }

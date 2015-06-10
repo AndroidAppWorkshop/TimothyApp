@@ -104,7 +104,6 @@ public class fragment_1 extends Fragment implements OnClickListener {
             default:
                 break;
         }
-
     }
 
     private void resetBtn() {

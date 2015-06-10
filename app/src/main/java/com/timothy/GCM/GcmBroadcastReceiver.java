@@ -8,8 +8,7 @@ import android.os.Bundle;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
-import com.timothy.Activitys.Another;
-import com.timothy.Activitys.MainActivity;
+import com.timothy.Activitys.OrderActivity;
 import com.timothy.R;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
@@ -33,7 +32,7 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
                     .equals(messageType)) {
                 Log.i(getClass() + " GCM MESSAGE", extras.toString());
 
-                Intent it = new Intent(context, Another.class);
+                Intent it = new Intent(context, OrderActivity.class);
 
                 it.putExtra("Content", "this is a message from Intent "+ extras.getString("message") );
 
