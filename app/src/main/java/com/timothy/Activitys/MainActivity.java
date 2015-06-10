@@ -16,9 +16,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.astuetz.PagerSlidingTabStrip;
-import com.timothy.DrawerList.DrawerAdapter;
-import com.timothy.DrawerList.DrawerItem;
-import com.timothy.Fragments.fragment_1;
+import com.timothy.Adapter.DrawerAdapter;
+import com.timothy.Fragments.MenuListFragment;
 import com.timothy.Fragments.fragment_2;
 import com.timothy.Fragments.fragment_3;
 import com.timothy.Fragments.NetImage;
@@ -33,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     DrawerLayout DL;
     Menu mMenu;
     ViewPager viewPager;
+    Fragment Fra = null ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +51,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    private List<DrawerItem> getList() {
-        List<DrawerItem> list = new ArrayList<>();
+    private List<DrawerAdapter.DrawerItem> getList() {
+        List<DrawerAdapter.DrawerItem> list = new ArrayList<>();
         String[] DraName= { " NetImage ", " MenuClass " };
         int[] DraIcon = {R.drawable.testicon , R.drawable.menuicon};
         for (int position = 0; position < DraName.length; position++) {
-            list.add(new DrawerItem( DraName[position] , DraIcon[position]));
+            list.add(new DrawerAdapter.DrawerItem( DraName[position] , DraIcon[position]));
         }
         return list;
     }
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return new MenuListActivity();
+                return new MenuListFragment();
             } else if (position == 1) {
                 return new fragment_2();
             } else if (position == 2) {
@@ -116,20 +116,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         android.support.v4.app.FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
         ft1.addToBackStack("HOME");
-        Fragment Fra;
         Intent it;
         switch (position) {
 
             case 0:
                 Fra = new NetImage();
-                ft1.replace(R.id.DraOut, Fra).commit();
+                ft1.replace(R.id.DraOut , Fra).commit();
                 break;
             case 1:
-                it = new Intent(this, MenuListActivity.class);
+                if(Fra != null)
+                    ft1.detach(Fra);
+                it = new Intent(this, MenuListFragment.class);
                 startActivity(it);
                 break;
             default:
                 break;
         }
+        DL.closeDrawer(Gravity.END);
     }
 }

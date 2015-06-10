@@ -38,10 +38,10 @@ public class PushNotificationFragment extends Fragment implements View.OnClickLi
     @Override
     public void onClick(final View view) {
 
-            if(!Message.getText().toString().trim().isEmpty())
-                magicLenGCM.SendMessage(    Message.getText().toString() );
+        if(!Message.getText().toString().trim().isEmpty())
+            magicLenGCM.SendMessage(    Message.getText().toString() );
 
-            Toast.makeText(getActivity() ,"RegID  : "+magicLenGCM.getSendREGID() , Toast.LENGTH_SHORT ).show();
+        Toast.makeText(getActivity() ,"RegID  : "+magicLenGCM.getSendREGID() , Toast.LENGTH_SHORT ).show();
     }
     
 }

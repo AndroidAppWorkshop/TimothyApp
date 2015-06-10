@@ -1,4 +1,4 @@
-package com.timothy.DrawerList;
+package com.timothy.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,7 +13,7 @@ import com.timothy.R;
 
 import java.util.List;
 
-public class DrawerAdapter  extends ArrayAdapter<DrawerItem> {
+public class DrawerAdapter  extends ArrayAdapter<DrawerAdapter.DrawerItem> {
     Context context;
     List<DrawerItem> drawerItemList;
     int layoutResID;
@@ -23,7 +23,6 @@ public class DrawerAdapter  extends ArrayAdapter<DrawerItem> {
         this.context = context;
         this.drawerItemList = listItems;
         this.layoutResID = layoutResourceID;
-
     }
 
     @Override
@@ -53,9 +52,26 @@ public class DrawerAdapter  extends ArrayAdapter<DrawerItem> {
 
         return view;
     }
-
     private static class DrawerItemHolder {
         TextView ItemName;
         ImageView icon;
+    }
+
+    public static class DrawerItem {
+        String ItemName;
+        int imgResID;
+
+        public DrawerItem(String itemName, int imgResID) {
+            super();
+            ItemName = itemName;
+            this.imgResID = imgResID;
+        }
+
+        public String getItemName() {
+            return ItemName;
+        }
+        public int getImgResID() {
+            return imgResID;
+        }
     }
 }

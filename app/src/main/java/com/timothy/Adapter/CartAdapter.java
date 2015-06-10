@@ -1,4 +1,4 @@
-package com.timothy.Activitys;
+package com.timothy.Adapter;
 
 
 import android.app.AlertDialog;
@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.timothy.Activitys.CartActivity;
 import com.timothy.R;
 
 import java.util.LinkedList;

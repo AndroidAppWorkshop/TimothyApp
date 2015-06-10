@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.timothy.Core.BaseApplication;
 import com.timothy.R;
 
 import org.json.JSONObject;
@@ -32,7 +33,6 @@ public class LoginActivity extends Activity
     private EditText editTextAccount;
     private EditText editTextPassword;
     private ProgressBar progressBar;
-    RequestQueue mQueue;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -52,7 +52,6 @@ public class LoginActivity extends Activity
         editTextAccount = (EditText) findViewById(R.id.editTextAccount);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        mQueue = Volley.newRequestQueue(this);
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +71,9 @@ public class LoginActivity extends Activity
             JSONObject loginBody = new JSONObject();
             loginBody.put("Account", editTextAccount.getText().toString());
             loginBody.put("Password", editTextPassword.getText().toString());
-            final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, "http://jasonchi.ddns.net:8080/api/Authenticate", loginBody,
+
+            BaseApplication.getInstance().addToRequestQueue(
+                    new JsonObjectRequest(Request.Method.POST, "http://jasonchi.ddns.net:8080/api/Authenticate", loginBody,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
@@ -99,8 +100,7 @@ public class LoginActivity extends Activity
                             Toast.makeText(LoginActivity.this, "Login fail:" + error.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
-            );
-            mQueue.add(request);
+            ));
 
         } catch (Exception e) {
             Log.e(LOG_TAG, e.getMessage(), e);

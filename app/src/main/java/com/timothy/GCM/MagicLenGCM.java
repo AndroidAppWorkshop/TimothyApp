@@ -21,6 +21,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.timothy.Core.BaseApplication;
 
 import org.json.JSONObject;
 
@@ -30,13 +31,12 @@ import java.util.Map;
 
 public class MagicLenGCM {
 
-    public final static String SENDER_ID = "707422521982";
+    private final static String SENDER_ID = "707422521982";
     private static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
-    public final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private Activity activity;
     private MagicLenGCMListener listener;
-    private RequestQueue queue;
     private String REGIDforSend = "";
     private String regidforlocal = "";
 
@@ -51,36 +51,11 @@ public class MagicLenGCM {
         public boolean gcmSendRegistrationIdToAppServer(String regID);
     }
 
-    public static void sendLocalNotification(Context context,
-                                             int notifyID,
-                                             int drawableSmallIcon,
-                                             String title, String msg, String info,
-                                             boolean autoCancel, PendingIntent pendingIntent) {
-        NotificationManager mNotificationManager = (NotificationManager) context
-                .getSystemService(Context.NOTIFICATION_SERVICE);
-
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
-                context).setSmallIcon(drawableSmallIcon)
-                .setContentTitle(title)
-                .setContentText(msg)
-                .setAutoCancel(autoCancel)
-                .setContentInfo(info)
-                .setDefaults(Notification.DEFAULT_ALL);
-
-        if (msg.length() > 10) {
-            mBuilder.setStyle(new NotificationCompat.BigTextStyle()
-                    .bigText(msg));
-        }
-        mBuilder.setContentIntent(pendingIntent);
-        mNotificationManager.notify(notifyID, mBuilder.build());
-    }
-
     public MagicLenGCM(Activity activity) {
         this(activity, null);
     }
 
     public MagicLenGCM(Activity activity, MagicLenGCMListener listener) {
-        queue = Volley.newRequestQueue(activity);
         this.activity = activity;
         GCMPPush(openGCM());
         setMagicLenGCMListener(listener);
@@ -120,10 +95,8 @@ public class MagicLenGCM {
                 REGIDforSend = regidforlocal;
                 break;
             case PLAY_SERVICES_NEED_PLAY_SERVICE:
-
                 break;
             case PLAY_SERVICES_UNSUPPORT:
-
                 break;
             default:
                 break;
@@ -137,7 +110,7 @@ public class MagicLenGCM {
             return "";
         }
         int registeredVersion = prefs.getInt(MagicLenGCM.PROPERTY_APP_VERSION,
-                Integer.MIN_VALUE);
+                                             Integer.MIN_VALUE);
         int currentVersion = getAppVersion();
         if (registeredVersion != currentVersion) {
             return "";
@@ -148,7 +121,7 @@ public class MagicLenGCM {
     private int getAppVersion() {
         try {
             PackageInfo packageInfo = activity.getPackageManager()
-                    .getPackageInfo(activity.getPackageName(), 0);
+                     .getPackageInfo(activity.getPackageName(), 0);
             return packageInfo.versionCode;
         } catch (NameNotFoundException e) {
             throw new RuntimeException("Could not get package name: " + e);
@@ -157,7 +130,7 @@ public class MagicLenGCM {
 
     private SharedPreferences getGCMPreferences() {
         return activity.getSharedPreferences(activity.getClass()
-                .getSimpleName(), Context.MODE_PRIVATE);
+                       .getSimpleName(), Context.MODE_PRIVATE);
     }
 
     private PlayServicesState checkPlayServices() {
@@ -174,6 +147,18 @@ public class MagicLenGCM {
         return PlayServicesState.SUPPROT;
     }
 
+    private void storeRegistrationId(String regId) {
+        final SharedPreferences prefs = getGCMPreferences();
+        int appVersion = getAppVersion();
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(PROPERTY_REG_ID, regId);
+        editor.putInt(PROPERTY_APP_VERSION, appVersion);
+        editor.commit();
+    }
+    public String getSendREGID() {
+        return REGIDforSend;
+    }
+
     private void registerInBackground() {
         new AsyncTaskRegister().execute();
     }
@@ -183,43 +168,51 @@ public class MagicLenGCM {
         protected String doInBackground(Void... params) {
             String regid = "";
             try {
-                GoogleCloudMessaging gcm = GoogleCloudMessaging
-                        .getInstance(activity);
+                GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(activity);
+
                 regid = gcm.register(SENDER_ID);
 
                 if (regid == null || regid.isEmpty()) {
                     return "";
                 }
-
                 storeRegistrationId(regid);
 
-                if (listener != null) {
-                    if (!listener.gcmSendRegistrationIdToAppServer(regid)) {
-                        storeRegistrationId("");
-                        return "";
-                    }
+                if (listener != null && !listener.gcmSendRegistrationIdToAppServer(regid)) {
+                    storeRegistrationId("");
+                    return "";
                 }
             } catch (IOException ex) {
-
+                Log.e("GCM Register error ",ex.getStackTrace().toString());
             }
             return regid;
         }
 
         @Override
         protected void onPostExecute(String msg) {
-            if (listener != null) {
+            if (listener != null)
                 listener.gcmRegistered(!msg.isEmpty(), msg.toString());
-            }
         }
     }
+    public static void sendLocalNotification(Context context   ,int notifyID,int drawableSmallIcon,
+                                              String title      ,String msg  , String info,
+                                              boolean autoCancel,PendingIntent pendingIntent) {
 
-    private void storeRegistrationId(String regId) {
-        final SharedPreferences prefs = getGCMPreferences();
-        int appVersion = getAppVersion();
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(PROPERTY_REG_ID, regId);
-        editor.putInt(PROPERTY_APP_VERSION, appVersion);
-        editor.commit();
+        NotificationManager mNotificationManager = (NotificationManager)context
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
+                context).setSmallIcon(drawableSmallIcon)
+                .setContentTitle(title)
+                .setContentText(msg)
+                .setAutoCancel(autoCancel)
+                .setContentInfo(info)
+                .setDefaults(Notification.DEFAULT_ALL);
+
+        if (msg.length() > 10)
+            mBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(msg));
+
+        mBuilder.setContentIntent(pendingIntent);
+        mNotificationManager.notify(notifyID, mBuilder.build());
     }
 
     public void SendMessage(String message) {
@@ -227,30 +220,34 @@ public class MagicLenGCM {
         params.put("RegistrationId", REGIDforSend);
         params.put("Message", message);
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, "http://jasonchi.ddns.net:8080/api/PushNotification", new JSONObject(params),
-                new Response.Listener<JSONObject>() {
+        BaseApplication.getInstance()
+                .addToRequestQueue(new JsonObjectRequest(Request.Method.POST,
+                        "http://jasonchi.ddns.net:8080/api/PushNotification",
+                        new JSONObject(params),
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Log.d("通知", response.toString());
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e("錯誤", error.getMessage(), error);
+                            }
+                        }) {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("通知", response.toString());
+                    public Map<String, String> getHeaders() {
+                        HashMap<String, String> headers = new HashMap<>();
+                        headers.put("Accept", "application/json");
+                        headers.put("Content-Type", "application/json; charset=utf-8");
+                        headers.put("APIKey", getAPIkey());
+                        return headers;
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("錯誤", error.getMessage(), error);
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() {
-                HashMap<String, String> headers = new HashMap<>();
-                headers.put("Accept", "application/json");
-                headers.put("Content-Type", "application/json; charset=utf-8");
-                headers.put("APIKey", "TimothyAPI");
-                return headers;
-            }
-        };
-        queue.add(jsonObjectRequest);
+                });
     }
-    public String getSendREGID() {
-        return REGIDforSend;
+    public String getAPIkey() {
+        return getActivity().getSharedPreferences("APIKey", Context.MODE_PRIVATE).getString("APIKey",null);
     }
+
 }

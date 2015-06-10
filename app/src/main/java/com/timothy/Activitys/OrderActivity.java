@@ -14,10 +14,10 @@ public class OrderActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.netimage);
+        setContentView(R.layout.activity_order);
 
-        tv = (TextView)findViewById(R.id.TextV01);
+        tv = (TextView)findViewById(R.id.Text);
 
-        tv.setText( this.getIntent().getStringExtra("Content")+ " a test Text ! !"  );
+        tv.append( this.getIntent().getStringExtra("Content")+ " a test Text ! !"  );
     }
 }

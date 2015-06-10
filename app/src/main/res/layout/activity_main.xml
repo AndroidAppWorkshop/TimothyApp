@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:id="@+id/DraOut">
     <LinearLayout
-        android:id="@+id/LinearLayout1"
+        android:id="@+id/LayoutSecondFloor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"

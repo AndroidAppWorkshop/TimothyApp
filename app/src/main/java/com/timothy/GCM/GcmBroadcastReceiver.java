@@ -21,32 +21,31 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
         Bundle extras = intent.getExtras();
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(context);
         String messageType = gcm.getMessageType(intent);
+
         if (!extras.isEmpty()) {
-            if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR
-                    .equals(messageType)) {
+            if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
                 Log.i(getClass() + " GCM ERROR", extras.toString());
-            } else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED
-                    .equals(messageType)) {
+            }
+            else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
                 Log.i(getClass() + " GCM DELETE", extras.toString());
-            } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE
-                    .equals(messageType)) {
+            }
+            else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                 Log.i(getClass() + " GCM MESSAGE", extras.toString());
 
-                Intent it = new Intent(context, OrderActivity.class);
+                Intent intentNextAction = new Intent(context, OrderActivity.class);
 
-                it.putExtra("Content", "this is a message from Intent "+ extras.getString("message") );
+                intentNextAction.putExtra("Content", "this is a message from Intent " + extras.getString("message"));
 
-                MagicLenGCM.sendLocalNotification(context,
-
-                        NOTIFICATION_ID, R.drawable.actionbar_menu,
-
-                        "From Jason Server ---",
-
-                        extras.getString("message"),
-
-                        " -Timothy- ", true,
-
-                        PendingIntent.getActivity(context, NOTIFICATION_ID, it , PendingIntent.FLAG_UPDATE_CURRENT ));
+                MagicLenGCM
+                        .sendLocalNotification(context,
+                                               NOTIFICATION_ID, R.drawable.actionbar_menu,
+                                               "From Jason Server ---",
+                                               extras.getString("message"),
+                                               " -Timothy- ", true,
+                                               PendingIntent.getActivity(context,
+                                                                          NOTIFICATION_ID, intentNextAction ,
+                                                                          PendingIntent.FLAG_UPDATE_CURRENT )
+                                               );
             }
         }
         setResultCode(Activity.RESULT_OK);

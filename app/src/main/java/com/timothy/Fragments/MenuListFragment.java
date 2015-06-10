@@ -1,4 +1,4 @@
-package com.timothy.Activitys;
+package com.timothy.Fragments;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -19,7 +19,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -27,16 +26,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.NetworkImageView;
+import com.timothy.Activitys.CartActivity;
 import com.timothy.Cache.LruBitmapCache;
 import com.timothy.Core.BaseApplication;
 import com.timothy.R;
-
 import org.json.JSONArray;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import library.timothy.Resources.UriResources;
 import library.timothy.Shopping.Cart;
 import library.timothy.Shopping.Category;
@@ -47,7 +44,7 @@ import library.timothy.Shopping.Product;
 import library.timothy.Shopping.ProductRepository;
 
 
-public class MenuListActivity extends Fragment implements View.OnClickListener {
+public class MenuListFragment extends Fragment implements View.OnClickListener {
 
     private ProductRepository productRepository = new ProductRepository();
     private final Cart cart = new Cart();
