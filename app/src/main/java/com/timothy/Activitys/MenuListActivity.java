@@ -1,10 +1,15 @@
 package com.timothy.Activitys;
 
-import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -22,24 +27,27 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.NetworkImageView;
-import com.android.volley.toolbox.Volley;
-import com.timothy.Core.BaseApplication;
-import library.timothy.Shopping.Cart;
-import library.timothy.Shopping.Category;
 import com.timothy.Cache.LruBitmapCache;
-
-import library.timothy.Shopping.Product;
-import library.timothy.Shopping.ProductRepository;
+import com.timothy.Core.BaseApplication;
 import com.timothy.R;
-
-import library.timothy.Resources.UriResources;
 
 import org.json.JSONArray;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import library.timothy.Resources.UriResources;
+import library.timothy.Shopping.Cart;
+import library.timothy.Shopping.Category;
+import library.timothy.Shopping.Combo;
+import library.timothy.Shopping.ComboDetail;
+import library.timothy.Shopping.ComboRepository;
+import library.timothy.Shopping.Product;
+import library.timothy.Shopping.ProductRepository;
 
 
-public class MenuListActivity extends Activity implements View.OnClickListener {
+public class MenuListActivity extends Fragment implements View.OnClickListener {
 
     private ProductRepository productRepository = new ProductRepository();
     private final Cart cart = new Cart();
@@ -48,20 +56,38 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
     private ProgressBar progressBar;
     private Button commit;
     private ListView listView;
+    private SharedPreferences sharedPreferences;
+    private String apiKey;
+    private ListViewAdapter listViewAdapter;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.menulayout);
-        listView = (ListView) findViewById(R.id.listview);
-        textViewPriceSum = (TextView) findViewById(R.id.textViewTotalPrice);
-        textViewTotal = (TextView) findViewById(R.id.textViewTotal);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        commit = (Button) findViewById(R.id.button1);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.menulayout, null);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        listView = (ListView) view.findViewById(R.id.listview);
+        textViewPriceSum = (TextView) view.findViewById(R.id.textViewTotalPrice);
+        textViewTotal = (TextView) view.findViewById(R.id.textViewTotal);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        commit = (Button) view.findViewById(R.id.button1);
         commit.setOnClickListener(this);
 
         progressBar.setVisibility(View.VISIBLE);
 
+        sharedPreferences = this.getActivity().getSharedPreferences("APIKey", Context.MODE_PRIVATE);
+
+        apiKey = sharedPreferences.getString("APIKey", null);
+
+        loadProducts();
+    }
+
+
+
+    private void loadProducts() {
         BaseApplication.getInstance().addToRequestQueue(
                 new JsonArrayRequest(
                         Request.Method.GET,
@@ -71,6 +97,37 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
                             public void onResponse(JSONArray jsonArray) {
                                 progressBar.setVisibility(View.GONE);
                                 productRepository.refreshdata(jsonArray);
+                                loadCombo();
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+                                progressBar.setVisibility(View.GONE);
+                                Toast.makeText(getActivity(), volleyError.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }) {
+                    @Override
+                    public Map<String, String> getHeaders() {
+                        HashMap<String, String> headers = new HashMap<String, String>();
+//                       headers.put("Accept", "application/json");
+                        headers.put("APIKey", apiKey);
+                        return headers;
+                    }
+                });
+    }
+
+    private void loadCombo() {
+        progressBar.setVisibility(View.VISIBLE);
+        BaseApplication.getInstance().addToRequestQueue(
+                new JsonArrayRequest(
+                        Request.Method.GET,
+                        UriResources.Server.Combo,
+                        new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray jsonArray) {
+                                progressBar.setVisibility(View.GONE);
+                                ComboRepository.refreshData(jsonArray);
                                 renderlistview();
                             }
                         },
@@ -78,26 +135,28 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
                                 progressBar.setVisibility(View.GONE);
-                                Toast.makeText(MenuListActivity.this, volleyError.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), volleyError.getMessage(), Toast.LENGTH_SHORT).show();
                             }
-                        }
-                )
-        );
+                        }) {
+                    @Override
+                    public Map<String, String> getHeaders() {
+                        HashMap<String, String> headers = new HashMap<String, String>();//
+                        headers.put("APIKey", apiKey);
+                        return headers;
+                    }
+                });
     }
 
     private void renderlistview() {
-        listView.setAdapter(new ListViewAdapter());
+        listViewAdapter = new ListViewAdapter();
+        listView.setAdapter(listViewAdapter);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        cart.getProductInCart().clear();
-    }
+
 
     @Override
     public void onClick(View v) {
-        Intent it = new Intent(this, CartActivity.class);
+        Intent it = new Intent(getActivity(), CartActivity.class);
         it.putExtra("Data", cart);
         startActivity(it);
     }
@@ -124,7 +183,7 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder viewHolder;
             if (convertView == null) {
-                convertView = getLayoutInflater().inflate(R.layout.listitem_category, null);
+                convertView = getActivity().getLayoutInflater().inflate(R.layout.listitem_category, null);
                 viewHolder = new ViewHolder();
                 viewHolder.textViewVategoryTitle = (TextView) convertView.findViewById(R.id.textViewCategoryTitle);
                 viewHolder.viewPagerProduct = (ViewPager) convertView.findViewById(R.id.productPager);
@@ -160,16 +219,17 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
             this.products = products;
         }
 
+        NetworkImageView image;
         RequestQueue queue;
         LruBitmapCache cache;
-        ImageLoader ImageLoader;
+        com.android.volley.toolbox.ImageLoader ImageLoader;
 
         @Override
         public Object instantiateItem(ViewGroup container, int pagerPosition) {
             cache = new LruBitmapCache();
-            queue = Volley.newRequestQueue(getApplicationContext());
+            //queue = Volley.newRequestQueue(getApplicationContext());
             ImageLoader = new ImageLoader(queue, cache);
-            View inflate = getLayoutInflater().inflate(R.layout.pageritem_container, null);
+            View inflate = getActivity().getLayoutInflater().inflate(R.layout.pageritem_container, null);
             LinearLayout pagerContainer = (LinearLayout) inflate.findViewById(R.id.pagerContainer);
 
             int start = 3 * pagerPosition + 0;
@@ -178,7 +238,7 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
             for (int i = start; i <= end; i++) {
                 View productView = pagerContainer.findViewById(pagerItemProductViewIds[i - 3 * pagerPosition]);
 
-                Product product ;
+                Product product = null;
                 try {
                     product = products.get(i);
                 } catch (Exception e) {
@@ -204,6 +264,8 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
                     @Override
                     public void onClick(View v) {
                         cart.addToCart(productId, 1);
+
+                        checkCombo();
                         textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(productId)));
                         textViewPriceSum.setText(String.valueOf(cart.calculateSumPrice()));
                         textViewTotal.setText(String.valueOf(cart.calculateSumCount()));
@@ -242,4 +304,36 @@ public class MenuListActivity extends Activity implements View.OnClickListener {
         }
     }
 
+    private void checkCombo() {
+        final String availableComboId = cart.getAvailableComboId();
+        if (availableComboId != null) {
+            new AlertDialog.Builder(getActivity())
+                    .setTitle("Package upgrade")
+                    .setMessage("Do you want to upgrade to the package?")
+                    .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            cart.addToCart(availableComboId, 1);
+
+                            Combo comboVo = ComboRepository.getCombosMap().get(availableComboId);
+                            for (ComboDetail detailVo : comboVo.getDetails()) {
+                                cart.addToCart(detailVo.getProductId(), 0 - detailVo.getQuantity());
+                            }
+
+                            listViewAdapter.notifyDataSetChanged();
+                            textViewPriceSum.setText(String.valueOf(cart.calculateSumPrice()));
+                            textViewTotal.setText(String.valueOf(cart.calculateSumCount()));
+                            checkCombo();
+                        }
+                    })
+                    .setNegativeButton("no", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    })
+                    .show();
+        }
+
+    }
 }

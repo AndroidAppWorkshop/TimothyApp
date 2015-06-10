@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return new fragment_1();
+                return new MenuListActivity();
             } else if (position == 1) {
                 return new fragment_2();
             } else if (position == 2) {

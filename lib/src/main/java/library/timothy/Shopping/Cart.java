@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -11,7 +12,7 @@ public class Cart implements Parcelable{
     private  Map<String, Integer> productInCart = new HashMap<String, Integer>();
 
 
-    public static Parcelable.Creator<Cart> CREATOR = new Creator<Cart>() {
+    public static Creator<Cart> CREATOR = new Creator<Cart>() {
         @Override
         public Cart createFromParcel(Parcel source) {
 
@@ -38,6 +39,12 @@ public class Cart implements Parcelable{
         if (countInMap < 0) {
             countInMap = 0;
         }
+        productInCart.put(productId, countInMap);
+    }
+
+    public void deletetoCart(String productId, int count)
+    {
+        Integer countInMap =count;
         productInCart.put(productId, countInMap);
     }
 
@@ -88,4 +95,30 @@ public class Cart implements Parcelable{
     public void writeToParcel(Parcel parcel, int i) {
            parcel.writeMap(productInCart);
     }
+
+    public  String getAvailableComboId() {
+        List<Combo> combos = ComboRepository.getCombos();
+        for (Combo combo : combos) {
+            List<ComboDetail> details = combo.getDetails();
+
+            boolean available = true;
+            for (ComboDetail detail : details) {
+                Integer countInProduct = productInCart.get(detail.getProductId());
+                Integer countInDetail = detail.getQuantity();
+
+                if (countInDetail.intValue() > countInProduct.intValue()) {
+                    available = false;
+                    break;
+                }
+            }
+
+            if (available) {
+                return combo.getId();
+            }
+        }
+
+        return null;
+    }
+
 }
+
