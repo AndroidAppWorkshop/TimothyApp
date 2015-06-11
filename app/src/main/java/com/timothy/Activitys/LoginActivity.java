@@ -12,18 +12,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.timothy.Core.BaseApplication;
 import com.timothy.R;
-
+import library.timothy.Resources.NameResources;
 import org.json.JSONObject;
-
 
 public class LoginActivity extends Activity
 {
@@ -40,13 +36,7 @@ public class LoginActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-        sharedPreferences = getSharedPreferences("APIKey", MODE_PRIVATE);
-
-
-//        if (sharedPreferences.getString("APIKey", null) != null) {
-//            goToNextActivity();
-//        }
+        sharedPreferences = getSharedPreferences( NameResources.Key.Apikey , MODE_PRIVATE);
 
         buttonLogin = (Button) findViewById(R.id.buttonLogin);
         editTextAccount = (EditText) findViewById(R.id.editTextAccount);
@@ -83,13 +73,13 @@ public class LoginActivity extends Activity
                                 return;
                             }
 
-                            String apiKey = response.optString("APIKey");
+                            String apiKey = response.optString(NameResources.Key.Apikey);
                             if (TextUtils.isEmpty(apiKey)) {
                                 Toast.makeText(LoginActivity.this, "Login fail,cannot get APIKey", Toast.LENGTH_SHORT).show();
                                 return;
                             }
 
-                            sharedPreferences.edit().putString("APIKey", apiKey).commit();
+                            sharedPreferences.edit().putString(NameResources.Key.Apikey, apiKey).commit();
                             goToNextActivity();
                         }
                     },

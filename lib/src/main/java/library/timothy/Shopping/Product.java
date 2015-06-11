@@ -6,11 +6,11 @@ public class Product {
     private String name;
     private int price;
     private String image;
-    public Product(String id, String name, int price) {
+    public Product(String id, String name, int price ,String ImageUrl) {
         this.id = id;
         this.name = name;
         this.price= price;
-        //this.image=ImageUrl;
+        this.image=ImageUrl;
     }
 
     public String getId() {

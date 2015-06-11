@@ -34,6 +34,8 @@ import org.json.JSONArray;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import library.timothy.Resources.NameResources;
 import library.timothy.Resources.UriResources;
 import library.timothy.Shopping.Cart;
 import library.timothy.Shopping.Category;
@@ -75,9 +77,9 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
 
         progressBar.setVisibility(View.VISIBLE);
 
-        sharedPreferences = this.getActivity().getSharedPreferences("APIKey", Context.MODE_PRIVATE);
+        sharedPreferences = this.getActivity().getSharedPreferences(NameResources.Key.Apikey, Context.MODE_PRIVATE);
 
-        apiKey = sharedPreferences.getString("APIKey", null);
+        apiKey = sharedPreferences.getString(NameResources.Key.Apikey, null);
 
         loadProducts();
     }
@@ -108,7 +110,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                     public Map<String, String> getHeaders() {
                         HashMap<String, String> headers = new HashMap<String, String>();
 //                       headers.put("Accept", "application/json");
-                        headers.put("APIKey", apiKey);
+                        headers.put(NameResources.Key.Apikey, apiKey);
                         return headers;
                     }
                 });
@@ -138,7 +140,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public Map<String, String> getHeaders() {
                         HashMap<String, String> headers = new HashMap<String, String>();//
-                        headers.put("APIKey", apiKey);
+                        headers.put(NameResources.Key.Apikey, apiKey);
                         return headers;
                     }
                 });
@@ -149,12 +151,10 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
         listView.setAdapter(listViewAdapter);
     }
 
-
-
     @Override
     public void onClick(View v) {
         Intent it = new Intent(getActivity(), CartActivity.class);
-        it.putExtra("Data", cart);
+        it.putExtra(NameResources.Key.ParcelKey, cart);
         startActivity(it);
     }
 
@@ -224,7 +224,6 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
         @Override
         public Object instantiateItem(ViewGroup container, int pagerPosition) {
             cache = new LruBitmapCache();
-            //queue = Volley.newRequestQueue(getApplicationContext());
             ImageLoader = new ImageLoader(queue, cache);
             View inflate = getActivity().getLayoutInflater().inflate(R.layout.pageritem_container, null);
             LinearLayout pagerContainer = (LinearLayout) inflate.findViewById(R.id.pagerContainer);
@@ -254,6 +253,9 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                 final String productId = product.getId();
 
                 textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(productId)));
+
+                NetworkImageView imageView = (NetworkImageView)productView.findViewById(R.id.image);
+                imageView.setImageUrl(product.getimage() , BaseApplication.getInstance().getImageLoader() );
 
                 Button btnAdd = (Button) productView.findViewById(R.id.btnAdd);
 

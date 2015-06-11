@@ -53,7 +53,7 @@ public class ProductRepository {
                 category.setName(categoryId);
 
 
-                Product product = new Product(jsonObject.getString("Id"), jsonObject.getString("Name"), jsonObject.getInt("Price"));
+                Product product = new Product(jsonObject.getString("Id"), jsonObject.getString("Name"), jsonObject.getInt("Price") , jsonObject.getString("imageUrl"));
                 category.getProducts().add(product);
             }
         } catch (JSONException e) {

@@ -29,6 +29,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import library.timothy.Resources.NameResources;
+
 public class MagicLenGCM {
 
     private final static String SENDER_ID = "707422521982";
@@ -241,13 +243,13 @@ public class MagicLenGCM {
                         HashMap<String, String> headers = new HashMap<>();
                         headers.put("Accept", "application/json");
                         headers.put("Content-Type", "application/json; charset=utf-8");
-                        headers.put("APIKey", getAPIkey());
+                        headers.put(NameResources.Key.Apikey, getAPIkey());
                         return headers;
                     }
                 });
     }
     public String getAPIkey() {
-        return getActivity().getSharedPreferences("APIKey", Context.MODE_PRIVATE).getString("APIKey",null);
+        return getActivity().getSharedPreferences(NameResources.Key.Apikey, Context.MODE_PRIVATE).getString(NameResources.Key.Apikey,null);
     }
 
 }

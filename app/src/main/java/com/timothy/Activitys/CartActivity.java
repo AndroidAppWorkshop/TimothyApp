@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.timothy.Adapter.CartAdapter;
 import com.timothy.R;
-
+import library.timothy.Resources.NameResources;
 import library.timothy.Shopping.Cart;
 import library.timothy.Shopping.ProductRepository;
 
@@ -24,7 +24,7 @@ public class CartActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        cart=getIntent().getParcelableExtra("Data");
+        cart=getIntent().getParcelableExtra(NameResources.Key.ParcelKey);
 
         ListView listView = (ListView) findViewById(R.id.cartlistview);
         cartAdapter=new CartAdapter(CartActivity.this,cart);
