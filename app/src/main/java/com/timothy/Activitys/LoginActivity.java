@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -20,6 +22,9 @@ import com.timothy.Core.BaseApplication;
 import com.timothy.R;
 import library.timothy.Resources.NameResources;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends Activity
 {
@@ -63,7 +68,7 @@ public class LoginActivity extends Activity
             loginBody.put("Password", editTextPassword.getText().toString());
 
             BaseApplication.getInstance().addToRequestQueue(
-                    new JsonObjectRequest(Request.Method.POST, "http://jasonchi.ddns.net:8080/api/Authenticate", loginBody,
+                    new JsonObjectRequest(Request.Method.POST, "http://jasonchi.ddns.net:8080/api/Login", loginBody,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
@@ -91,7 +96,6 @@ public class LoginActivity extends Activity
                         }
                     }
             ));
-
         } catch (Exception e) {
             Log.e(LOG_TAG, e.getMessage(), e);
             progressBar.setVisibility(View.INVISIBLE);
