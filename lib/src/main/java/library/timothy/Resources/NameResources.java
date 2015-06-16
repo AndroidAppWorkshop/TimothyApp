@@ -7,7 +7,7 @@ public class NameResources {
 
     public static class Key
     {
-        public static String Apikey = "APIKey";
+        public static String Apikey = "Authorization";
         public static String ParcelKey = "Data";
     }
 }

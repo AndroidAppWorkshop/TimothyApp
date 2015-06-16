@@ -7,6 +7,7 @@ public class UriResources {
         private static final String API = HOST + "api/";
         public static final String Product = API + "Product";
         public static final String Authenticate = API + "Authenticate";
+        public static final String LogIn = API + "Login";
         public static final String Combo = API + "Combo";
         public static final String PushNotification = API + "PushNotification";
     }

@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import library.timothy.Resources.NameResources;
+import library.timothy.Resources.UriResources;
 
 public class MagicLenGCM {
 
@@ -224,7 +225,7 @@ public class MagicLenGCM {
 
         BaseApplication.getInstance()
                 .addToRequestQueue(new JsonObjectRequest(Request.Method.POST,
-                        "http://jasonchi.ddns.net:8080/api/PushNotification",
+                        UriResources.Server.PushNotification ,
                         new JSONObject(params),
                         new Response.Listener<JSONObject>() {
                             @Override
