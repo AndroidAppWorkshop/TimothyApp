@@ -21,6 +21,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.timothy.Core.BaseApplication;
 import com.timothy.R;
 import library.timothy.Resources.NameResources;
+import library.timothy.Resources.UriResources;
+
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -68,7 +70,7 @@ public class LoginActivity extends Activity
             loginBody.put("Password", editTextPassword.getText().toString());
 
             BaseApplication.getInstance().addToRequestQueue(
-                    new JsonObjectRequest(Request.Method.POST, "http://jasonchi.ddns.net:8080/api/Login", loginBody,
+                    new JsonObjectRequest(Request.Method.POST, UriResources.Server.LogIn, loginBody,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
