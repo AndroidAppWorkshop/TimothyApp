@@ -28,8 +28,6 @@ public class Cart implements Parcelable{
         }
     };
 
-
-
     public  void addToCart(String productId, int count) {
         Integer countInMap = productInCart.get(productId);
         if (countInMap == null) {

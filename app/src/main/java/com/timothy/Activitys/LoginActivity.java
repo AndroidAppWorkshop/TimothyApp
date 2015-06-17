@@ -52,7 +52,7 @@ public class LoginActivity extends Activity
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {   
+            public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
                 Login();
             }

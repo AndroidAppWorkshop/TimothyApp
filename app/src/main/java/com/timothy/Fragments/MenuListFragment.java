@@ -49,7 +49,7 @@ import library.timothy.Shopping.ProductRepository;
 public class MenuListFragment extends Fragment implements View.OnClickListener {
 
     private ProductRepository productRepository = new ProductRepository();
-    private final Cart cart = new Cart();
+    private Cart cart = new Cart();
     private TextView textViewPriceSum;
     private TextView textViewTotal;
     private ProgressBar progressBar;
@@ -58,7 +58,6 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
     private SharedPreferences sharedPreferences;
     private String apiKey;
     private ListViewAdapter listViewAdapter;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -83,8 +82,6 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
 
         loadProducts();
     }
-
-
 
     private void loadProducts() {
         BaseApplication.getInstance().addToRequestQueue(
@@ -154,10 +151,20 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         Intent it = new Intent(getActivity(), CartActivity.class);
-        it.putExtra(NameResources.Key.ParcelKey, cart);
-        startActivity(it);
+        it.putExtra(NameResources.Key.ParcelKey , cart);
+        startActivityForResult( it , NameResources.Index.ActivityResult );
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        cart = data.getExtras().getParcelable(NameResources.Key.ParcelKey);
+
+        SetingSum(cart);
+
+        listViewAdapter.notifyDataSetChanged();
+    }
     private class ListViewAdapter extends BaseAdapter {
 
         private List<Category> categories = productRepository.getAllCategories();
@@ -266,8 +273,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
 
                         checkCombo();
                         textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(productId)));
-                        textViewPriceSum.setText(String.valueOf(cart.calculateSumPrice()));
-                        textViewTotal.setText(String.valueOf(cart.calculateSumCount()));
+                        SetingSum(cart);
                     }
                 });
 
@@ -278,8 +284,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
 
                         cart.addToCart(productId, -1);
                         textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(productId)));
-                        textViewPriceSum.setText(String.valueOf(cart.calculateSumPrice()));
-                        textViewTotal.setText(String.valueOf(cart.calculateSumCount()));
+                        SetingSum(cart);
                     }
                 });
             }
@@ -301,6 +306,11 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
         }
+    }
+    void SetingSum(Cart Cart)
+    {
+        textViewPriceSum.setText(String.valueOf(cart.calculateSumPrice()));
+        textViewTotal.setText(String.valueOf(Cart.calculateSumCount()));
     }
 
     private void checkCombo() {
