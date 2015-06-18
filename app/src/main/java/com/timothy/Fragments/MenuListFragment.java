@@ -58,15 +58,17 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
     private SharedPreferences sharedPreferences;
     private String apiKey;
     private ListViewAdapter listViewAdapter;
-
+    View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.menulayout, null);
+        view=inflater.inflate(R.layout.menulayout, null);
+        return  view;
+
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         listView = (ListView) view.findViewById(R.id.listview);
         textViewPriceSum = (TextView) view.findViewById(R.id.textViewTotalPrice);
         textViewTotal = (TextView) view.findViewById(R.id.textViewTotal);
