@@ -309,7 +309,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
             container.removeView((View) object);
         }
     }
-    void SetingSum(Cart Cart)
+    private void SetingSum(Cart Cart)
     {
         textViewPriceSum.setText(String.valueOf(cart.calculateSumPrice()));
         textViewTotal.setText(String.valueOf(Cart.calculateSumCount()));

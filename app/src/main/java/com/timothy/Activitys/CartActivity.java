@@ -54,7 +54,7 @@ public class CartActivity extends Activity implements View.OnClickListener{
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
             Intent it = new Intent();
             it.putExtra(NameResources.Key.ParcelKey , cart);
-            this.setResult(RESULT_OK , it);
+            this.setResult( RESULT_OK , it );
             this.finish();
             return true;
         }

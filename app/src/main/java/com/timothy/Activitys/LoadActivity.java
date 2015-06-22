@@ -32,37 +32,39 @@ public class LoadActivity extends Activity {
         setContentView(R.layout.activity_load);
         context = getApplicationContext();
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        ImageView loadingIv = (ImageView) findViewById(R.id.LoadImage);
-        loadingIv.setImageResource(R.drawable.menuicon);
+        ImageView loadingImage = (ImageView) findViewById(R.id.LoadImage);
+        loadingImage.setImageResource(R.drawable.menuicon);
 
         AlphaAnimation animation = new AlphaAnimation(0.1f, 1.0f);
-        animation.setDuration(3000);         loadingIv.setAnimation(animation);
+        animation.setDuration(3000);
+        loadingImage.setAnimation(animation);
 
         intent = new Intent( context , LoginActivity.class);
 
         animation.setAnimationListener(new Animation.AnimationListener() {
-        @Override
-        public void onAnimationStart(Animation animation) {
-            progressBar.setVisibility(View.VISIBLE);
+            @Override
+            public void onAnimationStart(Animation animation) {
+                progressBar.setVisibility(View.VISIBLE);
 
-        }
-        @Override
-        public void onAnimationEnd(Animation animation) {
+            }
+            @Override
+            public void onAnimationEnd(Animation animation) {
 
-         if (getSharedPreferences(NameResources.Key.Apikey , MODE_PRIVATE)
-                            .getString(NameResources.Key.Apikey, null) != null) {
-             intent.setClass(context , MainActivity.class);
+             if (getSharedPreferences(NameResources.Key.Apikey , MODE_PRIVATE)
+                                .getString(NameResources.Key.Apikey, null) != null) {
+                 intent.setClass(context , MainActivity.class);
+                 startActivity(intent);
+             }
+             else
              startActivity(intent);
-         }
-         else
-         startActivity(intent);
 
-         progressBar.setVisibility(View.INVISIBLE);
-         finish();
-        }
-        @Override
-        public void onAnimationRepeat(Animation animation) {
+             progressBar.setVisibility(View.INVISIBLE);
+             finish();
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation) {
 
-        }});
+            }
+        });
     }
 }

@@ -9,18 +9,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="6">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="top"
-            android:textSize="16dp"
-            android:text=" Order : "
-            android:id="@+id/Text"/>
-        <ListView
+        <ExpandableListView
             android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/List" />
+            android:id="@+id/Order_List" />
 
     </FrameLayout>
 

@@ -1,23 +1,27 @@
 package com.timothy.Activitys;
 
 import android.app.Activity;
-import android.app.PendingIntent;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.widget.TextView;
+import android.widget.ExpandableListView;
+
+import com.timothy.Adapter.ExpandableListAdapter;
 import com.timothy.R;
 
 public class OrderActivity extends Activity{
-    TextView tv ;
+
+    ExpandableListView orderList;
+    ExpandableListAdapter expandableListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
 
-        tv = (TextView)findViewById(R.id.Text);
+        orderList = (ExpandableListView)findViewById(R.id.Order_List);
+        expandableListAdapter = new ExpandableListAdapter(this , ExpandableListAdapter.getListFakerData()
+                                                              ,  ExpandableListAdapter.getMapFakerData() );
+        orderList.setAdapter(expandableListAdapter);
 
-        tv.append( this.getIntent().getStringExtra("Content")+ " a test Text ! !"  );
     }
+
 }
