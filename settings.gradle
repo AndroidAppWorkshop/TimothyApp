@@ -1,1 +1,1 @@
-include ':GCM_Android',':app', ':lib'
+include ':app', ':lib'

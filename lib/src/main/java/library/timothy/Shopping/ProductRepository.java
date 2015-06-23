@@ -15,7 +15,7 @@ import library.timothy.Shopping.Product;
 
 public class ProductRepository {
 
-    private static final Map<String, Category> categoryVos = new LinkedHashMap<String, Category>();
+   public static final Map<String, Category> categoryVos = new LinkedHashMap<String, Category>();
 
     public List<Category> getAllCategories() {
         List list = new LinkedList();

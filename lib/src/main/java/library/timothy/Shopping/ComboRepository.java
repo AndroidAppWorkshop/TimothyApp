@@ -20,6 +20,19 @@ public class ComboRepository {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
+                Category category;
+                String categoryId="0";
+                if (ProductRepository.categoryVos.containsKey(categoryId)) {
+                    category = ProductRepository.categoryVos.get(categoryId);
+                } else {
+                    category = new Category(categoryId);
+                    ProductRepository.categoryVos.put(categoryId, category);
+                }
+                category.setName(categoryId);
+
+                Product product = new Product(jsonObject.getString("Id"), jsonObject.getString("Name"), jsonObject.getInt("Price") , jsonObject.getString("imageUrl"));
+                category.getProducts().add(product);
+
                 Combo comboVo = new Combo();
                 String comboId = jsonObject.getString("Id");
                 comboVo.setId(comboId);
