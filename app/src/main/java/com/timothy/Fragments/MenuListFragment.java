@@ -82,7 +82,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
 
         apiKey = sharedPreferences.getString(NameResources.Key.Apikey, null);
 
-        loadProducts();
+        loadCombo();
     }
 
     private void loadProducts() {
@@ -95,7 +95,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                             public void onResponse(JSONArray jsonArray) {
                                 progressBar.setVisibility(View.GONE);
                                 productRepository.refreshdata(jsonArray);
-                                loadCombo();
+                                renderlistview();
                             }
                         },
                         new Response.ErrorListener() {
@@ -126,7 +126,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                             public void onResponse(JSONArray jsonArray) {
                                 progressBar.setVisibility(View.GONE);
                                 ComboRepository.refreshData(jsonArray);
-                                renderlistview();
+                                loadProducts();
                             }
                         },
                         new Response.ErrorListener() {
