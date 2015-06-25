@@ -7,13 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
+
 import com.timothy.R;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ExpandableListAdapter extends BaseExpandableListAdapter
-{
+public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private List<String> listDataHeader;
@@ -28,7 +29,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 
     @Override
     public Object getChild(int groupPosition, int childPosititon) {
-        return this.listDataChild.get(this.listDataHeader.get(groupPosition))
+        return this.listDataChild
+                .get(this.listDataHeader.get(groupPosition))
                 .get(childPosititon);
     }
 
@@ -41,12 +43,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
-        final String childText = (String) getChild(groupPosition, childPosition);
+        String childText = (String) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.list_expand , null);
+            convertView = infalInflater.inflate(R.layout.list_expand, null);
         }
 
         TextView leftText = (TextView) convertView.findViewById(R.id.leftText);
@@ -85,7 +87,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
             LayoutInflater infalInflater =
                     (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            convertView = infalInflater.inflate(R.layout.list_expand , null);
+            convertView = infalInflater.inflate(R.layout.list_expand, null);
         }
 
         TextView GroupText = (TextView) convertView.findViewById(R.id.leftText);
@@ -105,18 +107,17 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
         return true;
     }
 
-    public static HashMap<String, List<String>> getMapFakerData()
-    {
+    public static HashMap<String, List<String>> getMapFakerData() {
         List<String> listChild = new ArrayList<>();
         listChild.add("test Expand");
 
         HashMap<String, List<String>> map = new HashMap<>();
-        map.put( getListFakerData().get(0) , listChild );
+        map.put(getListFakerData().get(0), listChild);
 
         return map;
     }
-    public static List<String> getListFakerData()
-    {
+
+    public static List<String> getListFakerData() {
         List<String> listHeader = new ArrayList<>();
         listHeader.add("TEST");
         return listHeader;

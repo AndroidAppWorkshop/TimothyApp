@@ -27,7 +27,7 @@
         <activity android:name="com.timothy.Activitys.MainActivity" />
         <activity android:name="com.timothy.Activitys.SendActivity" />
         <activity android:name="com.timothy.Activitys.CartActivity" />
-        <activity android:name="com.timothy.Activitys.HistoryActivity" />
+        <activity android:name=".Activitys.HistoryActivity" />
 
         <activity android:name=".Activitys.LoadActivity">
             <intent-filter>

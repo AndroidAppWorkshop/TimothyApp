@@ -135,8 +135,6 @@ public class CartActivity extends Activity implements View.OnClickListener{
         } catch (Exception e) {
             Log.e(LOG_TAG, e.getMessage(), e);
         }
-
-
     }
 
     private void JSONEncode( Map<String, Integer> productInCart )  throws JSONException {

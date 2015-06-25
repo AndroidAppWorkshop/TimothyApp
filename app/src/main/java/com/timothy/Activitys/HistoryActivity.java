@@ -58,7 +58,6 @@ public class HistoryActivity extends AppCompatActivity {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
 
-
             final LinearLayout listitemBody = viewHolder.getListitemBody();
             viewHolder.getButtonExpand().setOnClickListener(new View.OnClickListener() {
                 @Override

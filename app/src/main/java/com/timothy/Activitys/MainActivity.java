@@ -1,5 +1,6 @@
 package com.timothy.Activitys;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private List<DrawerAdapter.DrawerItem> getList() {
         List<DrawerAdapter.DrawerItem> list = new ArrayList<>();
-        String[] DraName= { " NetImage " };
+        String[] DraName= { " NetImage " , "HistoryActivity Page" };
         int[] DraIcon = {R.drawable.testicon , R.drawable.menuicon};
         for (int position = 0; position < DraName.length; position++) {
             list.add(new DrawerAdapter.DrawerItem( DraName[position] , DraIcon[position]));
@@ -122,7 +123,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Fra = new NetImage();
                 ft1.replace(R.id.DraOut , Fra).commit();
                 break;
-
+            case 1:
+                Intent it = new Intent(this , HistoryActivity.class);
+                startActivity(it);
+                break;
             default:
                 break;
         }
