@@ -34,6 +34,7 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
 
                 Intent intentNextAction = new Intent(context, OrderActivity.class);
 
+                intentNextAction.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intentNextAction.putExtra("Content", "this is a message from Intent " + extras.getString("message"));
 
                 MagicLenGCM

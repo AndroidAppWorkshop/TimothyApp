@@ -34,7 +34,6 @@ import org.json.JSONArray;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import library.timothy.Resources.NameResources;
 import library.timothy.Resources.UriResources;
 import library.timothy.Shopping.Cart;
@@ -161,11 +160,16 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        cart = data.getExtras().getParcelable(NameResources.Key.ParcelKey);
+        if( listViewAdapter != null )
+        {
+            cart = data.getExtras().getParcelable(NameResources.Key.ParcelKey);
 
-        SetingSum(cart);
+            SetingSum(cart);
 
-        listViewAdapter.notifyDataSetChanged();
+            listViewAdapter.notifyDataSetChanged();
+        }
+
+
     }
     private class ListViewAdapter extends BaseAdapter {
 

@@ -1,6 +1,8 @@
 package com.timothy.Activitys;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ExpandableListView;
 
@@ -18,10 +20,10 @@ public class OrderActivity extends Activity{
         setContentView(R.layout.activity_order);
 
         orderList = (ExpandableListView)findViewById(R.id.Order_List);
+
         expandableListAdapter = new ExpandableListAdapter(this , ExpandableListAdapter.getListFakerData()
                                                               ,  ExpandableListAdapter.getMapFakerData() );
         orderList.setAdapter(expandableListAdapter);
-
     }
 
 }

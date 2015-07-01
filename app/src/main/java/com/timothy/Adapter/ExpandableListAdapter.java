@@ -1,11 +1,13 @@
 package com.timothy.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.timothy.R;
@@ -13,11 +15,17 @@ import com.timothy.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private List<String> listDataHeader;
+    private SharedPreferences preferences;
+    private static SharedPreferences.Editor edit;
+    private static List<String> listChild;
+    private static List<String> listHeader;
+    private static HashMap<String, List<String>> map;
     private HashMap<String, List<String>> listDataChild;
 
     public ExpandableListAdapter(Context context, List<String> listDataHeader,
@@ -25,6 +33,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         this.context = context;
         this.listDataHeader = listDataHeader;
         this.listDataChild = listChildData;
+        preferences = context.getSharedPreferences(context.getPackageName(), Context.MODE_APPEND);
+        edit = preferences.edit();
     }
 
     @Override
@@ -87,15 +97,26 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             LayoutInflater infalInflater =
                     (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            convertView = infalInflater.inflate(R.layout.list_expand, null);
+            convertView = infalInflater.inflate(R.layout.list_group, null);
         }
 
-        TextView GroupText = (TextView) convertView.findViewById(R.id.leftText);
+        final TextView GroupText = (TextView) convertView.findViewById(R.id.groupText);
+        Button Deltebtn = (Button) convertView.findViewById(R.id.DeleteBtn);
+        Deltebtn.setFocusable(false);
+        Deltebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeOrder(GroupText.getText().toString());
+                noticeChanged();
+            }
+        });
+
         GroupText.setTypeface(null, Typeface.BOLD);
         GroupText.setText(headerTitle);
 
         return convertView;
     }
+    private void noticeChanged(){ this.notifyDataSetChanged();}
 
     @Override
     public boolean hasStableIds() {
@@ -108,18 +129,33 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     public static HashMap<String, List<String>> getMapFakerData() {
-        List<String> listChild = new ArrayList<>();
-        listChild.add("test Expand");
+        if(listChild == null ){
+            listChild = new ArrayList<>();
+            listChild.add("test Expand");
+        }
 
-        HashMap<String, List<String>> map = new HashMap<>();
-        map.put(getListFakerData().get(0), listChild);
-
+        if(map == null ){
+            map = new HashMap<>();
+            map.put(getListFakerData().get(0), listChild);
+            map.put(getListFakerData().get(1), listChild);
+            edit.putString(getListFakerData().get(0)," ¬y¤ô¸¹ ");
+        }
         return map;
     }
 
     public static List<String> getListFakerData() {
-        List<String> listHeader = new ArrayList<>();
-        listHeader.add("TEST");
+        if(listHeader == null ){
+            listHeader = new ArrayList<>();
+            listHeader.add("TEST");
+            listHeader.add("Menu");
+        }
         return listHeader;
     }
+    private void removeOrder(String name)
+    {
+        listDataChild.remove(name);
+        listDataHeader.remove(name);
+        edit.remove(name);
+    }
+
 }
