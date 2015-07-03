@@ -58,6 +58,9 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
     private String apiKey;
     private ListViewAdapter listViewAdapter;
     View view;
+    ComboRepository comboRepository;
+    private   ViewPager viewPagerCombo;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.menulayout, null);
@@ -68,6 +71,12 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        comboRepository=new ComboRepository();
+        viewPagerCombo=(ViewPager)view.findViewById(R.id.comboPager);
+        Category combo = ComboRepository.getCategoryVo();
+        viewPagerCombo.setAdapter(new ComboPagerAdapter(combo.getProducts()));
+     //---------------------------------------------------------------------------
         listView = (ListView) view.findViewById(R.id.listview);
         textViewPriceSum = (TextView) view.findViewById(R.id.textViewTotalPrice);
         textViewTotal = (TextView) view.findViewById(R.id.textViewTotal);
@@ -125,6 +134,8 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                             public void onResponse(JSONArray jsonArray) {
                                 progressBar.setVisibility(View.GONE);
                                 ComboRepository.refreshData(jsonArray);
+//                                Category combo = ComboRepository.getCategoryVo();
+//                                viewPagerCombo.setAdapter(new ComboPagerAdapter(combo.getProducts()));
                                 loadProducts();
                             }
                         },
@@ -168,9 +179,166 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
 
             listViewAdapter.notifyDataSetChanged();
         }
-
-
     }
+
+
+    private class ComboPagerAdapter extends PagerAdapter {
+
+        private List<Product> products;
+
+        public ComboPagerAdapter(List<Product> products) {
+            this.products = products;
+        }
+
+        @Override
+        public int getCount() {
+            return products.size() / 3 + 1;
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object o) {
+            return view.equals(o);
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int  pagerPosition) {
+            View inflate = getActivity().getLayoutInflater().inflate(R.layout.pageritemcombo_container, null);
+            LinearLayout pagerContainer = (LinearLayout) inflate.findViewById(R.id.pagerContainer);
+
+            int start = 3 * pagerPosition + 0;
+            int end = 3 * pagerPosition + 2;
+            int[] pagerItemProductViewIds = {R.id.pagerItem1, R.id.pagerItem2, R.id.pagerItem3};
+            for (int i = start; i <= end; i++) {
+                View productView = pagerContainer.findViewById(pagerItemProductViewIds[i - 3 * pagerPosition]);
+
+                Product productVo;
+                try {
+                    productVo = products.get(i);
+                } catch (Exception e) {
+                    productView.setVisibility(View.INVISIBLE);
+                    continue;
+                }
+
+
+                TextView textViewProductName = (TextView) productView.findViewById(R.id.textViewProductName);
+                textViewProductName.setText(productVo.getName());
+
+                TextView textViewProductPrice = (TextView) productView.findViewById(R.id.textViewProductPrice);
+                final int price = productVo.getPrice();
+                textViewProductPrice.setText(String.valueOf(price));
+
+                final TextView textViewProductCount = (TextView) productView.findViewById(R.id.textViewProductCount);
+                final String productId = productVo.getId();
+
+                textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(productId)));//fix
+
+                final Map<String, Combo> combos=ComboRepository.getCombosMap();
+
+                Button btnorder = (Button) productView.findViewById(R.id.btnAdd);
+                btnorder.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        View view = getActivity().getLayoutInflater().inflate(R.layout.dialogsetview, null);
+                        listView=(ListView)view.findViewById(R.id.listView1);
+                        listView.setAdapter(new Adapter(combos.get(productId)));//send
+
+                        AlertDialog.Builder dialog=new AlertDialog.Builder(getActivity());
+                        dialog.setTitle("Order");
+                        dialog.setView(view);
+                        dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+
+
+                            }
+                        });
+                        dialog.setNegativeButton("No",new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+
+                            }
+                        });
+                        dialog.show();
+                    }
+                });
+
+            }
+
+            container.addView(inflate);
+            return inflate;
+        }
+    }
+
+    public class Adapter extends BaseAdapter
+    {
+        private Combo comboVo;
+        private List<ComboDetail> details;
+        public  Adapter(Combo comboVo) {
+            this.comboVo = comboVo;
+            this.details=comboVo.getDetails();
+        }
+
+        @Override
+        public int getCount() {
+
+            return details.size();
+        }
+
+        @Override
+        public Object getItem(int arg0) {
+
+            return details.get(arg0);
+        }
+
+        @Override
+        public long getItemId(int arg0) {
+
+            return 0;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+
+            final ViewHolder viewHolder;
+            if (convertView == null) {
+                convertView =getActivity().getLayoutInflater().inflate(R.layout.dialoglistview_adapter, null);
+                viewHolder = new ViewHolder();
+                viewHolder.product = (TextView) convertView.findViewById(R.id.product);
+
+                viewHolder.add= (Button) convertView.findViewById(R.id.add);
+                viewHolder.sub= (Button) convertView.findViewById(R.id.sub);
+
+
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+            viewHolder.add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
+            viewHolder.product.setText(details.get(position).getProductId());
+
+            viewHolder.sub.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+            return convertView;
+
+        }
+        private class ViewHolder
+        {
+            TextView product;
+            Button add,sub;
+        }
+    }
+
     private class ListViewAdapter extends BaseAdapter {
 
         private List<Category> categories = productRepository.getAllCategories();

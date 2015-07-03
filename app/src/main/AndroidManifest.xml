@@ -24,12 +24,12 @@
 
         <activity android:name=".Activitys.OrderActivity" />
         <activity android:name="org.achartengine.GraphicalActivity" />
-        <activity android:name="com.timothy.Activitys.MainActivity" />
+        <activity android:name="com.timothy.Activitys.LoadActivity" />
         <activity android:name="com.timothy.Activitys.SendActivity" />
         <activity android:name="com.timothy.Activitys.CartActivity" />
         <activity android:name=".Activitys.HistoryActivity" />
 
-        <activity android:name=".Activitys.LoadActivity">
+        <activity android:name=".Activitys.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

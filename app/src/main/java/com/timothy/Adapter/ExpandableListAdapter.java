@@ -138,7 +138,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             map = new HashMap<>();
             map.put(getListFakerData().get(0), listChild);
             map.put(getListFakerData().get(1), listChild);
-            edit.putString(getListFakerData().get(0)," ¬y¤ô¸¹ ");
+            edit.putString(getListFakerData().get(0)," water ");
         }
         return map;
     }

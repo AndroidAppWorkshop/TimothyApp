@@ -5,6 +5,12 @@ public class ComboDetail {
     private String productId;
     private Integer Quantity;
 
+    public ComboDetail() {}//fix
+
+    public ComboDetail(String id) {
+        this.productId=id;
+    }//fix
+
     public String getProductId() {
         return productId;
     }
