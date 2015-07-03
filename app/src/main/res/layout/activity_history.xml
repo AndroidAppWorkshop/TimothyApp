@@ -1,41 +1,68 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/HistoryDrawer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical"
-             >
+              android:orientation="vertical">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="145dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="145dp">
 
-        <EditText android:id="@+id/startDate" android:layout_width="match_parent" android:layout_height="wrap_content"
-                  android:focusable="false"
-                  android:editable="false"
-                  android:text="請選擇開始日期"
-                  android:drawableRight="@android:drawable/arrow_down_float"
-                />
+            <EditText android:id="@+id/startDate" android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:focusable="false"
+                      android:editable="false"
+                      android:text="請選擇開始日期"
+                      android:drawableRight="@android:drawable/arrow_down_float" />
 
-        <EditText android:id="@+id/endDate" android:layout_width="match_parent" android:layout_height="wrap_content"
-                  android:focusable="false"
-                  android:editable="false"
-                  android:text="請選擇結束日期"
-                  android:drawableRight="@android:drawable/arrow_down_float"
-                />
+            <EditText android:id="@+id/endDate" android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:focusable="false"
+                      android:editable="false"
+                      android:text="請選擇結束日期"
+                      android:drawableRight="@android:drawable/arrow_down_float" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="查詢"
-            android:id="@+id/button3"
-            android:layout_gravity="right" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="查詢"
+                android:id="@+id/button3"
+                android:layout_gravity="right" />
+        </LinearLayout>
+
+        <ExpandableListView android:layout_width="match_parent"
+            android:layout_height="394dp"
+            android:id="@+id/expandableListView"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
+
     </LinearLayout>
-
-    <ExpandableListView android:layout_width="match_parent"
-        android:layout_height="394dp"
-        android:id="@+id/expandableListView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"></ExpandableListView>
-
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="end"
+        android:background="#2f4f4f"
+        android:id="@+id/EndLinear">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/history_chatBtn"
+                android:src="@drawable/history_chat"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/history_orderBtn"
+                android:src="@drawable/history_ordericon"/>
+        </LinearLayout>
+        <include android:id="@+id/art" layout="@layout/artgine"/>
+    </LinearLayout>
+</android.support.v4.widget.DrawerLayout>

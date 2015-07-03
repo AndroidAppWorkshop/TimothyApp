@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private List<DrawerAdapter.DrawerItem> getList() {
         List<DrawerAdapter.DrawerItem> list = new ArrayList<>();
-        String[] DraName= { " NetImage " , "HistoryActivity Page" };
-        int[] DraIcon = {R.drawable.testicon , R.drawable.menuicon};
+        String[] DraName= { " NetImage " , "HistoryActivity Page" , "Order Page" };
+        int[] DraIcon = {R.drawable.testicon , R.drawable.menuicon ,R.drawable.testicon};
         for (int position = 0; position < DraName.length; position++) {
             list.add(new DrawerAdapter.DrawerItem( DraName[position] , DraIcon[position]));
         }
@@ -126,6 +126,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             case 1:
                 Intent it = new Intent(this , HistoryActivity.class);
                 startActivity(it);
+                break;
+            case 2:
+                Intent intentNextAction = new Intent(this, OrderActivity.class);
+                intentNextAction.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intentNextAction.putExtra("Content", "message");
+                startActivity(intentNextAction);
                 break;
             default:
                 break;

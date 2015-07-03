@@ -59,9 +59,6 @@ public class HistoryActivity extends AppCompatActivity {
                 ).show();
             }
         });
-//        Calendar c = Calendar.getInstance();
-//        String dateString = new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
-//        editTextStartDate.setText(dateString);
 
         editTextEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,11 +83,7 @@ public class HistoryActivity extends AppCompatActivity {
                 ).show();
             }
         });
-
-//        editTextEndDate.setText(dateString);
     }
-
-
 
     class ExpandableAdapter extends BaseExpandableListAdapter {
 
@@ -159,9 +152,6 @@ public class HistoryActivity extends AppCompatActivity {
             return false;
         }
     }
-
-
-
 }
 
 

@@ -13,5 +13,7 @@ public class NameResources {
         public static String Apikey = "Authorization";
         public static String ParcelKey = "Data";
         public static String OrderPrefenslKey = "OrderKey";
+        public static String OrderActionlKey = "KeyOrderAction";
+
     }
 }

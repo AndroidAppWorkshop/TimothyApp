@@ -21,8 +21,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private List<String> listDataHeader;
-    private SharedPreferences preferences;
-    private static SharedPreferences.Editor edit;
     private static List<String> listChild;
     private static List<String> listHeader;
     private static HashMap<String, List<String>> map;
@@ -33,8 +31,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         this.context = context;
         this.listDataHeader = listDataHeader;
         this.listDataChild = listChildData;
-        preferences = context.getSharedPreferences(context.getPackageName(), Context.MODE_APPEND);
-        edit = preferences.edit();
+
     }
 
     @Override
@@ -138,7 +135,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             map = new HashMap<>();
             map.put(getListFakerData().get(0), listChild);
             map.put(getListFakerData().get(1), listChild);
-            edit.putString(getListFakerData().get(0)," water ");
         }
         return map;
     }
@@ -155,7 +151,15 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     {
         listDataChild.remove(name);
         listDataHeader.remove(name);
-        edit.remove(name);
     }
-
+    public void addNewItem(String Item )
+    {
+        listHeader.add(Item);
+        notifyDataSetChanged();
+    }
+    public void addNewItem(String Item ,List<String> ChildItem)
+    {
+        listDataChild.put(Item , ChildItem);
+        notifyDataSetChanged();
+    }
 }
