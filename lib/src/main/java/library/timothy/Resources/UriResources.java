@@ -8,6 +8,7 @@ public class UriResources {
         public static final String Product = API + "Product";
         public static final String LogIn = API + "Login";
         public static final String Combo = API + "Combo";
+        public static final String orderhistory= API + "orderhistory";
         public static final String PushNotification = API + "PushNotification";
     }
 

@@ -58,9 +58,8 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
     private String apiKey;
     private ListViewAdapter listViewAdapter;
     View view;
-    ComboRepository comboRepository;
     private   ViewPager viewPagerCombo;
-
+    private ComboPagerAdapter comboPagerAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.menulayout, null);
@@ -72,11 +71,8 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        comboRepository=new ComboRepository();
         viewPagerCombo=(ViewPager)view.findViewById(R.id.comboPager);
-        Category combo = ComboRepository.getCategoryVo();
-        viewPagerCombo.setAdapter(new ComboPagerAdapter(combo.getProducts()));
-     //---------------------------------------------------------------------------
+
         listView = (ListView) view.findViewById(R.id.listview);
         textViewPriceSum = (TextView) view.findViewById(R.id.textViewTotalPrice);
         textViewTotal = (TextView) view.findViewById(R.id.textViewTotal);
@@ -90,7 +86,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
 
         apiKey = sharedPreferences.getString(NameResources.Key.Apikey, null);
 
-        loadCombo();
+        loadProducts();
     }
 
     private void loadProducts() {
@@ -103,7 +99,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                             public void onResponse(JSONArray jsonArray) {
                                 progressBar.setVisibility(View.GONE);
                                 productRepository.refreshdata(jsonArray);
-                                renderlistview();
+                                loadCombo();
                             }
                         },
                         new Response.ErrorListener() {
@@ -134,9 +130,8 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                             public void onResponse(JSONArray jsonArray) {
                                 progressBar.setVisibility(View.GONE);
                                 ComboRepository.refreshData(jsonArray);
-//                                Category combo = ComboRepository.getCategoryVo();
-//                                viewPagerCombo.setAdapter(new ComboPagerAdapter(combo.getProducts()));
-                                loadProducts();
+                                rendercombo();
+                                renderlistview();
                             }
                         },
                         new Response.ErrorListener() {
@@ -159,6 +154,11 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
         listViewAdapter = new ListViewAdapter();
         listView.setAdapter(listViewAdapter);
     }
+    private void rendercombo() {
+        comboPagerAdapter=new ComboPagerAdapter();
+        viewPagerCombo.setAdapter(comboPagerAdapter);
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -184,15 +184,15 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
 
     private class ComboPagerAdapter extends PagerAdapter {
 
-        private List<Product> products;
 
-        public ComboPagerAdapter(List<Product> products) {
-            this.products = products;
+        private  List<Combo>  combos;
+        public ComboPagerAdapter() {
+            combos = ComboRepository.getCombos();
         }
 
         @Override
         public int getCount() {
-            return products.size() / 3 + 1;
+            return combos.size() / 3 + 1;
         }
 
         @Override
@@ -211,9 +211,9 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
             for (int i = start; i <= end; i++) {
                 View productView = pagerContainer.findViewById(pagerItemProductViewIds[i - 3 * pagerPosition]);
 
-                Product productVo;
+                final Combo combosvo;
                 try {
-                    productVo = products.get(i);
+                    combosvo = combos.get(i);
                 } catch (Exception e) {
                     productView.setVisibility(View.INVISIBLE);
                     continue;
@@ -221,40 +221,62 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
 
 
                 TextView textViewProductName = (TextView) productView.findViewById(R.id.textViewProductName);
-                textViewProductName.setText(productVo.getName());
+                textViewProductName.setText(combosvo.getName());
 
-                TextView textViewProductPrice = (TextView) productView.findViewById(R.id.textViewProductPrice);
-                final int price = productVo.getPrice();
-                textViewProductPrice.setText(String.valueOf(price));
 
                 final TextView textViewProductCount = (TextView) productView.findViewById(R.id.textViewProductCount);
-                final String productId = productVo.getId();
+                final String productId =combosvo.getId();
 
                 textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(productId)));//fix
 
-                final Map<String, Combo> combos=ComboRepository.getCombosMap();
+                Button btnDrink=(Button)productView.findViewById(R.id.btnDrink);
+                Button btnMeat = (Button) productView.findViewById(R.id.btnMeat);
 
-                Button btnorder = (Button) productView.findViewById(R.id.btnAdd);
-                btnorder.setOnClickListener(new View.OnClickListener() {
+                btnDrink.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         View view = getActivity().getLayoutInflater().inflate(R.layout.dialogsetview, null);
                         listView=(ListView)view.findViewById(R.id.listView1);
-                        listView.setAdapter(new Adapter(combos.get(productId)));//send
+                        listView.setAdapter(new DrinkAdapter(combosvo));
 
                         AlertDialog.Builder dialog=new AlertDialog.Builder(getActivity());
                         dialog.setTitle("Order");
                         dialog.setView(view);
                         dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
+                                int combocount=cart.checkComboCount(combosvo);
+                                if (combocount>0)
+                                {
+                                    textViewProductCount.setText(String.valueOf(combocount));
+                                    SetingSum(cart);
+                                }
+                                else
+                                {
+                                    textViewProductCount.setText(String.valueOf(combocount));
+                                    SetingSum(cart);
+                                    Toast.makeText(getActivity(), "套餐數量不符合,請重新檢查", Toast.LENGTH_SHORT).show();
 
+                                }
 
                             }
                         });
-                        dialog.setNegativeButton("No",new DialogInterface.OnClickListener() {
 
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                        dialog.show();
+                    }
+                });
+
+                btnMeat.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        View view = getActivity().getLayoutInflater().inflate(R.layout.dialogsetview, null);
+                        listView=(ListView)view.findViewById(R.id.listView1);
+                        listView.setAdapter(new MeatAdapter(combosvo));
+
+                        AlertDialog.Builder dialog=new AlertDialog.Builder(getActivity());
+                        dialog.setTitle("Order");
+                        dialog.setView(view);
+                        dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
 
 
                             }
@@ -270,11 +292,89 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    public class Adapter extends BaseAdapter
+    public class DrinkAdapter extends BaseAdapter
     {
         private Combo comboVo;
         private List<ComboDetail> details;
-        public  Adapter(Combo comboVo) {
+        public  DrinkAdapter(Combo comboVo) {
+            this.comboVo = comboVo;
+            this.details=comboVo.getDrinkDetails();
+        }
+
+        @Override
+        public int getCount() {
+
+            return details.size();
+        }
+
+        @Override
+        public Object getItem(int arg0) {
+
+            return details.get(arg0);
+        }
+
+        @Override
+        public long getItemId(int arg0) {
+
+            return 0;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+
+            final ViewHolder viewHolder;
+            if (convertView == null) {
+                convertView =getActivity().getLayoutInflater().inflate(R.layout.dialoglistview_adapter, null);
+                viewHolder = new ViewHolder();
+                viewHolder.product = (TextView) convertView.findViewById(R.id.product);
+                viewHolder.textViewProductCount=(TextView)convertView.findViewById(R.id.textViewProductCount);
+                viewHolder.textViewProductPrice=(TextView)convertView.findViewById(R.id.textViewProductPrice);
+                viewHolder.add= (Button) convertView.findViewById(R.id.add);
+                viewHolder.sub= (Button) convertView.findViewById(R.id.sub);
+
+
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+
+            final String productId=details.get(position).getProductId();
+            viewHolder.product.setText(details.get(position).getName());
+            viewHolder.textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(details.get(position).getProductId())));
+            viewHolder.textViewProductPrice.setText(String.valueOf(details.get(position).getPrice()));
+            viewHolder.add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    cart.addToCart(productId, 1);
+                    viewHolder.textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(details.get(position).getProductId())));
+                    SetingSum(cart);
+                }
+            });
+
+
+            viewHolder.sub.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    cart.addToCart(productId, -1);
+                    viewHolder.textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(details.get(position).getProductId())));
+                    SetingSum(cart);
+                }
+            });
+            return convertView;
+
+        }
+        private class ViewHolder
+        {
+            TextView product,textViewProductPrice,textViewProductCount;
+            Button add,sub;
+        }
+    }
+
+    public class MeatAdapter extends BaseAdapter
+    {
+        private Combo comboVo;
+        private List<ComboDetail> details;
+        public  MeatAdapter(Combo comboVo) {
             this.comboVo = comboVo;
             this.details=comboVo.getDetails();
         }
@@ -305,7 +405,8 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                 convertView =getActivity().getLayoutInflater().inflate(R.layout.dialoglistview_adapter, null);
                 viewHolder = new ViewHolder();
                 viewHolder.product = (TextView) convertView.findViewById(R.id.product);
-
+                viewHolder.textViewProductCount=(TextView)convertView.findViewById(R.id.textViewProductCount);
+                viewHolder.textViewProductPrice=(TextView)convertView.findViewById(R.id.textViewProductPrice);
                 viewHolder.add= (Button) convertView.findViewById(R.id.add);
                 viewHolder.sub= (Button) convertView.findViewById(R.id.sub);
 
@@ -314,18 +415,29 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
+            final String productId=details.get(position).getProductId();
+            viewHolder.product.setText(details.get(position).getName());
+            viewHolder.textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(details.get(position).getProductId())));
+            viewHolder.textViewProductPrice.setText(String.valueOf(details.get(position).getPrice()));
+
             viewHolder.add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    cart.addToCart(productId, 1);
+                    viewHolder.textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(details.get(position).getProductId())));
+                    SetingSum(cart);
 
                 }
             });
 
-            viewHolder.product.setText(details.get(position).getProductId());
+
 
             viewHolder.sub.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    cart.addToCart(productId, -1);
+                    viewHolder.textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(details.get(position).getProductId())));
+                    SetingSum(cart);
 
                 }
             });
@@ -334,7 +446,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
         }
         private class ViewHolder
         {
-            TextView product;
+            TextView product,textViewProductPrice,textViewProductCount;;
             Button add,sub;
         }
     }
@@ -445,7 +557,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                     public void onClick(View v) {
                         cart.addToCart(productId, 1);
 
-                        checkCombo();
+                       // checkCombo();
                         textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(productId)));
                         SetingSum(cart);
                     }
@@ -481,42 +593,42 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
             container.removeView((View) object);
         }
     }
-    private void SetingSum(Cart Cart)
+    private void SetingSum(Cart cart)
     {
         textViewPriceSum.setText(String.valueOf(cart.calculateSumPrice()));
-        textViewTotal.setText(String.valueOf(Cart.calculateSumCount()));
+        textViewTotal.setText(String.valueOf(cart.calculateSumCount()));
     }
 
-    private void checkCombo() {
-        final String availableComboId = cart.getAvailableComboId();
-        if (availableComboId != null) {
-            new AlertDialog.Builder(getActivity())
-                    .setTitle("Package upgrade")
-                    .setMessage("Do you want to upgrade to the package?")
-                    .setPositiveButton("yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            cart.addToCart(availableComboId, 1);
+//    private void checkCombo() {
+//        final String availableComboId = cart.getAvailableComboId();
+//        if (availableComboId != null) {
+//            new AlertDialog.Builder(getActivity())
+//                    .setTitle("Package upgrade")
+//                    .setMessage("Do you want to upgrade to the package?")
+//                    .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            cart.addToCart(availableComboId, 1);
+//
+//                            Combo comboVo = ComboRepository.getCombosMap().get(availableComboId);
+//                            for (ComboDetail detailVo : comboVo.getDetails()) {
+//                                cart.addToCart(detailVo.getProductId(), 0 - detailVo.getQuantity());
+//                            }
+//
+//                            listViewAdapter.notifyDataSetChanged();
+//                            textViewPriceSum.setText(String.valueOf(cart.calculateSumPrice()));
+//                            textViewTotal.setText(String.valueOf(cart.calculateSumCount()));
+//                            checkCombo();
+//                        }
+//                    })
+//                    .setNegativeButton("no", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//
+//                        }
+//                    })
+//                    .show();
+//        }
 
-                            Combo comboVo = ComboRepository.getCombosMap().get(availableComboId);
-                            for (ComboDetail detailVo : comboVo.getDetails()) {
-                                cart.addToCart(detailVo.getProductId(), 0 - detailVo.getQuantity());
-                            }
-
-                            listViewAdapter.notifyDataSetChanged();
-                            textViewPriceSum.setText(String.valueOf(cart.calculateSumPrice()));
-                            textViewTotal.setText(String.valueOf(cart.calculateSumCount()));
-                            checkCombo();
-                        }
-                    })
-                    .setNegativeButton("no", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    })
-                    .show();
-        }
-
-    }
+//    }
 }

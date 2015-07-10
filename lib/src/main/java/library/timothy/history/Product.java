@@ -4,10 +4,12 @@ package library.timothy.history;
 public class Product {
     private String id;
     private String name;
+    private int  quantity;
 
-    public Product(String id, String name) {
+    public Product(String id, String name,int  quantity) {
         this.id = id;
         this.name = name;
+        this.quantity=quantity;
     }
 
     public String getId() {
@@ -24,5 +26,14 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+
+    public int getquantity() {
+        return quantity;
+    }
+
+    public void setquantity(int quantity) {
+        this.quantity= quantity;
     }
 }

@@ -17,6 +17,8 @@ public class ProductRepository {
 
    public static final Map<String, Category> categoryVos = new LinkedHashMap<String, Category>();
 
+    public static final List<Category> categorys = new LinkedList<Category>();
+
     public List<Category> getAllCategories() {
         List list = new LinkedList();
         list.addAll(categoryVos.values());
@@ -24,7 +26,7 @@ public class ProductRepository {
     }
 
         public Product findProductById(String productId) {
-            for (Category category : categoryVos.values()) {
+            for (Category category : categorys) {
                 for (Product product : category.getProducts()) {
                 if (productId.equals(product.getId())) {
                     return product;
@@ -52,11 +54,20 @@ public class ProductRepository {
                 category.setName(categoryId);
 
 
-                Product product = new Product(jsonObject.getString("Id"), jsonObject.getString("Name"), jsonObject.getInt("Price") , jsonObject.getString("imageUrl"));
+                Product product = new Product(jsonObject.getString("ProductId"), jsonObject.getString("ProductName"), jsonObject.getInt("ProductPrice") , jsonObject.getString("Image"));
                 category.getProducts().add(product);
             }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        addCategories();
     }
+
+    public  static void  addCategories() {
+        categorys.addAll(categoryVos.values());
+    }
+
+
+
 }

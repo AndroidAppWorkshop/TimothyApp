@@ -1,26 +1,54 @@
 package library.timothy.history;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+
 
 
 public class OrderRepository {
-    public static List<Order> getOrders() {
-        List<Order> orders = new LinkedList<Order>();
 
+    private static final Map<String, Order> orders = new LinkedHashMap<String, Order>();
 
-        Order order = new Order("1");
-        order.getProducts().add(new Product("A","Product A"));
-        order.getProducts().add(new Product("B","Product B"));
-        order.getProducts().add(new Product("C","Product C"));
-        orders.add(order);
+    public static void refreshData(JSONArray jsonArray) {
+        orders.clear();
+        try {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String orderid=jsonObject.getString("orderID");
+                Order order=new Order(jsonObject.getString("orderID"),jsonObject.getString("status"),
+                        jsonObject.getInt("totalprice"),jsonObject.getInt("discount"));
+                JSONArray detailsArray = jsonObject.getJSONArray("orderDetail");
 
-        Order order2 = new Order("2");
-        order2.getProducts().add(new Product("E","Product E"));
-        order2.getProducts().add(new Product("F","Product F"));
-        order2.getProducts().add(new Product("G","Product G"));
-        orders.add(order2);
+                for (int j = 0; j < detailsArray.length(); j++) {
+                    JSONObject detailObject = detailsArray.getJSONObject(j);
 
+                    Product product=new Product(detailObject.getString("orderID"),detailObject.getString("productName"),
+                            detailObject.getInt("quantity"));
+                    order.getProducts().add(product);
+                }
+                orders.put(orderid,order);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Map<String, Order> getOrdersMap() {
         return orders;
     }
+
+    public static List<Order> getOrders() {
+        List<Order> list = new LinkedList<Order>();
+        list.addAll(orders.values());
+        return list;
+    }
+
+
 }

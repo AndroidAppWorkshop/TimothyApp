@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ public class SendActivity extends Activity {
     Button gotomenue;
     private ProductRepository productRepository = new ProductRepository();
     int setdisprice=0,setrealprice=0;
+    List<String> productDisplayList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +41,7 @@ public class SendActivity extends Activity {
         disprice=(TextView)findViewById(R.id.textView6);
         realprice=(TextView)findViewById(R.id.textView4);
         gotomenue=(Button)findViewById(R.id.button2);
-        List<String> productDisplayList = new LinkedList<String>();
+        productDisplayList = new LinkedList<String>();
 
         Map<String, Integer> productInCart = cart.getProductInCart();
         for (Map.Entry<String, Integer> entry : productInCart.entrySet()) {
@@ -50,6 +52,8 @@ public class SendActivity extends Activity {
                 productDisplayList.add(product.getName() + ":" + count);
             }
         }
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, productDisplayList);
+        listView.setAdapter(arrayAdapter);
 
         disprice.setText(String.valueOf(setdisprice));
         realprice.setText(String.valueOf(setrealprice));

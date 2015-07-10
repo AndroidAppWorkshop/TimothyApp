@@ -47,7 +47,7 @@ public class CartAdapter extends BaseAdapter
             String productId = entry.getKey();
             int count = entry.getValue();
             if (count > 0) {
-                Product product = productRepository.findProductById(productId);
+                Product product = productRepository.findProductById(productId);//
                 productDisplayList.add(product.getName() + ":" + count);
                 productposition.add(product.getId());
             }

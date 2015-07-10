@@ -94,29 +94,78 @@ public class Cart implements Parcelable{
            parcel.writeMap(productInCart);
     }
 
-    public  String getAvailableComboId() {
-        List<Combo> combos = ComboRepository.getCombos();
-        for (Combo combo : combos) {
-            List<ComboDetail> details = combo.getDetails();
+//    public  String getAvailableComboId() {
+//        List<Combo> combos = ComboRepository.getCombos();
+//        for (Combo combo : combos) {
+//            List<ComboDetail> details = combo.getDetails();
+//
+//            boolean available = true;
+//            for (ComboDetail detail : details) {
+//                Integer countInProduct = productInCart.get(detail.getProductId());
+//                Integer countInDetail = detail.getQuantity();
+//
+//                if (countInDetail.intValue() > countInProduct.intValue()) {
+//                    available = false;
+//                    break;
+//                }
+//            }
+//
+//            if (available) {
+//                return combo.getId();
+//            }
+//        }
+//
+//        return null;
+//    }
 
-            boolean available = true;
-            for (ComboDetail detail : details) {
-                Integer countInProduct = productInCart.get(detail.getProductId());
-                Integer countInDetail = detail.getQuantity();
 
-                if (countInDetail.intValue() > countInProduct.intValue()) {
-                    available = false;
-                    break;
+        public  int checkComboCount( Combo combosvo) {
+
+            List<Combo> combos = ComboRepository.getCombos();
+            int allMeat = 0, allDrink = 0;
+            for (Combo combo : combos) {
+                List<ComboDetail> detailsMeat = combo.getDetails();
+                List<ComboDetail> detailsDrink = combo.getDrinkDetails();
+
+                for (ComboDetail detail : detailsMeat) {
+                    Integer countInProduct = productInCart.get(detail.getProductId());
+                    if(countInProduct==null)
+                    {
+                        allMeat+=0;
+                    }
+                    else if (countInProduct.intValue() > 0) {
+                        allMeat += countInProduct.intValue();
+                    }
                 }
-            }
+                for (ComboDetail detail : detailsDrink) {
+                    Integer countInProduct = productInCart.get(detail.getProductId());
+                    if(countInProduct==null)
+                    {
+                        allDrink+=0;
+                    }
+                    else if (countInProduct.intValue() > 0) {
+                        allDrink += countInProduct.intValue();
+                    }
+                }
 
-            if (available) {
-                return combo.getId();
             }
+            if((allDrink+allMeat)%2==0)
+            {
+                int meat = 0;
+                List<ComboDetail> detailsMeat = combosvo.getDetails();
+                for (ComboDetail detail : detailsMeat) {
+                    Integer countInProduct = productInCart.get(detail.getProductId());
+                    if(countInProduct==null)
+                    {
+                      meat+=0;
+                    }
+                    else if (countInProduct.intValue() > 0) {
+                        meat += countInProduct.intValue();
+                    }
+                }
+                return meat;
+            }
+            return  0;
         }
-
-        return null;
-    }
-
 }
 

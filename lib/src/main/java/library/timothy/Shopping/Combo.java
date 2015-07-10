@@ -7,7 +7,17 @@ import java.util.List;
 public class Combo {
 
         private String id;
+        private String name;
         private List<ComboDetail> details = new LinkedList<ComboDetail>();
+        private List<ComboDetail> drinkDetails = new LinkedList<ComboDetail>();
+
+        public String getName() {
+        return name;
+    }
+
+        public void setName(String name) {
+        this.name = name;
+    }
 
         public String getId() {
             return id;
@@ -24,6 +34,16 @@ public class Combo {
         public void setDetails(List<ComboDetail> details) {
             this.details = details;
         }
+
+        public List<ComboDetail> getDrinkDetails() {
+        return drinkDetails;
+    }
+
+        public void setDrinkDetails(List<ComboDetail> details) {
+        this.drinkDetails = drinkDetails;
+    }
+
+
     }
 
 

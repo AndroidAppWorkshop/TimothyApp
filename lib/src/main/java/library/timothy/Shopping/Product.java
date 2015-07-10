@@ -4,8 +4,8 @@ package library.timothy.Shopping;
 public class Product {
     private String id;
     private String name;
-    private int price;
-    private String image;
+    private int price=0;
+    private String image=null;
     public Product(String id, String name, int price ,String ImageUrl) {
         this.id = id;
         this.name = name;

@@ -1,6 +1,8 @@
 package com.timothy.Activitys;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,13 +11,27 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.timothy.Core.BaseApplication;
 import com.timothy.R;
+
+import org.json.JSONArray;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import library.timothy.Resources.NameResources;
+import library.timothy.Resources.UriResources;
 import library.timothy.history.Order;
 import library.timothy.history.OrderRepository;
 import library.timothy.history.Product;
@@ -24,14 +40,19 @@ import library.timothy.history.Product;
 public class HistoryActivity extends AppCompatActivity {
 
     private ExpandableListView expandableListView;
-
+    private ProgressBar progressBar;
+    private  ExpandableAdapter expandableAdapter;
+    private SharedPreferences sharedPreferences;
+    private String apiKey;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);
         expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
-        expandableListView.setAdapter(new ExpandableAdapter());
+        sharedPreferences = this.getSharedPreferences(NameResources.Key.Apikey, Context.MODE_PRIVATE);
+        apiKey = sharedPreferences.getString(NameResources.Key.Apikey, null);
 
         final EditText editTextStartDate = (EditText) findViewById(R.id.startDate);
         final EditText editTextEndDate = (EditText) findViewById(R.id.endDate);
@@ -50,7 +71,7 @@ public class HistoryActivity extends AppCompatActivity {
                         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                         String dateString = new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
 
-                        editTextStartDate.setText(dateString);
+                        editTextStartDate.setText("從" + dateString);
                     }
                 },
                         calendar.get(Calendar.YEAR),
@@ -59,6 +80,10 @@ public class HistoryActivity extends AppCompatActivity {
                 ).show();
             }
         });
+
+        Calendar c = Calendar.getInstance();
+        String dateString = new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
+        editTextStartDate.setText("從" + dateString);
 
         editTextEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,16 +99,56 @@ public class HistoryActivity extends AppCompatActivity {
                         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                         String dateString = new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
 
-                        editTextEndDate.setText(dateString);
+                        editTextEndDate.setText("到" + dateString);
+                        loadOrderhistory();
                     }
                 },
                         calendar.get(Calendar.YEAR),
                         calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DAY_OF_MONTH)
+
                 ).show();
+
             }
         });
+        editTextEndDate.setText("到" + dateString);
+        loadOrderhistory();
     }
+
+    private void loadOrderhistory() {
+        BaseApplication.getInstance().addToRequestQueue(
+                new JsonArrayRequest(
+                        Request.Method.POST,
+                        UriResources.Server.orderhistory,
+                        new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray jsonArray) {
+                                progressBar.setVisibility(View.GONE);
+                                OrderRepository.refreshData(jsonArray);
+                                renderlistview();
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+                                progressBar.setVisibility(View.GONE);
+                                Toast.makeText(HistoryActivity.this, volleyError.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }) {
+                    @Override
+                    public Map<String, String> getHeaders() {
+                        HashMap<String, String> headers = new HashMap<String, String>();
+                        headers.put(NameResources.Key.Apikey, apiKey);
+                        return headers;
+                    }
+                });
+    }
+
+    private void renderlistview() {
+        expandableAdapter = new ExpandableAdapter();
+        expandableListView.setAdapter(expandableAdapter);
+    }
+
 
     class ExpandableAdapter extends BaseExpandableListAdapter {
 
@@ -115,7 +180,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         @Override
         public long getChildId(int groupPosition, int childPosition) {
-            return groupPosition * 1000 + childPosition;
+            return  childPosition;
         }
 
         @Override
@@ -130,8 +195,8 @@ public class HistoryActivity extends AppCompatActivity {
             }
             Order order = orders.get(groupPosition);
 
-            TextView textView = (TextView) convertView.findViewById(R.id.textViewOrderId);
-            textView.setText("      "+order.getId() + "(" + order.getProducts().size() + ")");
+            TextView OrderId = (TextView) convertView.findViewById(R.id.textViewOrderId);
+            OrderId.setText("     "+order.getId() + "(" + order.getProducts().size() + ")"+" "+order.getstatus()+" "+String.valueOf("價格"+order.gettotalprice()+" 折扣"+order.getdiscount()));
             return convertView;
         }
 
@@ -141,9 +206,8 @@ public class HistoryActivity extends AppCompatActivity {
                 convertView = getLayoutInflater().inflate(R.layout.listitem_historyproduct, null);
             }
             Product product = orders.get(groupPosition).getProducts().get(childPosition);
-
-            TextView textView = (TextView) convertView.findViewById(R.id.textViewProductName);
-            textView.setText(product.getName());
+            TextView productname = (TextView) convertView.findViewById(R.id.textViewProductName);
+            productname.setText(product.getName() +"    數量:"+product.getquantity());
             return convertView;
         }
 
@@ -153,5 +217,7 @@ public class HistoryActivity extends AppCompatActivity {
         }
     }
 }
+
+
 
 

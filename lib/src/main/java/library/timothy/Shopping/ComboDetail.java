@@ -3,13 +3,8 @@ package library.timothy.Shopping;
 
 public class ComboDetail {
     private String productId;
-    private Integer Quantity;
-
-    public ComboDetail() {}//fix
-
-    public ComboDetail(String id) {
-        this.productId=id;
-    }//fix
+    private Integer price=0;
+    private String name;
 
     public String getProductId() {
         return productId;
@@ -19,11 +14,20 @@ public class ComboDetail {
         this.productId = productId;
     }
 
-    public Integer getQuantity() {
-        return Quantity;
+    public Integer getPrice() {
+        return price;
     }
 
-    public void setQuantity(Integer quantity) {
-        Quantity = quantity;
+    public void setPrice(Integer price) {
+        this.price= price;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 }

@@ -9,7 +9,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="172dp">
+        android:layout_height="wrap_content">
         <TextView
             android:textSize="18sp"
             android:text="套餐區"
