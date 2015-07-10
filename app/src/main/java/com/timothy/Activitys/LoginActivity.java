@@ -13,20 +13,16 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.timothy.Core.BaseApplication;
 import com.timothy.R;
-import library.timothy.Resources.NameResources;
+import library.timothy.Resources.Name;
 import library.timothy.Resources.UriResources;
 
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class LoginActivity extends Activity
 {
@@ -43,7 +39,7 @@ public class LoginActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        sharedPreferences = getSharedPreferences( NameResources.Key.Apikey , MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences( Name.Key.Apikey , MODE_PRIVATE);
 
         buttonLogin = (Button) findViewById(R.id.buttonLogin);
         editTextAccount = (EditText) findViewById(R.id.editTextAccount);
@@ -80,13 +76,13 @@ public class LoginActivity extends Activity
                                 return;
                             }
 
-                            String apiKey = response.optString(NameResources.Key.Apikey);
+                            String apiKey = response.optString(Name.Key.Apikey);
                             if (TextUtils.isEmpty(apiKey)) {
                                 Toast.makeText(LoginActivity.this, "Login fail,cannot get APIKey", Toast.LENGTH_SHORT).show();
                                 return;
                             }
 
-                            sharedPreferences.edit().putString(NameResources.Key.Apikey, apiKey).commit();
+                            sharedPreferences.edit().putString(Name.Key.Apikey, apiKey).commit();
                             goToNextActivity();
                         }
                     },

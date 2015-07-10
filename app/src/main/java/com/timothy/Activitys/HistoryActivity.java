@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import library.timothy.Resources.NameResources;
+import library.timothy.Resources.Name;
 import library.timothy.Resources.UriResources;
 import library.timothy.history.Order;
 import library.timothy.history.OrderRepository;
@@ -51,8 +51,8 @@ public class HistoryActivity extends AppCompatActivity {
 
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
         expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
-        sharedPreferences = this.getSharedPreferences(NameResources.Key.Apikey, Context.MODE_PRIVATE);
-        apiKey = sharedPreferences.getString(NameResources.Key.Apikey, null);
+        sharedPreferences = this.getSharedPreferences(Name.Key.Apikey, Context.MODE_PRIVATE);
+        apiKey = sharedPreferences.getString(Name.Key.Apikey, null);
 
         final EditText editTextStartDate = (EditText) findViewById(R.id.startDate);
         final EditText editTextEndDate = (EditText) findViewById(R.id.endDate);
@@ -138,7 +138,7 @@ public class HistoryActivity extends AppCompatActivity {
                     @Override
                     public Map<String, String> getHeaders() {
                         HashMap<String, String> headers = new HashMap<String, String>();
-                        headers.put(NameResources.Key.Apikey, apiKey);
+                        headers.put(Name.Key.Apikey, apiKey);
                         return headers;
                     }
                 });

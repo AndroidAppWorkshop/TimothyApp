@@ -34,7 +34,7 @@ import org.json.JSONArray;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import library.timothy.Resources.NameResources;
+import library.timothy.Resources.Name;
 import library.timothy.Resources.UriResources;
 import library.timothy.Shopping.Cart;
 import library.timothy.Shopping.Category;
@@ -82,9 +82,9 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
 
         progressBar.setVisibility(View.VISIBLE);
 
-        sharedPreferences = this.getActivity().getSharedPreferences(NameResources.Key.Apikey, Context.MODE_PRIVATE);
+        sharedPreferences = this.getActivity().getSharedPreferences(Name.Key.Apikey, Context.MODE_PRIVATE);
 
-        apiKey = sharedPreferences.getString(NameResources.Key.Apikey, null);
+        apiKey = sharedPreferences.getString(Name.Key.Apikey, null);
 
         loadProducts();
     }
@@ -113,7 +113,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                     public Map<String, String> getHeaders() {
                         HashMap<String, String> headers = new HashMap<String, String>();
 //                       headers.put("Accept", "application/json");
-                        headers.put(NameResources.Key.Apikey, apiKey);
+                        headers.put(Name.Key.Apikey, apiKey);
                         return headers;
                     }
                 });
@@ -144,7 +144,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public Map<String, String> getHeaders() {
                         HashMap<String, String> headers = new HashMap<String, String>();//
-                        headers.put(NameResources.Key.Apikey, apiKey);
+                        headers.put(Name.Key.Apikey, apiKey);
                         return headers;
                     }
                 });
@@ -163,8 +163,8 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         Intent it = new Intent(getActivity(), CartActivity.class);
-        it.putExtra(NameResources.Key.ParcelKey , cart);
-        startActivityForResult( it , NameResources.Index.ActivityResult );
+        it.putExtra(Name.Key.ParcelKey , cart);
+        startActivityForResult( it , Name.Index.ActivityResult );
     }
 
     @Override
@@ -173,7 +173,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
 
         if( listViewAdapter != null )
         {
-            cart = data.getExtras().getParcelable(NameResources.Key.ParcelKey);
+            cart = data.getExtras().getParcelable(Name.Key.ParcelKey);
 
             SetingSum(cart);
 

@@ -1,7 +1,6 @@
 package com.timothy.Adapter;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,33 +11,30 @@ import android.widget.TextView;
 
 import com.timothy.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import library.timothy.Resources.Name;
+
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
-    private List<String> listDataHeader;
-    private static List<String> listChild;
-    private static List<String> listHeader;
-    private static HashMap<String, List<String>> map;
-    private HashMap<String, List<String>> listDataChild;
+    private List<String> orderIdlist ;
+    private HashMap<String, Map<String,String>> HeaderMap;
 
-    public ExpandableListAdapter(Context context, List<String> listDataHeader,
-                                 HashMap<String, List<String>> listChildData) {
+
+    public ExpandableListAdapter(Context context) {
         this.context = context;
-        this.listDataHeader = listDataHeader;
-        this.listDataChild = listChildData;
-
     }
-
     @Override
     public Object getChild(int groupPosition, int childPosititon) {
-        return this.listDataChild
-                .get(this.listDataHeader.get(groupPosition))
-                .get(childPosititon);
+        return HeaderMap.get(orderIdlist.get(groupPosition)).get(childPosititon+"");
     }
 
     @Override
@@ -67,18 +63,17 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this.listDataChild.get(this.listDataHeader.get(groupPosition))
-                .size();
+        return this.HeaderMap.get(orderIdlist.get(groupPosition)).size();
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return this.listDataHeader.get(groupPosition);
+        return orderIdlist.get(groupPosition);
     }
 
     @Override
     public int getGroupCount() {
-        return this.listDataHeader.size();
+        return this.orderIdlist.size();
     }
 
     @Override
@@ -125,41 +120,41 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
-    public static HashMap<String, List<String>> getMapFakerData() {
-        if(listChild == null ){
-            listChild = new ArrayList<>();
-            listChild.add("test Expand");
-        }
-
-        if(map == null ){
-            map = new HashMap<>();
-            map.put(getListFakerData().get(0), listChild);
-            map.put(getListFakerData().get(1), listChild);
-        }
-        return map;
-    }
-
-    public static List<String> getListFakerData() {
-        if(listHeader == null ){
-            listHeader = new ArrayList<>();
-            listHeader.add("TEST");
-            listHeader.add("Menu");
-        }
-        return listHeader;
-    }
     private void removeOrder(String name)
     {
-        listDataChild.remove(name);
-        listDataHeader.remove(name);
+        orderIdlist.remove(name);
     }
-    public void addNewItem(String Item )
-    {
-        listHeader.add(Item);
-        notifyDataSetChanged();
+    public void mapNewData(JSONArray jsonArray) {
+        JSONObject jsonObject ;
+        JSONArray DetailArray ;
+        String orderId;
+        orderIdlist = new ArrayList<>();
+        HeaderMap = new HashMap<>();
+        try {
+            for (int index = 0; index < jsonArray.length(); index++) {
+                jsonObject = jsonArray.getJSONObject(index);
+                DetailArray = jsonObject.getJSONArray(Name.Order.orderDetail);
+                Map map= getChildMap(DetailArray);
+                orderId = "³æ¸¹"+jsonObject.getString(Name.Order.orderID)+"("+map.size()+")";
+                orderIdlist.add(orderId);
+                HeaderMap.put(orderId, map);
+            }
+        }
+        catch (JSONException e) { e.printStackTrace();}
+        noticeChanged();
     }
-    public void addNewItem(String Item ,List<String> ChildItem)
-    {
-        listDataChild.put(Item , ChildItem);
-        notifyDataSetChanged();
+    private Map getChildMap(JSONArray DetailArray) {
+        Map<String , String> ChildMap = new HashMap<>();
+        JSONObject jo;
+        for (int index = 0; index < DetailArray.length(); index++) {
+            try {
+                jo = DetailArray.getJSONObject(index);
+                jo.getString(Name.Order.productName);
+                jo.getString(Name.Order.quantity);
+                ChildMap.put(index+"" , jo.getString(Name.Order.productName) + "x" + jo.getString(Name.Order.quantity));
+            }
+            catch (JSONException e) {e.printStackTrace();}
+        }
+        return ChildMap;
     }
 }

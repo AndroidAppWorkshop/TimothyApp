@@ -15,7 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import library.timothy.Resources.NameResources;
+import library.timothy.Resources.Name;
 import library.timothy.Shopping.Cart;
 import library.timothy.Shopping.Product;
 import library.timothy.Shopping.ProductRepository;
@@ -33,7 +33,7 @@ public class SendActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send);
 
-        cart = getIntent().getParcelableExtra(NameResources.Key.ParcelKey);
+        cart = getIntent().getParcelableExtra(Name.Key.ParcelKey);
         setdisprice=getIntent().getIntExtra("disprice", 0);
         setrealprice=getIntent().getIntExtra("realprice", 0);
 

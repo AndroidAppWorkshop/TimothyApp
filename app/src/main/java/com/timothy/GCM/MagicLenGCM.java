@@ -13,11 +13,9 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -29,7 +27,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import library.timothy.Resources.NameResources;
+import library.timothy.Resources.Name;
 import library.timothy.Resources.UriResources;
 
 public class MagicLenGCM {
@@ -244,13 +242,13 @@ public class MagicLenGCM {
                         HashMap<String, String> headers = new HashMap<>();
                         headers.put("Accept", "application/json");
                         headers.put("Content-Type", "application/json; charset=utf-8");
-                        headers.put(NameResources.Key.Apikey, getAPIkey());
+                        headers.put(Name.Key.Apikey, getAPIkey());
                         return headers;
                     }
                 });
     }
     public String getAPIkey() {
-        return getActivity().getSharedPreferences(NameResources.Key.Apikey, Context.MODE_PRIVATE).getString(NameResources.Key.Apikey,null);
+        return getActivity().getSharedPreferences(Name.Key.Apikey, Context.MODE_PRIVATE).getString(Name.Key.Apikey,null);
     }
 
 }

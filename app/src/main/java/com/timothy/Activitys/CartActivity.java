@@ -26,7 +26,7 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
-import library.timothy.Resources.NameResources;
+import library.timothy.Resources.Name;
 import library.timothy.Resources.UriResources;
 import library.timothy.Shopping.Cart;
 import library.timothy.Shopping.ProductRepository;
@@ -49,7 +49,7 @@ public class CartActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        cart = getIntent().getParcelableExtra(NameResources.Key.ParcelKey);
+        cart = getIntent().getParcelableExtra(Name.Key.ParcelKey);
 
         confirmMeal=(Button)findViewById(R.id.button);
         confirmMeal.setOnClickListener(this);
@@ -71,7 +71,7 @@ public class CartActivity extends Activity implements View.OnClickListener{
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
             Intent it = new Intent();
-            it.putExtra(NameResources.Key.ParcelKey , cart);
+            it.putExtra(Name.Key.ParcelKey , cart);
             this.setResult( RESULT_OK , it );
             this.finish();
             return true;
@@ -119,7 +119,7 @@ public class CartActivity extends Activity implements View.OnClickListener{
                                     Intent it = new Intent(CartActivity.this, SendActivity.class);
                                     it.putExtra("realprice",realprice);
                                     it.putExtra("disprice",disprice);
-                                    it.putExtra(NameResources.Key.ParcelKey , cart);
+                                    it.putExtra(Name.Key.ParcelKey , cart);
                                     startActivity(it);
                                     finish();
 
