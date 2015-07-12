@@ -135,7 +135,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 jsonObject = jsonArray.getJSONObject(index);
                 DetailArray = jsonObject.getJSONArray(Name.Order.orderDetail);
                 Map map= getChildMap(DetailArray);
-                orderId = "�渹"+jsonObject.getString(Name.Order.orderID)+"("+map.size()+")";
+                orderId = "單號"+jsonObject.getString(Name.Order.orderID)+"("+map.size()+")";
                 orderIdlist.add(orderId);
                 HeaderMap.put(orderId, map);
             }

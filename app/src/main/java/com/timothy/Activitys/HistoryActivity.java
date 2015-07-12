@@ -36,8 +36,7 @@ import library.timothy.history.Order;
 import library.timothy.history.OrderRepository;
 import library.timothy.history.Product;
 
-
-public class HistoryActivity extends AppCompatActivity {
+public class HistoryActivity extends AppCompatActivity implements View.OnClickListener{
 
     private ExpandableListView expandableListView;
     private ProgressBar progressBar;
@@ -54,65 +53,37 @@ public class HistoryActivity extends AppCompatActivity {
         sharedPreferences = this.getSharedPreferences(Name.Key.Apikey, Context.MODE_PRIVATE);
         apiKey = sharedPreferences.getString(Name.Key.Apikey, null);
 
-        final EditText editTextStartDate = (EditText) findViewById(R.id.startDate);
-        final EditText editTextEndDate = (EditText) findViewById(R.id.endDate);
+        EditText editTextStartDate = (EditText) findViewById(R.id.startDate);
+        EditText editTextEndDate = (EditText) findViewById(R.id.endDate);
 
-        editTextStartDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar calendar = Calendar.getInstance();
-
-                new DatePickerDialog(HistoryActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.YEAR, year);
-                        c.set(Calendar.MONTH, monthOfYear);
-                        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                        String dateString = new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
-
-                        editTextStartDate.setText("從" + dateString);
-                    }
-                },
-                        calendar.get(Calendar.YEAR),
-                        calendar.get(Calendar.MONTH),
-                        calendar.get(Calendar.DAY_OF_MONTH)
-                ).show();
-            }
-        });
-
+        editTextStartDate.setOnClickListener(this);
+        editTextEndDate.setOnClickListener(this);
         Calendar c = Calendar.getInstance();
+
         String dateString = new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
         editTextStartDate.setText("從" + dateString);
-
-        editTextEndDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar calendar = Calendar.getInstance();
-
-                new DatePickerDialog(HistoryActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.YEAR, year);
-                        c.set(Calendar.MONTH, monthOfYear);
-                        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                        String dateString = new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
-
-                        editTextEndDate.setText("到" + dateString);
-                        loadOrderhistory();
-                    }
-                },
-                        calendar.get(Calendar.YEAR),
-                        calendar.get(Calendar.MONTH),
-                        calendar.get(Calendar.DAY_OF_MONTH)
-
-                ).show();
-
-            }
-        });
         editTextEndDate.setText("到" + dateString);
         loadOrderhistory();
+    }
+    @Override
+    public void onClick(View v) {
+        Calendar calendar = Calendar.getInstance();
+        final EditText edit = (EditText)v;
+        new DatePickerDialog(HistoryActivity.this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar c = Calendar.getInstance();
+                c.set(Calendar.YEAR, year);
+                c.set(Calendar.MONTH, monthOfYear);
+                c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                String dateString = new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
+                edit.setText("到" + dateString);
+                loadOrderhistory();
+            }},
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+        ).show();
     }
 
     private void loadOrderhistory() {
@@ -143,12 +114,10 @@ public class HistoryActivity extends AppCompatActivity {
                     }
                 });
     }
-
     private void renderlistview() {
         expandableAdapter = new ExpandableAdapter();
         expandableListView.setAdapter(expandableAdapter);
     }
-
 
     class ExpandableAdapter extends BaseExpandableListAdapter {
 
@@ -196,7 +165,7 @@ public class HistoryActivity extends AppCompatActivity {
             Order order = orders.get(groupPosition);
 
             TextView OrderId = (TextView) convertView.findViewById(R.id.textViewOrderId);
-            OrderId.setText("     "+order.getId() + "(" + order.getProducts().size() + ")"+" "+order.getstatus()+" "+String.valueOf("價格"+order.gettotalprice()+" 折扣"+order.getdiscount()));
+            OrderId.setText(order.getId() + "(" + order.getProducts().size() + ")"+" "+order.getstatus());
             return convertView;
         }
 
@@ -207,10 +176,12 @@ public class HistoryActivity extends AppCompatActivity {
             }
             Product product = orders.get(groupPosition).getProducts().get(childPosition);
             TextView productname = (TextView) convertView.findViewById(R.id.textViewProductName);
-            productname.setText(product.getName() +"    數量:"+product.getquantity());
+            if (childPosition != 0)
+                productname.setText(product.getName() +"    數量:"+product.getquantity());
+            else
+                productname.setText(product.getName());
             return convertView;
         }
-
         @Override
         public boolean isChildSelectable(int groupPosition, int childPosition) {
             return false;

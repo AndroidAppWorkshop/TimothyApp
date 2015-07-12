@@ -21,8 +21,9 @@ public class OrderRepository {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 String orderid=jsonObject.getString("orderID");
-                Order order=new Order(jsonObject.getString("orderID"),jsonObject.getString("status"),
-                        jsonObject.getInt("totalprice"),jsonObject.getInt("discount"));
+                Order order=new Order(jsonObject.getString("orderID"),
+                        (jsonObject.getString("status") == "undone")?"未核銷":"已核銷");
+                order.getProducts().add(new Status(jsonObject.getInt("totalprice"),jsonObject.getInt("discount")));
                 JSONArray detailsArray = jsonObject.getJSONArray("orderDetail");
 
                 for (int j = 0; j < detailsArray.length(); j++) {
