@@ -189,11 +189,14 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
         public ComboPagerAdapter() {
             combos = ComboRepository.getCombos();
         }
-
         @Override
         public int getCount() {
-            return combos.size() / 3 + 1;
+            if(combos.size()%3==0 )
+                return combos.size()/3;
+            else
+                return combos.size()/ 3 + 1;
         }
+
 
         @Override
         public boolean isViewFromObject(View view, Object o) {
@@ -227,43 +230,11 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                 final TextView textViewProductCount = (TextView) productView.findViewById(R.id.textViewProductCount);
                 final String productId =combosvo.getId();
 
-                textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(productId)));//fix
+                textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(productId)));
 
-                Button btnDrink=(Button)productView.findViewById(R.id.btnDrink);
+
                 Button btnMeat = (Button) productView.findViewById(R.id.btnMeat);
 
-                btnDrink.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        View view = getActivity().getLayoutInflater().inflate(R.layout.dialogsetview, null);
-                        listView=(ListView)view.findViewById(R.id.listView1);
-                        listView.setAdapter(new DrinkAdapter(combosvo));
-
-                        AlertDialog.Builder dialog=new AlertDialog.Builder(getActivity());
-                        dialog.setTitle("Order");
-                        dialog.setView(view);
-                        dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                int combocount=cart.checkComboCount(combosvo);
-                                if (combocount>0)
-                                {
-                                    textViewProductCount.setText(String.valueOf(combocount));
-                                    SetingSum(cart);
-                                }
-                                else
-                                {
-                                    textViewProductCount.setText(String.valueOf(combocount));
-                                    SetingSum(cart);
-                                    Toast.makeText(getActivity(), "套餐數量不符合,請重新檢查", Toast.LENGTH_SHORT).show();
-
-                                }
-
-                            }
-                        });
-
-                        dialog.show();
-                    }
-                });
 
                 btnMeat.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -277,7 +248,22 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                         dialog.setView(view);
                         dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-
+                                int combocount=cart.ComboCount(combosvo);
+                                if (combocount>0)
+                                {
+                                    textViewProductCount.setText(String.valueOf(combocount));
+                                    SetingSum(cart);
+                                }
+                                int check=cart.ComboSetup(combosvo);
+                                if(check>0)
+                                {
+                                    Toast.makeText(getActivity(), "飲料少"+check+"份請重新檢查", Toast.LENGTH_SHORT).show();
+                                }
+                                else if(check<0)
+                                {
+                                    Toast.makeText(getActivity(), "飲料多"+(check*(-1))+"份請重新檢查", Toast.LENGTH_SHORT).show();
+                                }
+                                textViewProductCount.setText(String.valueOf(combocount));
 
                             }
                         });
@@ -286,89 +272,17 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                 });
 
             }
-
             container.addView(inflate);
             return inflate;
         }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
     }
 
-    public class DrinkAdapter extends BaseAdapter
-    {
-        private Combo comboVo;
-        private List<ComboDetail> details;
-        public  DrinkAdapter(Combo comboVo) {
-            this.comboVo = comboVo;
-            this.details=comboVo.getDrinkDetails();
-        }
 
-        @Override
-        public int getCount() {
-
-            return details.size();
-        }
-
-        @Override
-        public Object getItem(int arg0) {
-
-            return details.get(arg0);
-        }
-
-        @Override
-        public long getItemId(int arg0) {
-
-            return 0;
-        }
-
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-
-            final ViewHolder viewHolder;
-            if (convertView == null) {
-                convertView =getActivity().getLayoutInflater().inflate(R.layout.dialoglistview_adapter, null);
-                viewHolder = new ViewHolder();
-                viewHolder.product = (TextView) convertView.findViewById(R.id.product);
-                viewHolder.textViewProductCount=(TextView)convertView.findViewById(R.id.textViewProductCount);
-                viewHolder.textViewProductPrice=(TextView)convertView.findViewById(R.id.textViewProductPrice);
-                viewHolder.add= (Button) convertView.findViewById(R.id.add);
-                viewHolder.sub= (Button) convertView.findViewById(R.id.sub);
-
-
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
-
-            final String productId=details.get(position).getProductId();
-            viewHolder.product.setText(details.get(position).getName());
-            viewHolder.textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(details.get(position).getProductId())));
-            viewHolder.textViewProductPrice.setText(String.valueOf(details.get(position).getPrice()));
-            viewHolder.add.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    cart.addToCart(productId, 1);
-                    viewHolder.textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(details.get(position).getProductId())));
-                    SetingSum(cart);
-                }
-            });
-
-
-            viewHolder.sub.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    cart.addToCart(productId, -1);
-                    viewHolder.textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(details.get(position).getProductId())));
-                    SetingSum(cart);
-                }
-            });
-            return convertView;
-
-        }
-        private class ViewHolder
-        {
-            TextView product,textViewProductPrice,textViewProductCount;
-            Button add,sub;
-        }
-    }
 
     public class MeatAdapter extends BaseAdapter
     {
@@ -450,6 +364,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
             Button add,sub;
         }
     }
+
 
     private class ListViewAdapter extends BaseAdapter {
 
@@ -580,7 +495,10 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
 
         @Override
         public int getCount() {
-            return products.size() / 3 + 1;
+            if(products.size()%3==0 )
+            return products.size()/3;
+            else
+            return products.size()/ 3 + 1;
         }
 
         @Override

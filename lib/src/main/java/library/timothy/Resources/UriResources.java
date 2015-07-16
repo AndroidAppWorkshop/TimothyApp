@@ -11,6 +11,7 @@ public class UriResources {
         public static final String orderhistory= API + "orderhistory";
         public static final String PushNotification = API + "PushNotification";
         public static final String Order = API + "order";
+        public static final String shopping = API + "shopping";
     }
 
     public static class Test{

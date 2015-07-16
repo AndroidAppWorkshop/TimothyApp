@@ -15,11 +15,14 @@ import java.util.Map;
 public class ComboRepository {
 
     private static final Map<String, Combo> combos = new LinkedHashMap<String, Combo>();
+    private static final List<Combo> comparelist = new LinkedList<Combo>();
+
+
     private final static String[] addcomboname={"打拋","綠咖哩","椰汁咖哩","瑪莎曼",""};
 
     public static void refreshData(JSONArray jsonArray) {
         combos.clear();
-
+        String comboId=null;
         try {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -27,7 +30,7 @@ public class ComboRepository {
                 Category category;
                 Combo comboVo = new Combo();
 
-                String comboId = jsonObject.getString("comboId");
+                comboId = jsonObject.getString("comboId");
                 String comboName=jsonObject.getString("comboName");
                 comboVo.setId(comboId);
                 comboVo.setName(comboName);
@@ -70,9 +73,29 @@ public class ComboRepository {
                 combos.put(comboId, comboVo);
             }
 
-
+            adddrinkcombo(comboId);
         } catch (JSONException e) {
         }
+    }
+
+    public static void adddrinkcombo(String comboId)
+    {
+        comparelist.addAll(combos.values());
+        Combo comboVo = new Combo();
+        comboVo.setId("Drink");
+        comboVo.setName("附餐飲料");
+        List<ComboDetail> drinkdetails=combos.get(comboId).getDrinkDetails();
+        for(int i=0;i<drinkdetails.size();i++)
+        {
+            ComboDetail detailMeat = new ComboDetail();
+            detailMeat.setProductId(drinkdetails.get(i).getProductId());
+            detailMeat.setPrice(drinkdetails.get(i).getPrice());
+            detailMeat.setName(drinkdetails.get(i).getName());
+            comboVo.getDetails().add(detailMeat);
+            comboVo.getDrinkDetails().add(detailMeat);
+        }
+        combos.put("Drink", comboVo);
+
     }
 
     public static Map<String, Combo> getCombosMap() {
@@ -84,6 +107,8 @@ public class ComboRepository {
         list.addAll(combos.values());
         return list;
     }
+
+    public static List<Combo> getCompareCombos() {return comparelist;}
 
 
 }

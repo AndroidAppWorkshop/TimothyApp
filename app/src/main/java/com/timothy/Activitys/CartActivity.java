@@ -1,20 +1,25 @@
 package com.timothy.Activitys;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.timothy.Adapter.CartAdapter;
 import com.timothy.Core.BaseApplication;
@@ -24,12 +29,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import library.timothy.Resources.Name;
 import library.timothy.Resources.UriResources;
 import library.timothy.Shopping.Cart;
 import library.timothy.Shopping.ProductRepository;
+import library.timothy.history.OrderRepository;
 
 
 public class CartActivity extends Activity implements View.OnClickListener{
@@ -43,6 +50,9 @@ public class CartActivity extends Activity implements View.OnClickListener{
     Button confirmMeal;
     JSONArray cartarray;
     int totalprice,realprice,disprice;
+    private SharedPreferences sharedPreferences;
+    private String apiKey;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +60,9 @@ public class CartActivity extends Activity implements View.OnClickListener{
         setContentView(R.layout.activity_cart);
 
         cart = getIntent().getParcelableExtra(Name.Key.ParcelKey);
+        sharedPreferences = this.getSharedPreferences(Name.Key.Apikey, Context.MODE_PRIVATE);
+        apiKey = sharedPreferences.getString(Name.Key.Apikey, null);
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);
 
         confirmMeal=(Button)findViewById(R.id.button);
         confirmMeal.setOnClickListener(this);
@@ -103,35 +116,50 @@ public class CartActivity extends Activity implements View.OnClickListener{
     {
 
         try {
+            progressBar.setVisibility(View.VISIBLE);
             JSONEncode(productInCart);
             JSONObject orderBody = new JSONObject();
-            orderBody.put("Disprice", disprice);
-            orderBody.put("Realprice", realprice);
-            orderBody.put("Cart",cartarray);
+            orderBody.put("discount", disprice);
+            orderBody.put("totalPrice", realprice);
+            orderBody.put("cartDetail",cartarray);
 
-            Log.i("JSON String",orderBody.toString());
+            Log.i("JSON String", orderBody.toString());
 
             BaseApplication.getInstance().addToRequestQueue(
-                    new JsonObjectRequest(Request.Method.POST, UriResources.Server.LogIn,orderBody,
+                    new JsonObjectRequest
+                            (Request.Method.POST,
+                            UriResources.Server.shopping,orderBody,
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject response) {
-                                    Intent it = new Intent(CartActivity.this, SendActivity.class);
-                                    it.putExtra("realprice",realprice);
-                                    it.putExtra("disprice",disprice);
-                                    it.putExtra(Name.Key.ParcelKey , cart);
-                                    startActivity(it);
-                                    finish();
-
+                                    Log.i("response", response.optString("true"));
+                                    if (response.optString("true").equals("Success")) {
+                                        Intent it = new Intent(CartActivity.this, SendActivity.class);
+                                        it.putExtra("realprice", realprice);
+                                        it.putExtra("disprice", disprice);
+                                        it.putExtra(Name.Key.ParcelKey, cart);
+                                        startActivity(it);
+                                        finish();
+                                        progressBar.setVisibility(View.INVISIBLE);
                                     }
+
+                                }
                             },
                             new Response.ErrorListener() {
                                 @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Toast.makeText(CartActivity.this, "Send fail:" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                public void onErrorResponse(VolleyError volleyError) {
+                                    progressBar.setVisibility(View.INVISIBLE);
+                                    Toast.makeText(CartActivity.this,"Send fail:"+volleyError.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
-                            }
-                    ));
+                            }) {
+                        @Override
+                        public Map<String, String> getHeaders() {
+                            HashMap<String, String> headers = new HashMap<String, String>();
+                            headers.put(Name.Key.Apikey, apiKey);
+                            return headers;
+                        }
+                    });
+
         } catch (Exception e) {
             Log.e(LOG_TAG, e.getMessage(), e);
         }
@@ -140,12 +168,16 @@ public class CartActivity extends Activity implements View.OnClickListener{
     private void JSONEncode( Map<String, Integer> productInCart )  throws JSONException {
         cartarray  = new JSONArray();
         for (Map.Entry<String,Integer> entry :productInCart.entrySet()) {
-            JSONObject jsonObject = new JSONObject();
             String productId = entry.getKey();
             int count = entry.getValue();
-            jsonObject.put("Id", productId);
-            jsonObject.put("Count",count);
-           cartarray.put(jsonObject);
+            if(count>0)
+            {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("productID", productId);
+                jsonObject.put("quantity",count);
+                cartarray.put(jsonObject);
+            }
+
         }
 
     }

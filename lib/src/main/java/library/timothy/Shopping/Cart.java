@@ -61,11 +61,20 @@ public class Cart implements Parcelable{
 
     public  int calculateSumCount(){
         int count=0;
+        int allDrink=0;
         for (Map.Entry<String, Integer> entry : productInCart.entrySet()) {
             int countInMap = entry.getValue();
             count+=countInMap;
         }
-        return count;
+        List<ComboDetail> detailsDrink = ComboRepository.getCompareCombos().get(0).getDrinkDetails();
+        for (ComboDetail detail : detailsDrink) {
+            Integer countInProduct = productInCart.get(detail.getProductId());
+            if (countInProduct != null) {
+                allDrink += countInProduct.intValue();
+            }
+        }
+
+        return count-allDrink;
     }
 
     public  int calculateSumPrice() {
@@ -119,53 +128,56 @@ public class Cart implements Parcelable{
 //    }
 
 
-        public  int checkComboCount( Combo combosvo) {
+        public  int ComboCount(Combo combosvo) {
+            int Meat = 0, Drink = 0;
+            List<ComboDetail> comboDetails = combosvo.getDetails();
+               for (ComboDetail detail : comboDetails) {
+                       Integer countInProduct = productInCart.get(detail.getProductId());
+                       if (countInProduct != null) {
+                           Meat += countInProduct.intValue();
+                       }
+                    }
+            if (Meat > 0) {return Meat;}
 
-            List<Combo> combos = ComboRepository.getCombos();
-            int allMeat = 0, allDrink = 0;
-            for (Combo combo : combos) {
-                List<ComboDetail> detailsMeat = combo.getDetails();
-                List<ComboDetail> detailsDrink = combo.getDrinkDetails();
+            return 0;
 
-                for (ComboDetail detail : detailsMeat) {
-                    Integer countInProduct = productInCart.get(detail.getProductId());
-                    if(countInProduct==null)
-                    {
-                        allMeat+=0;
-                    }
-                    else if (countInProduct.intValue() > 0) {
-                        allMeat += countInProduct.intValue();
-                    }
-                }
-                for (ComboDetail detail : detailsDrink) {
-                    Integer countInProduct = productInCart.get(detail.getProductId());
-                    if(countInProduct==null)
-                    {
-                        allDrink+=0;
-                    }
-                    else if (countInProduct.intValue() > 0) {
-                        allDrink += countInProduct.intValue();
-                    }
-                }
-
-            }
-            if((allDrink+allMeat)%2==0)
-            {
-                int meat = 0;
-                List<ComboDetail> detailsMeat = combosvo.getDetails();
-                for (ComboDetail detail : detailsMeat) {
-                    Integer countInProduct = productInCart.get(detail.getProductId());
-                    if(countInProduct==null)
-                    {
-                      meat+=0;
-                    }
-                    else if (countInProduct.intValue() > 0) {
-                        meat += countInProduct.intValue();
-                    }
-                }
-                return meat;
-            }
-            return  0;
         }
+
+        public  int ComboSetup(Combo combosvo) {
+            int allMeat = 0, allDrink = 0;
+            List<Combo> allcombos = ComboRepository.getCompareCombos();
+
+                for (Combo combo : allcombos) {
+                    List<ComboDetail> detailsMeat = combo.getDetails();
+
+                    for (ComboDetail detail : detailsMeat) {
+                        Integer countInProduct = productInCart.get(detail.getProductId());
+                        if (countInProduct != null) {
+                            allMeat += countInProduct.intValue();
+                        }
+                    }
+                }
+              if (combosvo.getId() == "Drink") {
+                  List<ComboDetail> detailsDrink = combosvo.getDetails();
+                  for (ComboDetail detail : detailsDrink) {
+                      Integer countInProduct = productInCart.get(detail.getProductId());
+                      if (countInProduct != null) {
+                          allDrink += countInProduct.intValue();
+                      }
+                  }
+                  if(allMeat!=allDrink)
+                  {
+                    if(allMeat>allDrink){
+                        return allMeat-allDrink;
+                    }
+                    else{
+                        return allMeat-allDrink;
+                    }
+                  }
+              }
+
+            return 0;
+        }
+
 }
 

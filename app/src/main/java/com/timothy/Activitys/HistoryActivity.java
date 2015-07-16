@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
@@ -23,6 +24,8 @@ import com.timothy.Core.BaseApplication;
 import com.timothy.R;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -63,7 +66,8 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         String dateString = new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
         editTextStartDate.setText("從" + dateString);
         editTextEndDate.setText("到" + dateString);
-        loadOrderhistory();
+        String date= new SimpleDateFormat("yyyyMMdd").format(c.getTime());
+        loadOrderhistory(date);
     }
     @Override
     public void onClick(View v) {
@@ -78,7 +82,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                 c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 String dateString = new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
                 edit.setText("到" + dateString);
-                loadOrderhistory();
+                loadOrderhistory(dateString);
             }},
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
@@ -86,11 +90,18 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         ).show();
     }
 
-    private void loadOrderhistory() {
+    private void loadOrderhistory(String date)  {
+        JSONObject dateBody = new JSONObject();
+        try {
+            dateBody.put("date",date);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.i("date",dateBody.toString());
         BaseApplication.getInstance().addToRequestQueue(
                 new JsonArrayRequest(
                         Request.Method.POST,
-                        UriResources.Server.orderhistory,
+                        UriResources.Server.orderhistory,dateBody,
                         new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray jsonArray) {
@@ -165,7 +176,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
             Order order = orders.get(groupPosition);
 
             TextView OrderId = (TextView) convertView.findViewById(R.id.textViewOrderId);
-            OrderId.setText(order.getId() + "(" + order.getProducts().size() + ")"+" "+order.getstatus());
+            OrderId.setText(order.getId() + "(" + (order.getProducts().size()-1) + ")"+" "+order.getstatus());
             return convertView;
         }
 

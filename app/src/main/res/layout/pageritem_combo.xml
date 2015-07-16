@@ -33,14 +33,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-        <Button android:id="@+id/btnMeat" android:text="肉"
+        <Button android:id="@+id/btnMeat" android:text="點餐"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
-        <Button android:id="@+id/btnDrink" android:text="飲料"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </LinearLayout>
