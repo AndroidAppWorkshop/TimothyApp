@@ -15,16 +15,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
 import com.astuetz.PagerSlidingTabStrip;
 import com.timothy.Adapter.DrawerAdapter;
 import com.timothy.Fragments.MenuListFragment;
-import com.timothy.Fragments.fragment_2;
-import com.timothy.Fragments.fragment_3;
-import com.timothy.Fragments.NetImage;
 import com.timothy.Fragments.PushNotificationFragment;
 import com.timothy.R;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import library.timothy.Resources.Name;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -32,7 +33,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     DrawerLayout DL;
     Menu mMenu;
     ViewPager viewPager;
-    Fragment Fra = null ;
+    Fragment Fra = null;
+    int MenuPage = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +43,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         DL = (DrawerLayout) findViewById(R.id.DraOut);
         LV = (ListView) findViewById(R.id.LV);
-        LV.setAdapter(new DrawerAdapter(this, R.layout.drawerlist , getList()));
+        LV.setAdapter(new DrawerAdapter(this, R.layout.drawerlist, getList()));
         LV.setOnItemClickListener(this);
-        DL.setDrawerShadow(R.drawable.drashadow, GravityCompat.END );
+        DL.setDrawerShadow(R.drawable.drashadow, GravityCompat.END);
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
@@ -53,17 +55,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private List<DrawerAdapter.DrawerItem> getList() {
         List<DrawerAdapter.DrawerItem> list = new ArrayList<>();
-        String[] DraName= { " NetImage " , "HistoryActivity Page" , "Order Page" };
-        int[] DraIcon = {R.drawable.testicon , R.drawable.menuicon ,R.drawable.testicon};
+        String[] DraName = {getResources().getString(R.string.history), getResources().getString(R.string.order)};
+        int[] DraIcon = {R.drawable.menuicon, R.drawable.testicon};
         for (int position = 0; position < DraName.length; position++) {
-            list.add(new DrawerAdapter.DrawerItem( DraName[position] , DraIcon[position]));
+            list.add(new DrawerAdapter.DrawerItem(DraName[position], DraIcon[position]));
         }
         return list;
     }
 
-    class PagerAdapter extends FragmentPagerAdapter  implements PagerSlidingTabStrip.IconTabProvider {
+    class PagerAdapter extends FragmentPagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
 
-        private final int[] icon = {R.drawable.actionbartab_1, R.drawable.actionbartab_2, R.drawable.actionbartab3 , R.drawable.actionbar_pushicon };
+        private final int[] icon = {R.drawable.actionbartab_1, R.drawable.actionbar_pushicon};
 
         public PagerAdapter(FragmentManager fm) {
             super(fm);
@@ -71,15 +73,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         @Override
         public Fragment getItem(int position) {
-            if (position == 0) {
+
+            if (position == MenuPage) {
                 return new MenuListFragment();
-            } else if (position == 1) {
-                return new fragment_2();
-            } else if (position == 2) {
-                return new fragment_3();
             }
             return new PushNotificationFragment();
         }
+
         @Override
         public int getCount() {
             return icon.length;
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main , menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         mMenu = menu;
         return true;
     }
@@ -115,24 +115,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         android.support.v4.app.FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
-        ft1.addToBackStack("HOME");
+        ft1.addToBackStack(Name.Key.KeyBackStack);
 
         switch (position) {
 
             case 0:
-                Fra = new NetImage();
-                ft1.replace(R.id.DraOut , Fra).commit();
-                break;
-            case 1:
-                Intent it = new Intent(this , HistoryActivity.class);
+                Intent it = new Intent(this, HistoryActivity.class);
                 startActivity(it);
                 break;
-            case 2:
+            case 1:
                 Intent intentNextAction = new Intent(this, OrderActivity.class);
                 intentNextAction.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                intentNextAction.putExtra("Content", "message");
                 startActivity(intentNextAction);
                 break;
+
             default:
                 break;
         }

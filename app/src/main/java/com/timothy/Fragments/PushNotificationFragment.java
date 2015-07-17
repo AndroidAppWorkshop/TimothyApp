@@ -41,7 +41,7 @@ public class PushNotificationFragment extends Fragment implements View.OnClickLi
         if(!Message.getText().toString().trim().isEmpty())
             magicLenGCM.SendMessage(    Message.getText().toString() );
 
-        Toast.makeText(getActivity() ,"RegID  : "+magicLenGCM.getSendREGID() , Toast.LENGTH_SHORT ).show();
+        Toast.makeText(getActivity() ,getResources().getString(R.string.regId)+magicLenGCM.getSendREGID() , Toast.LENGTH_SHORT ).show();
     }
     
 }

@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">TimothyCoffee</string>
+    <string name="numberOf">  number :</string>
+    <string name="sendfail"> Send fail : </string>
+    <string name="from"> From :</string>
+    <string name="util"> Util :</string>
+    <string name="loginfail"> Login fail </string>
+    <string name="jsonstring"> JSON String : </string>
+    <string name="textYes"> Yes </string>
+    <string name="textNo"> No </string>
+    <string name="confirmDelete"> ConfirmDelete </string>
+    <string name="serialNumber"> SerialNumber </string>
+    <string name="history"> History </string>
+    <string name="order"> order </string>
+    <string name="wrongNumberCombo"> Combo Number Error </string>
+    <string name="regId"> RegID : </string>
+    <string name="apiKeyError"> ApiKey Error</string>
+    <string name="GcmError">  GCM ERROR </string>
+    <string name="GcmDelete"> GCM DELETE </string>
+    <string name="GcmMessage"> GCM MESSAGE </string>
+    <string name="FromServer"> From Server --- </string>
+
+
+    <string name="Message"> Message </string>
+    <string name="Reponse"> Reponse</string>
 </resources>

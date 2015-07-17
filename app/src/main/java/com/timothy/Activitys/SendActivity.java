@@ -33,9 +33,9 @@ public class SendActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send);
 
-        cart = getIntent().getParcelableExtra(Name.Key.ParcelKey);
-        setdisprice=getIntent().getIntExtra("disprice", 0);
-        setrealprice=getIntent().getIntExtra("realprice", 0);
+        cart = getIntent().getParcelableExtra(Name.Key.KeyParcel);
+        setdisprice = getIntent().getIntExtra(Name.Key.KeyDisprice, 0);
+        setrealprice = getIntent().getIntExtra(Name.Key.KeyRealprice, 0);
 
         listView=(ListView)findViewById(R.id.listview);
         disprice=(TextView)findViewById(R.id.textView6);

@@ -1,4 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">提摩太咖啡</string>
+    <string name="numberOf">  數量 :</string>
+    <string name="sendfail">傳送失敗 :</string>
+    <string name="from"> 從 :</string>
+    <string name="util"> 到 :</string>
+    <string name="loginfail"> 登入失敗 </string>
+    <string name="jsonstring"> JSON 字串 </string>
+    <string name="textYes"> 是 </string>
+    <string name="textNo"> 否 </string>
+    <string name="confirmDelete"> 是否刪除 </string>
+    <string name="serialNumber"> 單號 </string>
+    <string name="history"> 歷史 </string>
+    <string name="order"> 訂單 </string>
+    <string name="wrongNumberCombo"> 套餐數量不符合,請重新檢查 </string>
+    <string name="regId"> 儲存ID : </string>
+    <string name="GcmError">  推播端 錯誤 </string>
+    <string name="GcmDelete"> 推播端 不存在 </string>
+    <string name="GcmMessage"> 推播端訊息 </string>
+    <string name="FromServer"> From Server --- </string>
+    <string name="DrinkLess"> 飲料少 </string>
+    <string name="DrinkMore"> 飲料多 </string>
+    <string name="CheckAgain"> 份請重新檢查 </string>
+
+
+    <string name="Message"> 訊息 </string>
 </resources>

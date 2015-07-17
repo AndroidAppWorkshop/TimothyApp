@@ -109,7 +109,7 @@ public class CartAdapter extends BaseAdapter
             @Override
             public void onClick(View view) {
                  AlertDialog.Builder builder=new AlertDialog.Builder(cartActivity);
-                builder.setMessage("Confirm Delete") .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                builder.setMessage(R.string.confirmDelete) .setPositiveButton(R.string.textYes, new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which)
@@ -119,7 +119,7 @@ public class CartAdapter extends BaseAdapter
                         cartActivity.refresh();
 
                     }
-                }).setNegativeButton("no", new DialogInterface.OnClickListener() {
+                }).setNegativeButton(R.string.textNo, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which)
                     {

@@ -59,7 +59,7 @@ public class CartActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        cart = getIntent().getParcelableExtra(Name.Key.ParcelKey);
+        cart = getIntent().getParcelableExtra(Name.Key.KeyParcel);
         sharedPreferences = this.getSharedPreferences(Name.Key.Apikey, Context.MODE_PRIVATE);
         apiKey = sharedPreferences.getString(Name.Key.Apikey, null);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
@@ -84,7 +84,7 @@ public class CartActivity extends Activity implements View.OnClickListener{
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
             Intent it = new Intent();
-            it.putExtra(Name.Key.ParcelKey , cart);
+            it.putExtra(Name.Key.KeyParcel , cart);
             this.setResult( RESULT_OK , it );
             this.finish();
             return true;
@@ -119,11 +119,11 @@ public class CartActivity extends Activity implements View.OnClickListener{
             progressBar.setVisibility(View.VISIBLE);
             JSONEncode(productInCart);
             JSONObject orderBody = new JSONObject();
-            orderBody.put("discount", disprice);
-            orderBody.put("totalPrice", realprice);
-            orderBody.put("cartDetail",cartarray);
+            orderBody.put(Name.Key.KeyDisprice, disprice);
+            orderBody.put(Name.Key.KeyRealprice, realprice);
+            orderBody.put( Name.Key.KeyCart , cartarray);
 
-            Log.i("JSON String", orderBody.toString());
+            Log.i(String.valueOf(R.string.jsonstring), orderBody.toString());
 
             BaseApplication.getInstance().addToRequestQueue(
                     new JsonObjectRequest
@@ -132,12 +132,12 @@ public class CartActivity extends Activity implements View.OnClickListener{
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject response) {
-                                    Log.i("response", response.optString("true"));
-                                    if (response.optString("true").equals("Success")) {
+                                    Log.i(getResources().getString(R.string.Reponse), response.optString(Name.Key.KeyTrue));
+                                    if (response.optString(Name.Key.KeyTrue).equals(Name.Key.KeySuccess)) {
                                         Intent it = new Intent(CartActivity.this, SendActivity.class);
-                                        it.putExtra("realprice", realprice);
-                                        it.putExtra("disprice", disprice);
-                                        it.putExtra(Name.Key.ParcelKey, cart);
+                                        it.putExtra(Name.Key.KeyRealprice, realprice);
+                                        it.putExtra(Name.Key.KeyDisprice, disprice);
+                                        it.putExtra(Name.Key.KeyParcel, cart);
                                         startActivity(it);
                                         finish();
                                         progressBar.setVisibility(View.INVISIBLE);
@@ -149,7 +149,7 @@ public class CartActivity extends Activity implements View.OnClickListener{
                                 @Override
                                 public void onErrorResponse(VolleyError volleyError) {
                                     progressBar.setVisibility(View.INVISIBLE);
-                                    Toast.makeText(CartActivity.this,"Send fail:"+volleyError.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(CartActivity.this,getResources().getString(R.string.sendfail)+volleyError.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }) {
                         @Override
@@ -173,8 +173,8 @@ public class CartActivity extends Activity implements View.OnClickListener{
             if(count>0)
             {
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("productID", productId);
-                jsonObject.put("quantity",count);
+                jsonObject.put(Name.Key.KeyId, productId);
+                jsonObject.put(Name.Key.KeyCount , count);
                 cartarray.put(jsonObject);
             }
 

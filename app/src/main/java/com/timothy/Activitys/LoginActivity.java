@@ -4,6 +4,7 @@ package com.timothy.Activitys;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -33,11 +34,14 @@ public class LoginActivity extends Activity
     private EditText editTextPassword;
     private ProgressBar progressBar;
     private SharedPreferences sharedPreferences;
-
+    private String Account;
+    private String Password;
+    private Resources res ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        res = getResources();
 
         sharedPreferences = getSharedPreferences( Name.Key.Apikey , MODE_PRIVATE);
 
@@ -59,11 +63,13 @@ public class LoginActivity extends Activity
     private void Login() {
 
         try {
+            Password = editTextPassword.getText().toString();
+            Account = editTextAccount.getText().toString();
             progressBar.setVisibility(View.VISIBLE);
 
             JSONObject loginBody = new JSONObject();
-            loginBody.put("Account", editTextAccount.getText().toString());
-            loginBody.put("Password", editTextPassword.getText().toString());
+            loginBody.put(Name.Key.KeyAccount, Account);
+            loginBody.put(Name.Key.KeyPassword, Password);
 
             BaseApplication.getInstance().addToRequestQueue(
                     new JsonObjectRequest(Request.Method.POST, UriResources.Server.LogIn, loginBody,
@@ -71,14 +77,14 @@ public class LoginActivity extends Activity
                         @Override
                         public void onResponse(JSONObject response) {
                             progressBar.setVisibility(View.INVISIBLE);
-                            if (!TextUtils.isEmpty(response.optString("Failure"))) {
-                                Toast.makeText(LoginActivity.this, "Login fail", Toast.LENGTH_SHORT).show();
+                            if (!TextUtils.isEmpty(response.optString(Name.Key.KeyFailure))) {
+                                Toast.makeText(LoginActivity.this, res.getString(R.string.loginfail) , Toast.LENGTH_SHORT).show();
                                 return;
                             }
 
                             String apiKey = response.optString(Name.Key.Apikey);
                             if (TextUtils.isEmpty(apiKey)) {
-                                Toast.makeText(LoginActivity.this, "Login fail,cannot get APIKey", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, res.getString(R.string.loginfail)+res.getString(R.string.apiKeyError), Toast.LENGTH_SHORT).show();
                                 return;
                             }
 
@@ -90,7 +96,7 @@ public class LoginActivity extends Activity
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             progressBar.setVisibility(View.INVISIBLE);
-                            Toast.makeText(LoginActivity.this, "Login fail:" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, res.getString(R.string.loginfail) + error.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
             ));

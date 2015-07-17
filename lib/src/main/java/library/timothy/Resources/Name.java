@@ -11,9 +11,31 @@ public class Name {
     public static class Key
     {
         public static String Apikey = "Authorization";
-        public static String ParcelKey = "Data";
-        public static String OrderPrefenslKey = "OrderKey";
-        public static String OrderActionlKey = "KeyOrderAction";
+        public static String KeyBackStack = "BackStack";
+        public static String KeyContentType = "Content-Type";
+
+        public static String KeyParcel = "Data";
+        public static String KeyHeaderformat = "application/json; charset=utf-8";
+        public static String KeyAcceptformat = "application/json";
+        public static String KeyFailure = "Failure";
+
+        public static String KeyAccount = "Account";
+        public static String KeyPassword = "Password";
+
+        public static String KeyDisprice = "Disprice";
+        public static String KeyRealprice = "Realprice";
+        public static String KeyId = "Id";
+        public static String KeyCount = "Count";
+        public static String KeyCart = "Cart";
+        public static String KeyTrue = "true";
+        public static String KeySuccess = "Success";
+        public static String KeyDate = "date";
+
+
+        public static String KeyRegId = "RegistrationId";
+        public static String KeyMessage = "Message";
+        public static String KeyAccept = "Accept";
+
     }
     public static class Order
     {
@@ -21,6 +43,17 @@ public class Name {
         public static String quantity = "quantity";
         public static String orderDetail = "orderDetail";
         public static String orderID = "orderID";
-        public static String totalprice = "totalprice";
+
+    }
+    public static class Gcm
+    {
+        public static String sendId = "707422521982";
+        public static String propertyReg = "registration_id";
+        public static String proretyAppVersion = "appVersion";
+
+        public static String error = "Error";
+        public static String notice = "Notice";
+        public static String empty = "";
+
     }
 }

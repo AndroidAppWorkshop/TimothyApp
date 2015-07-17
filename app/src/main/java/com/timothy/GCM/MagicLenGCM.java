@@ -32,14 +32,16 @@ import library.timothy.Resources.UriResources;
 
 public class MagicLenGCM {
 
-    private final static String SENDER_ID = "707422521982";
-    private static final String PROPERTY_REG_ID = "registration_id";
-    private static final String PROPERTY_APP_VERSION = "appVersion";
+    private final static String SENDER_ID = Name.Gcm.sendId;
+    private static final String PROPERTY_REG_ID = Name.Gcm.propertyReg;
+    private static final String PROPERTY_APP_VERSION = Name.Gcm.proretyAppVersion;
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private Activity activity;
     private MagicLenGCMListener listener;
-    private String REGIDforSend = "";
-    private String regidforlocal = "";
+    private String Empty = Name.Gcm.empty;
+    private String REGIDforSend = Empty;
+    private String regidforlocal = Empty;
+
 
     public static enum PlayServicesState {SUPPROT, NEED_PLAY_SERVICE, UNSUPPORT;}
 
@@ -106,15 +108,15 @@ public class MagicLenGCM {
 
     private String getRegistrationId() {
         final SharedPreferences prefs = getGCMPreferences();
-        String registrationId = prefs.getString(PROPERTY_REG_ID, "");
+        String registrationId = prefs.getString(PROPERTY_REG_ID, Empty);
         if (registrationId.isEmpty()) {
-            return "";
+            return Empty;
         }
         int registeredVersion = prefs.getInt(MagicLenGCM.PROPERTY_APP_VERSION,
-                                             Integer.MIN_VALUE);
+                Integer.MIN_VALUE);
         int currentVersion = getAppVersion();
         if (registeredVersion != currentVersion) {
-            return "";
+            return Empty;
         }
         return registrationId;
     }
@@ -122,16 +124,16 @@ public class MagicLenGCM {
     private int getAppVersion() {
         try {
             PackageInfo packageInfo = activity.getPackageManager()
-                     .getPackageInfo(activity.getPackageName(), 0);
+                    .getPackageInfo(activity.getPackageName(), 0);
             return packageInfo.versionCode;
         } catch (NameNotFoundException e) {
-            throw new RuntimeException("Could not get package name: " + e);
+            throw new RuntimeException(PROPERTY_APP_VERSION + Name.Gcm.error);
         }
     }
 
     private SharedPreferences getGCMPreferences() {
         return activity.getSharedPreferences(activity.getClass()
-                       .getSimpleName(), Context.MODE_PRIVATE);
+                .getSimpleName(), Context.MODE_PRIVATE);
     }
 
     private PlayServicesState checkPlayServices() {
@@ -139,7 +141,7 @@ public class MagicLenGCM {
 
         if (resultCode != ConnectionResult.SUCCESS) {
             if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                GooglePlayServicesUtil.getErrorDialog(resultCode, activity,PLAY_SERVICES_RESOLUTION_REQUEST).show();
+                GooglePlayServicesUtil.getErrorDialog(resultCode, activity, PLAY_SERVICES_RESOLUTION_REQUEST).show();
                 return PlayServicesState.NEED_PLAY_SERVICE;
             } else {
                 return PlayServicesState.UNSUPPORT;
@@ -156,6 +158,7 @@ public class MagicLenGCM {
         editor.putInt(PROPERTY_APP_VERSION, appVersion);
         editor.commit();
     }
+
     public String getSendREGID() {
         return REGIDforSend;
     }
@@ -167,23 +170,23 @@ public class MagicLenGCM {
     private final class AsyncTaskRegister extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... params) {
-            String regid = "";
+            String regid = Empty;
             try {
                 GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(activity);
 
                 regid = gcm.register(SENDER_ID);
 
                 if (regid == null || regid.isEmpty()) {
-                    return "";
+                    return Empty;
                 }
                 storeRegistrationId(regid);
 
                 if (listener != null && !listener.gcmSendRegistrationIdToAppServer(regid)) {
-                    storeRegistrationId("");
-                    return "";
+                    storeRegistrationId(Empty);
+                    return Empty;
                 }
             } catch (IOException ex) {
-                Log.e("GCM Register error ",ex.getStackTrace().toString());
+                Log.e(PROPERTY_REG_ID + Name.Gcm.error, ex.getStackTrace().toString());
             }
             return regid;
         }
@@ -194,11 +197,12 @@ public class MagicLenGCM {
                 listener.gcmRegistered(!msg.isEmpty(), msg.toString());
         }
     }
-    public static void sendLocalNotification(Context context   ,int notifyID,int drawableSmallIcon,
-                                              String title      ,String msg  , String info,
-                                              boolean autoCancel,PendingIntent pendingIntent) {
 
-        NotificationManager mNotificationManager = (NotificationManager)context
+    public static void sendLocalNotification(Context context, int notifyID, int drawableSmallIcon,
+                                             String title, String msg, String info,
+                                             boolean autoCancel, PendingIntent pendingIntent) {
+
+        NotificationManager mNotificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
@@ -218,37 +222,38 @@ public class MagicLenGCM {
 
     public void SendMessage(String message) {
         Map<String, String> params = new HashMap<String, String>();
-        params.put("RegistrationId", REGIDforSend);
-        params.put("Message", message);
+        params.put(Name.Key.KeyRegId, REGIDforSend);
+        params.put(Name.Key.KeyMessage, message);
 
         BaseApplication.getInstance()
                 .addToRequestQueue(new JsonObjectRequest(Request.Method.POST,
-                        UriResources.Server.PushNotification ,
+                        UriResources.Server.PushNotification,
                         new JSONObject(params),
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                Log.d("通知", response.toString());
+                                Log.d(Name.Gcm.notice, response.toString());
                             }
                         },
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Log.e("錯誤", error.getMessage(), error);
+                                Log.e(Name.Gcm.error, error.getMessage(), error);
                             }
                         }) {
                     @Override
                     public Map<String, String> getHeaders() {
                         HashMap<String, String> headers = new HashMap<>();
-                        headers.put("Accept", "application/json");
-                        headers.put("Content-Type", "application/json; charset=utf-8");
+                        headers.put(Name.Key.KeyAccept, Name.Key.KeyAcceptformat);
+                        headers.put(Name.Key.KeyContentType, Name.Key.KeyHeaderformat);
                         headers.put(Name.Key.Apikey, getAPIkey());
                         return headers;
                     }
                 });
     }
+
     public String getAPIkey() {
-        return getActivity().getSharedPreferences(Name.Key.Apikey, Context.MODE_PRIVATE).getString(Name.Key.Apikey,null);
+        return getActivity().getSharedPreferences(Name.Key.Apikey, Context.MODE_PRIVATE).getString(Name.Key.Apikey, null);
     }
 
 }
