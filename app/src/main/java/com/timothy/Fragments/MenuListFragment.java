@@ -184,7 +184,6 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
             SetingSum(cart);
 
             listViewAdapter.notifyDataSetChanged();
-            listView.deferNotifyDataSetChanged();
         }
     }
 
@@ -231,6 +230,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                     continue;
                 }
 
+
                 TextView textViewProductName = (TextView) productView.findViewById(R.id.textViewProductName);
                 textViewProductName.setText(combosvo.getName());
 
@@ -239,6 +239,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                 final String productId = combosvo.getId();
 
                 textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(productId)));
+
 
                 Button btnMeat = (Button) productView.findViewById(R.id.btnMeat);
 
@@ -263,11 +264,9 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                                 int check = cart.ComboSetup(combosvo);
                                 if (check > 0) {
                                     Toast.makeText(getActivity(), res.getString(R.string.DrinkLess) + check + res.getString(R.string.CheckAgain), Toast.LENGTH_SHORT).show();
-                                } else {
-                                    if (check < 0) {
-                                        Toast.makeText(getActivity(), res.getString(R.string.DrinkMore) + (check * (-1)) + res.getString(R.string.CheckAgain), Toast.LENGTH_SHORT).show();
+                                } else  if(check < 0) {
+                                    Toast.makeText(getActivity(), res.getString(R.string.DrinkMore) + (check * (-1)) + res.getString(R.string.CheckAgain), Toast.LENGTH_SHORT).show();
 
-                                    }
                                 }
                                 textViewProductCount.setText(String.valueOf(combocount));
 
