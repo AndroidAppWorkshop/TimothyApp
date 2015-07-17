@@ -45,7 +45,6 @@ public class LoadActivity extends Activity {
             @Override
             public void onAnimationStart(Animation animation) {
                 progressBar.setVisibility(View.VISIBLE);
-
             }
             @Override
             public void onAnimationEnd(Animation animation) {

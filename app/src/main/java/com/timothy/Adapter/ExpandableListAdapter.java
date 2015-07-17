@@ -2,13 +2,20 @@ package com.timothy.Adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.timothy.Core.BaseApplication;
 import com.timothy.R;
 
 import org.json.JSONArray;
@@ -21,16 +28,21 @@ import java.util.List;
 import java.util.Map;
 
 import library.timothy.Resources.Name;
+import library.timothy.Resources.UriResources;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
-    private List<String> orderIdlist ;
-    private HashMap<String, Map<String,String>> HeaderMap;
-
-
-    public ExpandableListAdapter(Context context) {
+    private List<String> orderIdlist = new ArrayList<>();
+    private List<String> listSerialnum = new ArrayList<>();
+    private HashMap<String, Map<String,String>> HeaderMap = new HashMap<>();;
+    private ExpandableListAdapter expandableListAdapter;
+    private ExpandableListView expandableListView;
+    public ExpandableListAdapter(Context context , ExpandableListView expandableListView) {
         this.context = context;
+        expandableListAdapter = this;
+        this.expandableListView = expandableListView;
+        OrderRequest();
     }
     @Override
     public Object getChild(int groupPosition, int childPosititon) {
@@ -82,7 +94,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded,
+    public View getGroupView(final int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
         String headerTitle = (String) getGroup(groupPosition);
         if (convertView == null) {
@@ -95,10 +107,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         final TextView GroupText = (TextView) convertView.findViewById(R.id.groupText);
         Button Deltebtn = (Button) convertView.findViewById(R.id.DeleteBtn);
         Deltebtn.setFocusable(false);
+        final int position = groupPosition;
         Deltebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                removeOrder(GroupText.getText().toString());
+                removeOrder(GroupText.getText().toString() , position);
                 noticeChanged();
             }
         });
@@ -120,23 +133,26 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
-    private void removeOrder(String name)
-    {
+    private void removeOrder(String name ,int position) {
         orderIdlist.remove(name);
+        OrderRequest(listSerialnum.get(position));
     }
+
     public void mapNewData(JSONArray jsonArray) {
         JSONObject jsonObject ;
         JSONArray DetailArray ;
         String orderId;
         orderIdlist = new ArrayList<>();
+        listSerialnum = new ArrayList<>();
         HeaderMap = new HashMap<>();
         try {
             for (int index = 0; index < jsonArray.length(); index++) {
                 jsonObject = jsonArray.getJSONObject(index);
                 DetailArray = jsonObject.getJSONArray(Name.Order.orderDetail);
                 Map map= getChildMap(DetailArray);
-                orderId = context.getResources().getString(R.string.serialNumber)
-                        + jsonObject.getString(Name.Order.orderID) + "(" + map.size() + ")";
+                String Id = jsonObject.getString(Name.Order.orderID);
+                orderId = context.getResources().getString(R.string.serialNumber) + Id + "(" + map.size() + ")";
+                listSerialnum.add(Id);
                 orderIdlist.add(orderId);
                 HeaderMap.put(orderId, map);
             }
@@ -157,5 +173,57 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             catch (JSONException e) {e.printStackTrace();}
         }
         return ChildMap;
+    }
+    public void OrderRequest() {
+        BaseApplication.getInstance().addToRequestQueue(new JsonArrayRequest(Request.Method.POST,
+                UriResources.Server.Order,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray jsonArray) {
+                        expandableListAdapter.mapNewData(jsonArray);
+                        expandableListView.setAdapter(expandableListAdapter);
+                        expandableListAdapter.notifyDataSetChanged();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Log.e(volleyError.getClass().toString(), volleyError.getStackTrace().toString());
+                    }
+                }) {
+        });
+    }
+    public void OrderRequest(String SerialNumber) {
+        Map<String, String> bodymap = new HashMap<>();
+
+        bodymap.put(Name.Key.KeyAccept, SerialNumber);
+
+        BaseApplication.getInstance().addToRequestQueue(new JsonArrayRequest(Request.Method.POST,
+                UriResources.Server.Order,
+                new JSONObject(bodymap),
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray jsonArray) {
+                        expandableListAdapter.mapNewData(jsonArray);
+                        expandableListView.setAdapter(expandableListAdapter);
+                        expandableListAdapter.notifyDataSetChanged();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Log.e(volleyError.getClass().toString(), volleyError.getStackTrace().toString());
+                    }
+                }) {
+//            @Override
+//            public Map<String, String> getHeaders() {
+//                HashMap<String, String> headers = new HashMap<>();
+////                headers.put(Name.Key.KeyContentType, Name.Key.KeyHeaderformat);
+////                headers.put(Name.Key.Apikey,
+////                        context.getSharedPreferences(Name.Key.Apikey, Context.MODE_PRIVATE).getString(Name.Key.Apikey, null));
+//                return headers;
+//            }
+        });
+
     }
 }

@@ -41,7 +41,7 @@ public class SendActivity extends Activity {
         disprice=(TextView)findViewById(R.id.textView6);
         realprice=(TextView)findViewById(R.id.textView4);
         gotomenue=(Button)findViewById(R.id.button2);
-        productDisplayList = new LinkedList<String>();
+        productDisplayList = new LinkedList<>();
 
         Map<String, Integer> productInCart = cart.getProductInCart();
         for (Map.Entry<String, Integer> entry : productInCart.entrySet()) {

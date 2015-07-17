@@ -63,18 +63,20 @@ public class OrderActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
 
+
         orderList = (ExpandableListView) findViewById(R.id.Order_List);
         context = getApplicationContext();
+        expandableListAdapter = new ExpandableListAdapter(this,orderList);
         testBtn = (Button) findViewById(R.id.testBtn);
         reQuestBtn = (Button) findViewById(R.id.reQuestBtn);
         reQuestBtn.setOnClickListener(this);
-        OrderRequest();
+//        orderList.setVisibility(View.VISIBLE);
+//        orderList.setVisibility(View.INVISIBLE);
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        OrderRequest();
     }
 
     @Override
@@ -83,37 +85,5 @@ public class OrderActivity extends Activity implements View.OnClickListener {
         it.setClass(this, OrderActivity.class);
         it.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(it);
-    }
-
-    public void OrderRequest() {
-        Map<String, String> bodymap = new HashMap<>();
-        bodymap.put(Name.Key.KeyAccount, getSharedPreferences(Name.Key.Apikey, Context.MODE_PRIVATE).getString(Name.Key.KeyAccount, null));
-        BaseApplication.getInstance().addToRequestQueue(new JsonArrayRequest(Request.Method.POST,
-                UriResources.Server.Order,
-                new JSONObject(bodymap),
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray jsonArray) {
-                        orderList.setVisibility(View.VISIBLE);
-                        expandableListAdapter = new ExpandableListAdapter(context);
-                        expandableListAdapter.mapNewData(jsonArray);
-                        orderList.setAdapter(expandableListAdapter);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        orderList.setVisibility(View.INVISIBLE);
-                    }
-                }) {
-            @Override
-            public Map<String, String> getHeaders() {
-                HashMap<String, String> headers = new HashMap<>();
-                headers.put(Name.Key.KeyContentType, Name.Key.KeyHeaderformat);
-                headers.put(Name.Key.Apikey,
-                        getSharedPreferences(Name.Key.Apikey, Context.MODE_PRIVATE).getString(Name.Key.Apikey, null));
-                return headers;
-            }
-        });
     }
 }

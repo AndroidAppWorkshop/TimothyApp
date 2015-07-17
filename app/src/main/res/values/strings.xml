@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">TimothyCoffee</string>
-    <string name="numberOf">  number :</string>
+    <string name="numberOf">  Quantity :</string>
     <string name="sendfail"> Send fail : </string>
     <string name="from"> From :</string>
     <string name="util"> Util :</string>
@@ -20,7 +21,9 @@
     <string name="GcmDelete"> GCM DELETE </string>
     <string name="GcmMessage"> GCM MESSAGE </string>
     <string name="FromServer"> From Server --- </string>
-
+    <string name="DrinkLess"> DrinktooLess </string>
+    <string name="DrinkMore"> DrinktooMore </string>
+    <string name="CheckAgain"> Please Check again </string>
 
     <string name="Message"> Message </string>
     <string name="Reponse"> Reponse</string>

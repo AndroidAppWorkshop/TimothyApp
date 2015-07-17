@@ -1,5 +1,7 @@
 package library.timothy.history;
 
+import library.timothy.R;
+
 /**
  * Created by h94u04 on 2015/7/12.
  */

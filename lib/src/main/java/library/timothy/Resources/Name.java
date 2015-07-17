@@ -24,13 +24,14 @@ public class Name {
 
         public static String KeyDisprice = "Disprice";
         public static String KeyRealprice = "Realprice";
-        public static String KeyId = "Id";
-        public static String KeyCount = "Count";
-        public static String KeyCart = "Cart";
+        public static String KeyproductID = "productID";
+        public static String Keyquantity = "quantity";
+        public static String KeytotalPrice = "totalPrice";
+        public static String Keydiscount = "discount";
+        public static String KeycartDetail = "cartDetail";
         public static String KeyTrue = "true";
         public static String KeySuccess = "Success";
         public static String KeyDate = "date";
-
 
         public static String KeyRegId = "RegistrationId";
         public static String KeyMessage = "Message";

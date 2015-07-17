@@ -16,6 +16,7 @@
     <string name="order"> 訂單 </string>
     <string name="wrongNumberCombo"> 套餐數量不符合,請重新檢查 </string>
     <string name="regId"> 儲存ID : </string>
+    <string name="apiKeyError"> ApiKey Error</string>
     <string name="GcmError">  推播端 錯誤 </string>
     <string name="GcmDelete"> 推播端 不存在 </string>
     <string name="GcmMessage"> 推播端訊息 </string>
@@ -24,6 +25,6 @@
     <string name="DrinkMore"> 飲料多 </string>
     <string name="CheckAgain"> 份請重新檢查 </string>
 
-
     <string name="Message"> 訊息 </string>
+    <string name="Reponse"> 回報</string>
 </resources>

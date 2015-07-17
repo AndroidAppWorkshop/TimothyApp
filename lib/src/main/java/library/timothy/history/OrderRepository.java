@@ -22,7 +22,7 @@ public class OrderRepository {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 String orderid=jsonObject.getString("orderID");
                 Order order=new Order(jsonObject.getString("orderID"),
-                        (jsonObject.getString("status") == "undone")?"未核銷":"已核銷");
+                        (jsonObject.getString("status").equals("undone")) ? "未核銷":"已核銷");
                 order.getProducts().add(new Status(jsonObject.getInt("totalprice"),jsonObject.getInt("discount")));
                 JSONArray detailsArray = jsonObject.getJSONArray("orderDetail");
 

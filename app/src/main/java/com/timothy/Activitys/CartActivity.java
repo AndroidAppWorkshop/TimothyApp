@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -19,7 +18,6 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.timothy.Adapter.CartAdapter;
 import com.timothy.Core.BaseApplication;
@@ -36,7 +34,6 @@ import library.timothy.Resources.Name;
 import library.timothy.Resources.UriResources;
 import library.timothy.Shopping.Cart;
 import library.timothy.Shopping.ProductRepository;
-import library.timothy.history.OrderRepository;
 
 
 public class CartActivity extends Activity implements View.OnClickListener{
@@ -100,13 +97,11 @@ public class CartActivity extends Activity implements View.OnClickListener{
 
         String realpriceinput=actualreceipts.getText().toString();
 
-        if(realpriceinput.length()>0)
-        {
+        if(realpriceinput.length()>0) {
             realprice=Integer.valueOf(realpriceinput);
             disprice=totalprice-realprice;
         }
-        else
-        {
+        else {
             realprice=totalprice;
         }
         Send(realprice, disprice, cart.getProductInCart());
@@ -119,9 +114,9 @@ public class CartActivity extends Activity implements View.OnClickListener{
             progressBar.setVisibility(View.VISIBLE);
             JSONEncode(productInCart);
             JSONObject orderBody = new JSONObject();
-            orderBody.put(Name.Key.KeyDisprice, disprice);
-            orderBody.put(Name.Key.KeyRealprice, realprice);
-            orderBody.put( Name.Key.KeyCart , cartarray);
+            orderBody.put(Name.Key.Keydiscount, disprice);
+            orderBody.put(Name.Key.KeytotalPrice, realprice);
+            orderBody.put(Name.Key.KeycartDetail, cartarray);
 
             Log.i(String.valueOf(R.string.jsonstring), orderBody.toString());
 
@@ -142,7 +137,6 @@ public class CartActivity extends Activity implements View.OnClickListener{
                                         finish();
                                         progressBar.setVisibility(View.INVISIBLE);
                                     }
-
                                 }
                             },
                             new Response.ErrorListener() {
@@ -173,8 +167,8 @@ public class CartActivity extends Activity implements View.OnClickListener{
             if(count>0)
             {
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put(Name.Key.KeyId, productId);
-                jsonObject.put(Name.Key.KeyCount , count);
+                jsonObject.put(Name.Key.KeyproductID , productId);
+                jsonObject.put(Name.Key.Keyquantity, count);
                 cartarray.put(jsonObject);
             }
 
