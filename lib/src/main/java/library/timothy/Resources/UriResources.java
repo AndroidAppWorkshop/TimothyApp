@@ -8,9 +8,9 @@ public class UriResources {
         public static final String Product = API + "Product";
         public static final String LogIn = API + "Login";
         public static final String Combo = API + "Combo";
-        public static final String orderhistory= API + "Orderhistory";
+        public static final String Orderhistory = API + "Orderhistory";
         public static final String PushNotification = API + "PushNotification";
         public static final String Order = API + "Order";
-        public static final String shopping = API + "Shopping";
+        public static final String Shopping = API + "Shopping";
     }
 }
