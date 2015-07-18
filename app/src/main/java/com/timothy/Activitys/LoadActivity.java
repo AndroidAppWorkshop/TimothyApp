@@ -12,7 +12,7 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import com.timothy.R;
-import library.timothy.Resources.Name;
+import library.timothy.Resources.StringResuorces;
 
 /**
  * Created by h94u04 on 2015/6/12.
@@ -49,8 +49,8 @@ public class LoadActivity extends Activity {
             @Override
             public void onAnimationEnd(Animation animation) {
 
-             if (getSharedPreferences(Name.Key.Apikey , MODE_PRIVATE)
-                                .getString(Name.Key.Apikey, null) != null) {
+             if (getSharedPreferences(StringResuorces.Key.apiKey, MODE_PRIVATE)
+                                .getString(StringResuorces.Key.apiKey, null) != null) {
                  intent.setClass(context , MainActivity.class);
                  startActivity(intent);
              }

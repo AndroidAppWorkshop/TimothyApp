@@ -30,7 +30,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import library.timothy.Resources.Name;
+import library.timothy.Resources.StringResuorces;
 import library.timothy.Resources.UriResources;
 import library.timothy.Shopping.Cart;
 import library.timothy.Shopping.ProductRepository;
@@ -56,9 +56,9 @@ public class CartActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        cart = getIntent().getParcelableExtra(Name.Key.KeyParcel);
-        sharedPreferences = this.getSharedPreferences(Name.Key.Apikey, Context.MODE_PRIVATE);
-        apiKey = sharedPreferences.getString(Name.Key.Apikey, null);
+        cart = getIntent().getParcelableExtra(StringResuorces.Key.data);
+        sharedPreferences = this.getSharedPreferences(StringResuorces.Key.apiKey, Context.MODE_PRIVATE);
+        apiKey = sharedPreferences.getString(StringResuorces.Key.apiKey, null);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
 
         confirmMeal=(Button)findViewById(R.id.button);
@@ -81,7 +81,7 @@ public class CartActivity extends Activity implements View.OnClickListener{
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
             Intent it = new Intent();
-            it.putExtra(Name.Key.KeyParcel , cart);
+            it.putExtra(StringResuorces.Key.data, cart);
             this.setResult( RESULT_OK , it );
             this.finish();
             return true;
@@ -114,9 +114,9 @@ public class CartActivity extends Activity implements View.OnClickListener{
             progressBar.setVisibility(View.VISIBLE);
             JSONEncode(productInCart);
             JSONObject orderBody = new JSONObject();
-            orderBody.put(Name.Key.Keydiscount, disprice);
-            orderBody.put(Name.Key.KeytotalPrice, realprice);
-            orderBody.put(Name.Key.KeycartDetail, cartarray);
+            orderBody.put(StringResuorces.Key.discount, disprice);
+            orderBody.put(StringResuorces.Key.totalPrice, realprice);
+            orderBody.put(StringResuorces.Key.cartDetail, cartarray);
 
             Log.i(String.valueOf(R.string.jsonstring), orderBody.toString());
 
@@ -127,12 +127,12 @@ public class CartActivity extends Activity implements View.OnClickListener{
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject response) {
-                                    Log.i(getResources().getString(R.string.Reponse), response.optString(Name.Key.KeyTrue));
-                                    if (response.optString(Name.Key.KeyTrue).equals(Name.Key.KeySuccess)) {
+                                    Log.i(getResources().getString(R.string.Reponse), response.optString(StringResuorces.Key.True));
+                                    if (response.optString(StringResuorces.Key.True).equals(StringResuorces.Key.success)) {
                                         Intent it = new Intent(CartActivity.this, SendActivity.class);
-                                        it.putExtra(Name.Key.KeyRealprice, realprice);
-                                        it.putExtra(Name.Key.KeyDisprice, disprice);
-                                        it.putExtra(Name.Key.KeyParcel, cart);
+                                        it.putExtra(StringResuorces.Key.realprice, realprice);
+                                        it.putExtra(StringResuorces.Key.disprice, disprice);
+                                        it.putExtra(StringResuorces.Key.data, cart);
                                         startActivity(it);
                                         finish();
                                         progressBar.setVisibility(View.INVISIBLE);
@@ -149,7 +149,7 @@ public class CartActivity extends Activity implements View.OnClickListener{
                         @Override
                         public Map<String, String> getHeaders() {
                             HashMap<String, String> headers = new HashMap<String, String>();
-                            headers.put(Name.Key.Apikey, apiKey);
+                            headers.put(StringResuorces.Key.apiKey, apiKey);
                             return headers;
                         }
                     });
@@ -167,8 +167,8 @@ public class CartActivity extends Activity implements View.OnClickListener{
             if(count>0)
             {
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put(Name.Key.KeyproductID , productId);
-                jsonObject.put(Name.Key.Keyquantity, count);
+                jsonObject.put(StringResuorces.Key.productID, productId);
+                jsonObject.put(StringResuorces.Key.quantity, count);
                 cartarray.put(jsonObject);
             }
 

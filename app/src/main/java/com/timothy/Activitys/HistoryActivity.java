@@ -1,13 +1,8 @@
 package com.timothy.Activitys;
 
-import android.animation.TimeInterpolator;
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -15,15 +10,11 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,16 +22,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.db.chart.Tools;
-import com.db.chart.model.Bar;
-import com.db.chart.model.BarSet;
-import com.db.chart.view.BarChartView;
-import com.db.chart.view.XController;
-import com.db.chart.view.YController;
-import com.db.chart.view.animation.Animation;
-import com.db.chart.view.animation.easing.BaseEasingMethod;
-import com.db.chart.view.animation.easing.ElasticEase;
-import com.db.chart.view.animation.easing.QuintEase;
 import com.timothy.Core.BaseApplication;
 import com.timothy.R;
 
@@ -54,7 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import library.timothy.Resources.Name;
+import library.timothy.Resources.StringResuorces;
 import library.timothy.Resources.UriResources;
 import library.timothy.history.Order;
 import library.timothy.history.OrderRepository;
@@ -79,8 +60,8 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         Dl.setDrawerShadow(R.drawable.drashadow, Gravity.END);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
         expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
-        sharedPreferences = this.getSharedPreferences(Name.Key.Apikey, Context.MODE_PRIVATE);
-        apiKey = sharedPreferences.getString(Name.Key.Apikey, null);
+        sharedPreferences = this.getSharedPreferences(StringResuorces.Key.apiKey, Context.MODE_PRIVATE);
+        apiKey = sharedPreferences.getString(StringResuorces.Key.apiKey, null);
 
         editTextStartDate = (EditText) findViewById(R.id.startDate);
         editTextEndDate = (EditText) findViewById(R.id.endDate);
@@ -123,11 +104,11 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
     private void loadOrderhistory(String date)  {
         JSONObject dateBody = new JSONObject();
         try {
-            dateBody.put(Name.Key.KeyDate,date);
+            dateBody.put(StringResuorces.Key.date,date);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.i(Name.Key.KeyDate,dateBody.toString());
+        Log.i(StringResuorces.Key.date,dateBody.toString());
         BaseApplication.getInstance().addToRequestQueue(
                 new JsonArrayRequest(
                         Request.Method.POST,
@@ -150,7 +131,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                     @Override
                     public Map<String, String> getHeaders() {
                         HashMap<String, String> headers = new HashMap<String, String>();
-                        headers.put(Name.Key.Apikey, apiKey);
+                        headers.put(StringResuorces.Key.apiKey, apiKey);
                         return headers;
                     }
                 });

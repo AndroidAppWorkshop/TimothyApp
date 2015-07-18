@@ -13,7 +13,7 @@ import com.timothy.Activitys.OrderActivity;
 import com.timothy.R;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
-import library.timothy.Resources.Name;
+import library.timothy.Resources.StringResuorces;
 
 public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
 
@@ -42,7 +42,7 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
                         .sendLocalNotification(context,
                                 NOTIFICATION_ID, R.drawable.actionbar_menu,
                                 res.getString(R.string.FromServer),
-                                extras.getString(res.getString(R.string.Message)),
+                                extras.getString(StringResuorces.Gcm.message),
                                 res.getString(R.string.app_name), true,
                                 PendingIntent.getActivity(context,
                                         NOTIFICATION_ID, intentNextAction,

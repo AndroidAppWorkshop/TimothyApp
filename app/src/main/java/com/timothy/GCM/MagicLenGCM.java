@@ -27,18 +27,18 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import library.timothy.Resources.Name;
+import library.timothy.Resources.StringResuorces;
 import library.timothy.Resources.UriResources;
 
 public class MagicLenGCM {
 
-    private final static String SENDER_ID = Name.Gcm.sendId;
-    private static final String PROPERTY_REG_ID = Name.Gcm.propertyReg;
-    private static final String PROPERTY_APP_VERSION = Name.Gcm.proretyAppVersion;
+    private final static String SENDER_ID = StringResuorces.Gcm.sendId;
+    private static final String PROPERTY_REG_ID = StringResuorces.Gcm.propertyReg;
+    private static final String PROPERTY_APP_VERSION = StringResuorces.Gcm.proretyAppVersion;
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private Activity activity;
     private MagicLenGCMListener listener;
-    private String Empty = Name.Gcm.empty;
+    private String Empty = StringResuorces.Gcm.empty;
     private String REGIDforSend = Empty;
     private String regidforlocal = Empty;
 
@@ -127,7 +127,7 @@ public class MagicLenGCM {
                     .getPackageInfo(activity.getPackageName(), 0);
             return packageInfo.versionCode;
         } catch (NameNotFoundException e) {
-            throw new RuntimeException(PROPERTY_APP_VERSION + Name.Gcm.error);
+            throw new RuntimeException(PROPERTY_APP_VERSION + StringResuorces.Gcm.error);
         }
     }
 
@@ -186,7 +186,7 @@ public class MagicLenGCM {
                     return Empty;
                 }
             } catch (IOException ex) {
-                Log.e(PROPERTY_REG_ID + Name.Gcm.error, ex.getStackTrace().toString());
+                Log.e(PROPERTY_REG_ID + StringResuorces.Gcm.error, ex.getStackTrace().toString());
             }
             return regid;
         }
@@ -222,8 +222,8 @@ public class MagicLenGCM {
 
     public void SendMessage(String message) {
         Map<String, String> params = new HashMap<String, String>();
-        params.put(Name.Key.KeyRegId, REGIDforSend);
-        params.put(Name.Key.KeyMessage, message);
+        params.put(StringResuorces.Key.registrationId, REGIDforSend);
+        params.put(StringResuorces.Key.message, message);
 
         BaseApplication.getInstance()
                 .addToRequestQueue(new JsonObjectRequest(Request.Method.POST,
@@ -232,28 +232,28 @@ public class MagicLenGCM {
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                Log.d(Name.Gcm.notice, response.toString());
+                                Log.d(StringResuorces.Gcm.notice, response.toString());
                             }
                         },
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Log.e(Name.Gcm.error, error.getMessage(), error);
+                                Log.e(StringResuorces.Gcm.error, error.getMessage(), error);
                             }
                         }) {
                     @Override
                     public Map<String, String> getHeaders() {
                         HashMap<String, String> headers = new HashMap<>();
-                        headers.put(Name.Key.KeyAccept, Name.Key.KeyAcceptformat);
-                        headers.put(Name.Key.KeyContentType, Name.Key.KeyHeaderformat);
-                        headers.put(Name.Key.Apikey, getAPIkey());
+                        headers.put(StringResuorces.Key.accept, StringResuorces.Key.jsonFormat);
+                        headers.put(StringResuorces.Key.ContentType, StringResuorces.Key.headerFormat);
+                        headers.put(StringResuorces.Key.apiKey, getAPIkey());
                         return headers;
                     }
                 });
     }
 
     public String getAPIkey() {
-        return getActivity().getSharedPreferences(Name.Key.Apikey, Context.MODE_PRIVATE).getString(Name.Key.Apikey, null);
+        return getActivity().getSharedPreferences(StringResuorces.Key.apiKey, Context.MODE_PRIVATE).getString(StringResuorces.Key.apiKey, null);
     }
 
 }

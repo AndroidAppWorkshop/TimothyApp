@@ -25,6 +25,6 @@
     <string name="DrinkMore"> DrinktooMore </string>
     <string name="CheckAgain"> Please Check again </string>
 
-    <string name="Message"> Message </string>
-    <string name="Reponse"> Reponse</string>
+    <string name="Message">message</string>
+    <string name="Reponse">Reponse</string>
 </resources>

@@ -39,7 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import library.timothy.Resources.Name;
+import library.timothy.Resources.StringResuorces;
 import library.timothy.Resources.UriResources;
 import library.timothy.Shopping.Cart;
 import library.timothy.Shopping.Category;
@@ -89,9 +89,9 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
 
         progressBar.setVisibility(View.VISIBLE);
 
-        sharedPreferences = this.getActivity().getSharedPreferences(Name.Key.Apikey, Context.MODE_PRIVATE);
+        sharedPreferences = this.getActivity().getSharedPreferences(StringResuorces.Key.apiKey, Context.MODE_PRIVATE);
 
-        apiKey = sharedPreferences.getString(Name.Key.Apikey, null);
+        apiKey = sharedPreferences.getString(StringResuorces.Key.apiKey, null);
 
         loadProducts();
     }
@@ -119,7 +119,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public Map<String, String> getHeaders() {
                         HashMap<String, String> headers = new HashMap<String, String>();
-                        headers.put(Name.Key.Apikey, apiKey);
+                        headers.put(StringResuorces.Key.apiKey, apiKey);
                         return headers;
                     }
                 });
@@ -150,7 +150,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public Map<String, String> getHeaders() {
                         HashMap<String, String> headers = new HashMap<String, String>();//
-                        headers.put(Name.Key.Apikey, apiKey);
+                        headers.put(StringResuorces.Key.apiKey, apiKey);
                         return headers;
                     }
                 });
@@ -170,8 +170,8 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         Intent it = new Intent(getActivity(), CartActivity.class);
-        it.putExtra(Name.Key.KeyParcel, cart);
-        startActivityForResult(it, Name.Index.ActivityResult);
+        it.putExtra(StringResuorces.Key.data, cart);
+        startActivityForResult(it, StringResuorces.Index.ActivityResult);
     }
 
     @Override
@@ -179,7 +179,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (listViewAdapter != null) {
-            cart = data.getExtras().getParcelable(Name.Key.KeyParcel);
+            cart = data.getExtras().getParcelable(StringResuorces.Key.data);
 
             SetingSum(cart);
 
@@ -264,7 +264,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                                 int check = cart.ComboSetup(combosvo);
                                 if (check > 0) {
                                     Toast.makeText(getActivity(), res.getString(R.string.DrinkLess) + check + res.getString(R.string.CheckAgain), Toast.LENGTH_SHORT).show();
-                                } else  if(check < 0) {
+                                } else if(check < 0) {
                                     Toast.makeText(getActivity(), res.getString(R.string.DrinkMore) + (check * (-1)) + res.getString(R.string.CheckAgain), Toast.LENGTH_SHORT).show();
 
                                 }

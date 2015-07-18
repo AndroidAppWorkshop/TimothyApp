@@ -25,7 +25,7 @@ import com.timothy.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import library.timothy.Resources.Name;
+import library.timothy.Resources.StringResuorces;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         android.support.v4.app.FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
-        ft1.addToBackStack(Name.Key.KeyBackStack);
+        ft1.addToBackStack(StringResuorces.Key.backStack);
 
         switch (position) {
 

@@ -20,7 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.timothy.Core.BaseApplication;
 import com.timothy.R;
-import library.timothy.Resources.Name;
+import library.timothy.Resources.StringResuorces;
 import library.timothy.Resources.UriResources;
 
 import org.json.JSONObject;
@@ -43,7 +43,7 @@ public class LoginActivity extends Activity
         setContentView(R.layout.activity_login);
         res = getResources();
 
-        sharedPreferences = getSharedPreferences( Name.Key.Apikey , MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences( StringResuorces.Key.apiKey, MODE_PRIVATE);
 
         buttonLogin = (Button) findViewById(R.id.buttonLogin);
         editTextAccount = (EditText) findViewById(R.id.editTextAccount);
@@ -68,8 +68,8 @@ public class LoginActivity extends Activity
             progressBar.setVisibility(View.VISIBLE);
 
             JSONObject loginBody = new JSONObject();
-            loginBody.put(Name.Key.KeyAccount, Account);
-            loginBody.put(Name.Key.KeyPassword, Password);
+            loginBody.put(StringResuorces.Key.account, Account);
+            loginBody.put(StringResuorces.Key.password, Password);
 
             BaseApplication.getInstance().addToRequestQueue(
                     new JsonObjectRequest(Request.Method.POST, UriResources.Server.LogIn, loginBody,
@@ -77,18 +77,18 @@ public class LoginActivity extends Activity
                         @Override
                         public void onResponse(JSONObject response) {
                             progressBar.setVisibility(View.INVISIBLE);
-                            if (!TextUtils.isEmpty(response.optString(Name.Key.KeyFailure))) {
+                            if (!TextUtils.isEmpty(response.optString(StringResuorces.Key.failure))) {
                                 Toast.makeText(LoginActivity.this, res.getString(R.string.loginfail) , Toast.LENGTH_SHORT).show();
                                 return;
                             }
 
-                            String apiKey = response.optString(Name.Key.Apikey);
+                            String apiKey = response.optString(StringResuorces.Key.apiKey);
                             if (TextUtils.isEmpty(apiKey)) {
                                 Toast.makeText(LoginActivity.this, res.getString(R.string.loginfail)+res.getString(R.string.apiKeyError), Toast.LENGTH_SHORT).show();
                                 return;
                             }
 
-                            sharedPreferences.edit().putString(Name.Key.Apikey, apiKey).commit();
+                            sharedPreferences.edit().putString(StringResuorces.Key.apiKey, apiKey).commit();
                             goToNextActivity();
                         }
                     },

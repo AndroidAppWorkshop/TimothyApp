@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import library.timothy.Resources.Name;
+import library.timothy.Resources.StringResuorces;
 import library.timothy.Resources.UriResources;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
@@ -148,9 +148,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         try {
             for (int index = 0; index < jsonArray.length(); index++) {
                 jsonObject = jsonArray.getJSONObject(index);
-                DetailArray = jsonObject.getJSONArray(Name.Order.orderDetail);
+                DetailArray = jsonObject.getJSONArray(StringResuorces.Order.orderDetail);
                 Map map= getChildMap(DetailArray);
-                String Id = jsonObject.getString(Name.Order.orderID);
+                String Id = jsonObject.getString(StringResuorces.Order.orderID);
                 orderId = context.getResources().getString(R.string.serialNumber) + Id + "(" + map.size() + ")";
                 listSerialnum.add(Id);
                 orderIdlist.add(orderId);
@@ -166,9 +166,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         for (int index = 0; index < DetailArray.length(); index++) {
             try {
                 jo = DetailArray.getJSONObject(index);
-                jo.getString(Name.Order.productName);
-                jo.getString(Name.Order.quantity);
-                ChildMap.put(index+"" , jo.getString(Name.Order.productName) + "x" + jo.getString(Name.Order.quantity));
+                jo.getString(StringResuorces.Order.productName);
+                jo.getString(StringResuorces.Order.quantity);
+                ChildMap.put(index+"" , jo.getString(StringResuorces.Order.productName) + "x" + jo.getString(StringResuorces.Order.quantity));
             }
             catch (JSONException e) {e.printStackTrace();}
         }
@@ -196,7 +196,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public void OrderRequest(String SerialNumber) {
         Map<String, String> bodymap = new HashMap<>();
 
-        bodymap.put(Name.Key.KeyAccept, SerialNumber);
+        bodymap.put(StringResuorces.Key.accept, SerialNumber);
 
         BaseApplication.getInstance().addToRequestQueue(new JsonArrayRequest(Request.Method.POST,
                 UriResources.Server.Order,
@@ -215,14 +215,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                         Log.e(volleyError.getClass().toString(), volleyError.getStackTrace().toString());
                     }
                 }) {
-//            @Override
-//            public Map<String, String> getHeaders() {
-//                HashMap<String, String> headers = new HashMap<>();
-////                headers.put(Name.Key.KeyContentType, Name.Key.KeyHeaderformat);
-////                headers.put(Name.Key.Apikey,
-////                        context.getSharedPreferences(Name.Key.Apikey, Context.MODE_PRIVATE).getString(Name.Key.Apikey, null));
-//                return headers;
-//            }
         });
 
     }
