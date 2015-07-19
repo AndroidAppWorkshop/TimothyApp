@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import library.timothy.Resources.StringResources;
 
 
 public class OrderRepository {
@@ -20,17 +21,17 @@ public class OrderRepository {
         try {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String orderid=jsonObject.getString("orderID");
-                Order order=new Order(jsonObject.getString("orderID"),
-                        (jsonObject.getString("status").equals("undone")) ? "未核銷":"已核銷");
-                order.getProducts().add(new Status(jsonObject.getInt("totalprice"),jsonObject.getInt("discount")));
-                JSONArray detailsArray = jsonObject.getJSONArray("orderDetail");
+                String orderid=jsonObject.getString(StringResources.Key.OrderID);
+                Order order=new Order(jsonObject.getString(StringResources.Key.OrderID),
+                        (jsonObject.getString(StringResources.Key.Status).equals(StringResources.Key.Undone)) ? StringResources.Text.Undone:StringResources.Text.Done);
+                order.getProducts().add(new Status(jsonObject.getInt(StringResources.Key.Totalprice),jsonObject.getInt(StringResources.Key.Discount)));
+                JSONArray detailsArray = jsonObject.getJSONArray(StringResources.Key.OrderDetail);
 
                 for (int j = 0; j < detailsArray.length(); j++) {
                     JSONObject detailObject = detailsArray.getJSONObject(j);
 
-                    Product product=new Product(detailObject.getString("orderID"),detailObject.getString("productName"),
-                            detailObject.getInt("quantity"));
+                    Product product=new Product(detailObject.getString(StringResources.Key.OrderID),detailObject.getString(StringResources.Key.ProductName),
+                            detailObject.getInt(StringResources.Key.Quantity));
                     order.getProducts().add(product);
                 }
                 orders.put(orderid,order);

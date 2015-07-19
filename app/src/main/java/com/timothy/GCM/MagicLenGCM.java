@@ -27,18 +27,18 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import library.timothy.Resources.StringResuorces;
+import library.timothy.Resources.StringResources;
 import library.timothy.Resources.UriResources;
 
 public class MagicLenGCM {
 
-    private final static String SENDER_ID = StringResuorces.Gcm.sendId;
-    private static final String PROPERTY_REG_ID = StringResuorces.Gcm.propertyReg;
-    private static final String PROPERTY_APP_VERSION = StringResuorces.Gcm.proretyAppVersion;
+    private final static String SENDER_ID = StringResources.Gcm.SendId;
+    private static final String PROPERTY_REG_ID = StringResources.Gcm.PropertyReg;
+    private static final String PROPERTY_APP_VERSION = StringResources.Gcm.ProretyAppVersion;
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private Activity activity;
     private MagicLenGCMListener listener;
-    private String Empty = StringResuorces.Gcm.empty;
+    private String Empty = StringResources.Gcm.Empty;
     private String REGIDforSend = Empty;
     private String regidforlocal = Empty;
 
@@ -127,7 +127,7 @@ public class MagicLenGCM {
                     .getPackageInfo(activity.getPackageName(), 0);
             return packageInfo.versionCode;
         } catch (NameNotFoundException e) {
-            throw new RuntimeException(PROPERTY_APP_VERSION + StringResuorces.Gcm.error);
+            throw new RuntimeException(PROPERTY_APP_VERSION + StringResources.Gcm.Error);
         }
     }
 
@@ -186,7 +186,7 @@ public class MagicLenGCM {
                     return Empty;
                 }
             } catch (IOException ex) {
-                Log.e(PROPERTY_REG_ID + StringResuorces.Gcm.error, ex.getStackTrace().toString());
+                Log.e(PROPERTY_REG_ID + StringResources.Gcm.Error, ex.getStackTrace().toString());
             }
             return regid;
         }
@@ -222,8 +222,8 @@ public class MagicLenGCM {
 
     public void SendMessage(String message) {
         Map<String, String> params = new HashMap<String, String>();
-        params.put(StringResuorces.Key.registrationId, REGIDforSend);
-        params.put(StringResuorces.Key.message, message);
+        params.put(StringResources.Key.RegistrationId, REGIDforSend);
+        params.put(StringResources.Key.Message, message);
 
         BaseApplication.getInstance()
                 .addToRequestQueue(new JsonObjectRequest(Request.Method.POST,
@@ -232,28 +232,28 @@ public class MagicLenGCM {
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                Log.d(StringResuorces.Gcm.notice, response.toString());
+                                Log.d(StringResources.Gcm.Notice, response.toString());
                             }
                         },
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Log.e(StringResuorces.Gcm.error, error.getMessage(), error);
+                                Log.e(StringResources.Gcm.Error, error.getMessage(), error);
                             }
                         }) {
                     @Override
                     public Map<String, String> getHeaders() {
                         HashMap<String, String> headers = new HashMap<>();
-                        headers.put(StringResuorces.Key.accept, StringResuorces.Key.jsonFormat);
-                        headers.put(StringResuorces.Key.ContentType, StringResuorces.Key.headerFormat);
-                        headers.put(StringResuorces.Key.apiKey, getAPIkey());
+                        headers.put(StringResources.Key.Accept, StringResources.Key.JsonFormat);
+                        headers.put(StringResources.Key.ContentType, StringResources.Key.HeaderFormat);
+                        headers.put(StringResources.Key.ApiKey, getAPIkey());
                         return headers;
                     }
                 });
     }
 
     public String getAPIkey() {
-        return getActivity().getSharedPreferences(StringResuorces.Key.apiKey, Context.MODE_PRIVATE).getString(StringResuorces.Key.apiKey, null);
+        return getActivity().getSharedPreferences(StringResources.Key.ApiKey, Context.MODE_PRIVATE).getString(StringResources.Key.ApiKey, null);
     }
 
 }

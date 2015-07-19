@@ -35,7 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import library.timothy.Resources.StringResuorces;
+import library.timothy.Resources.StringResources;
 import library.timothy.Resources.UriResources;
 import library.timothy.history.Order;
 import library.timothy.history.OrderRepository;
@@ -60,8 +60,8 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         Dl.setDrawerShadow(R.drawable.drashadow, Gravity.END);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
         expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
-        sharedPreferences = this.getSharedPreferences(StringResuorces.Key.apiKey, Context.MODE_PRIVATE);
-        apiKey = sharedPreferences.getString(StringResuorces.Key.apiKey, null);
+        sharedPreferences = this.getSharedPreferences(StringResources.Key.ApiKey, Context.MODE_PRIVATE);
+        apiKey = sharedPreferences.getString(StringResources.Key.ApiKey, null);
 
         editTextStartDate = (EditText) findViewById(R.id.startDate);
         editTextEndDate = (EditText) findViewById(R.id.endDate);
@@ -104,15 +104,15 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
     private void loadOrderhistory(String date)  {
         JSONObject dateBody = new JSONObject();
         try {
-            dateBody.put(StringResuorces.Key.date,date);
+            dateBody.put(StringResources.Key.Date,date);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.i(StringResuorces.Key.date,dateBody.toString());
+        Log.i(StringResources.Key.Date,dateBody.toString());
         BaseApplication.getInstance().addToRequestQueue(
                 new JsonArrayRequest(
                         Request.Method.POST,
-                        UriResources.Server.orderhistory,dateBody,
+                        UriResources.Server.Orderhistory,dateBody,
                         new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray jsonArray) {
@@ -131,7 +131,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                     @Override
                     public Map<String, String> getHeaders() {
                         HashMap<String, String> headers = new HashMap<String, String>();
-                        headers.put(StringResuorces.Key.apiKey, apiKey);
+                        headers.put(StringResources.Key.ApiKey, apiKey);
                         return headers;
                     }
                 });

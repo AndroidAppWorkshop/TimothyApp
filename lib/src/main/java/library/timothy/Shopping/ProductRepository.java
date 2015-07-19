@@ -10,8 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import library.timothy.Shopping.Category;
-import library.timothy.Shopping.Product;
+import library.timothy.Resources.StringResources;
 
 public class ProductRepository {
 
@@ -43,7 +42,7 @@ public class ProductRepository {
         try {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String categoryId = jsonObject.getString("CategoryID");
+                String categoryId = jsonObject.getString(StringResources.Key.CategoryID);
                 Category category;
                 if (categoryVos.containsKey(categoryId)) {
                     category = categoryVos.get(categoryId);
@@ -54,8 +53,11 @@ public class ProductRepository {
                 category.setName(categoryId);
 
 
-                Product product = new Product(jsonObject.getString("ProductId"), jsonObject.getString("ProductName"), jsonObject.getInt("ProductPrice") , jsonObject.getString("Image"));
-                category.getProducts().add(product);
+                Product product = new Product(jsonObject.getString(StringResources.Key.ProductID),
+                            jsonObject.getString(StringResources.Key.Productname),
+                            jsonObject.getInt(StringResources.Key.ProductPrice) ,
+                            jsonObject.getString(StringResources.Key.Image));
+                            category.getProducts().add(product);
             }
 
         } catch (JSONException e) {

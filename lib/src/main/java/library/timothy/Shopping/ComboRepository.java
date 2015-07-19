@@ -1,16 +1,15 @@
 package library.timothy.Shopping;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import library.timothy.Resources.StringResources;
 
 public class ComboRepository {
 
@@ -30,29 +29,29 @@ public class ComboRepository {
                 Category category;
                 Combo comboVo = new Combo();
 
-                comboId = jsonObject.getString("comboId");
-                String comboName=jsonObject.getString("comboName");
+                comboId = jsonObject.getString(StringResources.Key.ComboId);
+                String comboName=jsonObject.getString(StringResources.Key.ComboName);
                 comboVo.setId(comboId);
                 comboVo.setName(comboName);
 
                 category=new Category(comboId);
                 category.setName(comboName);
 
-                JSONArray detailsMeatArray = jsonObject.getJSONArray("detail");
-                JSONArray detailsDrinkArray = jsonObject.getJSONArray("combodrink");
+                JSONArray detailsMeatArray = jsonObject.getJSONArray(StringResources.Key.Detail);
+                JSONArray detailsDrinkArray = jsonObject.getJSONArray(StringResources.Key.Combodrink);
 
                 for (int j = 0; j < detailsMeatArray.length(); j++) {
                     JSONObject detailJsonObject = detailsMeatArray.getJSONObject(j);
 
                     ComboDetail detailMeat = new ComboDetail();
 
-                    detailMeat.setProductId(detailJsonObject.getString("productID"));
-                    detailMeat.setPrice(detailJsonObject.getInt("price"));
-                    detailMeat.setName(detailJsonObject.getString("meat")+addcomboname[i]);
+                    detailMeat.setProductId(detailJsonObject.getString(StringResources.Key.ProductId));
+                            detailMeat.setPrice(detailJsonObject.getInt(StringResources.Key.Price));
+                                    detailMeat.setName(detailJsonObject.getString(StringResources.Key.Meat) + addcomboname[i]);
 
-                    comboVo.getDetails().add(detailMeat);
+                                            comboVo.getDetails().add(detailMeat);
 
-                    Product product = new Product(detailJsonObject.getString("productID"), detailJsonObject.getString("meat")+addcomboname[i], detailJsonObject.getInt("price"), null);
+                    Product product = new Product(detailJsonObject.getString(StringResources.Key.ProductId), detailJsonObject.getString(StringResources.Key.Meat)+addcomboname[i], detailJsonObject.getInt(StringResources.Key.Price), null);
                     category.getProducts().add(product);
                 }
                 for (int k = 0; k< detailsDrinkArray.length(); k++) {
@@ -60,12 +59,12 @@ public class ComboRepository {
 
                     ComboDetail detailDrink = new ComboDetail();
 
-                    detailDrink.setProductId(detailJsonObject.getString("DrinkID"));
-                    detailDrink.setName(detailJsonObject.getString("DrinkName"));
+                    detailDrink.setProductId(detailJsonObject.getString(StringResources.Key.DrinkID));
+                            detailDrink.setName(detailJsonObject.getString(StringResources.Key.DrinkName));
 
-                    comboVo.getDrinkDetails().add(detailDrink);
+                                    comboVo.getDrinkDetails().add(detailDrink);
 
-                    Product product = new Product(detailJsonObject.getString("DrinkID"), detailJsonObject.getString("DrinkName"), 0, null);
+                    Product product = new Product(detailJsonObject.getString(StringResources.Key.DrinkID), detailJsonObject.getString(StringResources.Key.DrinkName), 0, null);
                     category.getProducts().add(product);
 
                 }
@@ -82,8 +81,8 @@ public class ComboRepository {
     {
         comparelist.addAll(combos.values());
         Combo comboVo = new Combo();
-        comboVo.setId("Drink");
-        comboVo.setName("附餐飲料");
+        comboVo.setId(StringResources.Key.Drink);
+                comboVo.setName("附餐飲料");
         List<ComboDetail> drinkdetails=combos.get(comboId).getDrinkDetails();
         for(int i=0;i<drinkdetails.size();i++)
         {
@@ -94,7 +93,7 @@ public class ComboRepository {
             comboVo.getDetails().add(detailMeat);
             comboVo.getDrinkDetails().add(detailMeat);
         }
-        combos.put("Drink", comboVo);
+        combos.put(StringResources.Key.Drink, comboVo);
 
     }
 

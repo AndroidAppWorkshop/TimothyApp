@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import library.timothy.Resources.StringResuorces;
+import library.timothy.Resources.StringResources;
 import library.timothy.Resources.UriResources;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
@@ -148,9 +148,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         try {
             for (int index = 0; index < jsonArray.length(); index++) {
                 jsonObject = jsonArray.getJSONObject(index);
-                DetailArray = jsonObject.getJSONArray(StringResuorces.Order.orderDetail);
+                DetailArray = jsonObject.getJSONArray(StringResources.Key.OrderDetail);
                 Map map= getChildMap(DetailArray);
-                String Id = jsonObject.getString(StringResuorces.Order.orderID);
+                String Id = jsonObject.getString(StringResources.Key.OrderID);
                 orderId = context.getResources().getString(R.string.serialNumber) + Id + "(" + map.size() + ")";
                 listSerialnum.add(Id);
                 orderIdlist.add(orderId);
@@ -166,9 +166,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         for (int index = 0; index < DetailArray.length(); index++) {
             try {
                 jo = DetailArray.getJSONObject(index);
-                jo.getString(StringResuorces.Order.productName);
-                jo.getString(StringResuorces.Order.quantity);
-                ChildMap.put(index+"" , jo.getString(StringResuorces.Order.productName) + "x" + jo.getString(StringResuorces.Order.quantity));
+                jo.getString(StringResources.Key.ProductName);
+                jo.getString(StringResources.Key.Quantity);
+                ChildMap.put(index+"" , jo.getString(StringResources.Key.ProductName) + "x" + jo.getString(StringResources.Key.Quantity));
             }
             catch (JSONException e) {e.printStackTrace();}
         }
@@ -196,7 +196,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public void OrderRequest(String SerialNumber) {
         Map<String, String> bodymap = new HashMap<>();
 
-        bodymap.put(StringResuorces.Key.accept, SerialNumber);
+        bodymap.put(StringResources.Key.Accept, SerialNumber);
 
         BaseApplication.getInstance().addToRequestQueue(new JsonArrayRequest(Request.Method.POST,
                 UriResources.Server.Order,

@@ -24,7 +24,6 @@ public class OrderActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
 
-
         orderList = (ExpandableListView) findViewById(R.id.Order_List);
         context = getApplicationContext();
         expandableListAdapter = new ExpandableListAdapter(this,orderList);

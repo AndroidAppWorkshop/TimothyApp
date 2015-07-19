@@ -39,7 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import library.timothy.Resources.StringResuorces;
+import library.timothy.Resources.StringResources;
 import library.timothy.Resources.UriResources;
 import library.timothy.Shopping.Cart;
 import library.timothy.Shopping.Category;
@@ -89,9 +89,9 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
 
         progressBar.setVisibility(View.VISIBLE);
 
-        sharedPreferences = this.getActivity().getSharedPreferences(StringResuorces.Key.apiKey, Context.MODE_PRIVATE);
+        sharedPreferences = this.getActivity().getSharedPreferences(StringResources.Key.ApiKey, Context.MODE_PRIVATE);
 
-        apiKey = sharedPreferences.getString(StringResuorces.Key.apiKey, null);
+        apiKey = sharedPreferences.getString(StringResources.Key.ApiKey, null);
 
         loadProducts();
     }
@@ -119,7 +119,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public Map<String, String> getHeaders() {
                         HashMap<String, String> headers = new HashMap<String, String>();
-                        headers.put(StringResuorces.Key.apiKey, apiKey);
+                        headers.put(StringResources.Key.ApiKey, apiKey);
                         return headers;
                     }
                 });
@@ -150,7 +150,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public Map<String, String> getHeaders() {
                         HashMap<String, String> headers = new HashMap<String, String>();//
-                        headers.put(StringResuorces.Key.apiKey, apiKey);
+                        headers.put(StringResources.Key.ApiKey, apiKey);
                         return headers;
                     }
                 });
@@ -170,8 +170,8 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         Intent it = new Intent(getActivity(), CartActivity.class);
-        it.putExtra(StringResuorces.Key.data, cart);
-        startActivityForResult(it, StringResuorces.Index.ActivityResult);
+        it.putExtra(StringResources.Key.Data, cart);
+        startActivityForResult(it, StringResources.Index.ActivityResult);
     }
 
     @Override
@@ -179,7 +179,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (listViewAdapter != null) {
-            cart = data.getExtras().getParcelable(StringResuorces.Key.data);
+            cart = data.getExtras().getParcelable(StringResources.Key.Data);
 
             SetingSum(cart);
 
