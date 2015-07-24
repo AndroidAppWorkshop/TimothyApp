@@ -188,7 +188,6 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-
     private class ComboPagerAdapter extends PagerAdapter {
 
         private List<Combo> combos;
@@ -228,10 +227,8 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                     continue;
                 }
 
-
                 TextView textViewProductName = (TextView) productView.findViewById(R.id.textViewProductName);
                 textViewProductName.setText(combosvo.getName());
-
 
                 final TextView textViewProductCount = (TextView) productView.findViewById(R.id.textViewProductCount);
                 String productId = combosvo.getId();

@@ -35,10 +35,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import library.timothy.Resources.StringResources;
 import library.timothy.Resources.UriResources;
@@ -121,7 +123,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         BaseApplication.getInstance().addToRequestQueue(
                 new JsonArrayRequest(
                         Request.Method.POST,
-                        UriResources.Server.Orderhistory,dateBody,
+                        UriResources.Server.Orderhistory, dateBody,
                         new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray jsonArray) {
@@ -153,6 +155,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
     class ExpandableAdapter extends BaseExpandableListAdapter {
 
         private List<Order> orders = OrderRepository.getOrders();
+        ExpandableAdapter() {updateBarChart();}
 
         public int getGroupCount() {
             return orders.size();
@@ -217,41 +220,60 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         public boolean isChildSelectable(int groupPosition, int childPosition) {
             return false;
         }
+
+        public void updateBarChart(){
+            Map<String,Integer> map = new HashMap();
+
+            for(Order order : orders) {
+                int size = order.getProducts().size();
+                for (int index = 1; index < size; index++) {
+                    Product product = order.getProducts().get(index) ;
+                    if(map.containsKey(product.getName()))
+                        map.put(product.getName() , map.get(product.getName())+product.getquantity());
+                    else
+                        map.put(product.getName() , product.getquantity());
+                }
+            }
+
+            mBarChart.reset();
+
+            BarSet barSet = new BarSet();
+            Bar bar;
+            int Max =0 ;
+            for(Map.Entry<String , Integer> entry : map.entrySet()){
+
+                String Key = entry.getKey();
+
+                int Value = entry.getValue();
+
+                if(Max < Value) Max = Value;
+
+                bar = new Bar(Key , (float)Value);
+
+                barSet.addBar(bar);
+            }
+            mBarChart.addData(barSet);
+
+            mBarChart.setSetSpacing(Tools.fromDpToPx(2));
+            mBarChart.setBarSpacing(Tools.fromDpToPx(10));
+
+            mBarChart.setBorderSpacing(0)
+                    .setAxisBorderValues(0, Max, Max / 3 )
+
+                    .show();
+        }
     }
     private void initBarChart(){
 
         mBarChart = (BarChartView) findViewById(R.id.barchart);
 
         mBarGridPaint = new Paint();
-        mBarGridPaint.setColor(this.getResources().getColor(R.color.orange));
+        mBarGridPaint.setColor(this.getResources().getColor(R.color.white));
         mBarGridPaint.setStyle(Paint.Style.STROKE);
         mBarGridPaint.setAntiAlias(true);
         mBarGridPaint.setStrokeWidth(Tools.fromDpToPx(.75f));
-        updateBarChart();
     }
-    private void updateBarChart(){
 
-        mBarChart.reset();
-        String[] barLabels = { "A" , "B" , "C" };
-        float[] barValues = {6.0f , 7.0f , 5.0f};
-        BarSet barSet = new BarSet();
-        Bar bar;
-        for(int i = 0; i < 3; i++){
-
-            bar = new Bar(barLabels[i], barValues[i]);
-
-            barSet.addBar(bar);
-        }
-        mBarChart.addData(barSet);
-
-        mBarChart.setSetSpacing(Tools.fromDpToPx(3));
-        mBarChart.setBarSpacing(Tools.fromDpToPx(14));
-
-        mBarChart.setBorderSpacing(0)
-                .setAxisBorderValues(0, 10, 2)
-
-                .show();
-    }
 }
 
 

@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+
         if (id == mMenu.getItem(0).getItemId()) {
             if (!DL.isDrawerOpen(Gravity.END)) {
                 DL.openDrawer(Gravity.END);

@@ -10,5 +10,4 @@
         android:icon="@drawable/actionbar_menu"
         ActionBar:showAsAction="ifRoom"
         android:title="MenuBtn01"/>
-    
 </menu>

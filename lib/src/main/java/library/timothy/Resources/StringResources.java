@@ -60,13 +60,14 @@ public class StringResources {
         public static String CategoryID = "CategoryID";
 
     }
-    public static class Text
-    {
-        public static String Undone = "���־P";
-        public static String Done = "�w�־P";
+    public static class Text {
+        public static String Undone = "未核銷";
+        public static String Done = "已核銷";
+        public static String Discount = "折扣 :";
+        public static String AllPrice = "總價 :";
+
     }
-    public static class Gcm
-    {
+    public static class Gcm {
         public static String SendId = "707422521982";
         public static String PropertyReg = "registration_id";
         public static String ProretyAppVersion = "appVersion";
