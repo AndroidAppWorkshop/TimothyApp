@@ -203,7 +203,6 @@ public class LoginActivity extends Activity
                             @Override
                             public void onResponse(JSONArray jsonArray) {
                                 progressBar.setVisibility(View.GONE);
-                                OrderRepository.refreshData(jsonArray);
                                 saveApiResult("History",true);
                             }
                         },

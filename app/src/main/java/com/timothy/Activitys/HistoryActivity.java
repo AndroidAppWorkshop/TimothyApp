@@ -102,9 +102,10 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                 c.set(Calendar.MONTH, monthOfYear);
                 c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 String dateString = new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
+                String date= new SimpleDateFormat("yyyyMMdd").format(c.getTime());
                 edit.setText(getResources().getString(text));
                 edit.append(dateString);
-                loadOrderhistory(dateString);
+                loadOrderhistory(date);
             }},
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
