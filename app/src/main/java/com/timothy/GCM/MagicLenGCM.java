@@ -31,7 +31,7 @@ import java.util.Map;
 import library.timothy.Resources.StringResources;
 import library.timothy.Resources.UriResources;
 
-public class MagicLenGCM extends Application{
+public class MagicLenGCM {
 
     private final static String SENDER_ID = StringResources.Gcm.SendId;
     private static final String PROPERTY_REG_ID = StringResources.Gcm.PropertyReg;

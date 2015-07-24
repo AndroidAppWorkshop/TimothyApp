@@ -32,6 +32,7 @@ public class StringResources {
         public static String Success = "Success";
         public static String Date = "date";
 
+        public static String RegId = "RegID";
         public static String RegistrationId = "RegistrationId";
         public static String Message = "Message";
         public static String Accept = "Accept";
@@ -70,7 +71,6 @@ public class StringResources {
         public static String PropertyReg = "registration_id";
         public static String ProretyAppVersion = "appVersion";
         public static String Message = "message";
-        public static String RegId = "RegID";
 
         public static String Error = "Error";
         public static String Notice = "Notice";

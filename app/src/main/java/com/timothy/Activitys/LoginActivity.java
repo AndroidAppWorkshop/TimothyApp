@@ -72,7 +72,7 @@ public class LoginActivity extends Activity
             JSONObject loginBody = new JSONObject();
             loginBody.put(StringResources.Key.Account, Account);
             loginBody.put(StringResources.Key.Password, Password);
-            loginBody.put(StringResources.Gcm.RegId,gcm.GCMcheck().getSendRegID());
+            loginBody.put(StringResources.Key.RegId,gcm.GCMcheck().getSendRegID());
 
             BaseApplication.getInstance().addToRequestQueue(
                     new JsonObjectRequest(Request.Method.POST, UriResources.Server.LogIn, loginBody,
