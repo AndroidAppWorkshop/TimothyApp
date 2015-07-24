@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -191,7 +192,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                         Log.e(volleyError.getClass().toString(), volleyError.getStackTrace().toString());
                     }
                 }) {
-        });
+            @Override
+            public Map<String, String> getHeaders() {
+            HashMap<String, String> headers = new HashMap<>();
+            headers.put(StringResources.Key.ApiKey, context.getSharedPreferences(StringResources.Key.ApiKey, Context.MODE_PRIVATE).getString(StringResources.Key.ApiKey, null));
+            return headers;
+        }});
     }
     public void OrderRequest(String SerialNumber) {
         Map<String, String> bodymap = new HashMap<>();
@@ -214,7 +220,13 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     public void onErrorResponse(VolleyError volleyError) {
                         Log.e(volleyError.getClass().toString(), volleyError.getStackTrace().toString());
                     }
-                }) {
+                }){
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put(StringResources.Key.ApiKey, context.getSharedPreferences(StringResources.Key.ApiKey, Context.MODE_PRIVATE).getString(StringResources.Key.ApiKey, null));
+                return headers;
+            }
         });
 
     }

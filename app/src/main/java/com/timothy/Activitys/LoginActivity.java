@@ -50,6 +50,7 @@ public class LoginActivity extends Activity
     private String Password;
     private Resources res ;
     private String apiKey;
+    private MagicLenGCM gcm;
     private  static Map<String, Boolean>  resultApi = new HashMap<String, Boolean>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +64,7 @@ public class LoginActivity extends Activity
         editTextAccount = (EditText) findViewById(R.id.editTextAccount);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
+        gcm = new MagicLenGCM(this).GCMcheck();
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,7 +77,6 @@ public class LoginActivity extends Activity
     private void Login() {
 
         try {
-            MagicLenGCM gcm = new MagicLenGCM(this);
 
             Password = editTextPassword.getText().toString();
             Account = editTextAccount.getText().toString();
@@ -85,7 +85,7 @@ public class LoginActivity extends Activity
             JSONObject loginBody = new JSONObject();
             loginBody.put(StringResources.Key.Account, Account);
             loginBody.put(StringResources.Key.Password, Password);
-            //loginBody.put(StringResources.Key.RegId,gcm.GCMcheck().getSendRegID());
+            loginBody.put(StringResources.Key.RegId,gcm.GCMcheck().getSendRegID());
 
             BaseApplication.getInstance().addToRequestQueue(
                     new JsonObjectRequest(Request.Method.POST, UriResources.Server.LogIn, loginBody,

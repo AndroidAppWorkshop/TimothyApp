@@ -35,6 +35,7 @@ public class OrderActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        expandableListAdapter.OrderRequest();
     }
 
     @Override
