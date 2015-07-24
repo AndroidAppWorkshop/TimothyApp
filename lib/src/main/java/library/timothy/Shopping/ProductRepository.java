@@ -18,7 +18,7 @@ public class ProductRepository {
 
     public static final List<Category> categorys = new LinkedList<Category>();
 
-    public List<Category> getAllCategories() {
+    public static List<Category> getAllCategories() {
         List list = new LinkedList();
         list.addAll(categoryVos.values());
         return list;

@@ -52,7 +52,6 @@ import library.timothy.Shopping.ProductRepository;
 
 public class MenuListFragment extends Fragment implements View.OnClickListener {
 
-    private ProductRepository productRepository = new ProductRepository();
     private Cart cart = new Cart();
     private TextView textViewPriceSum;
     private TextView textViewTotal;
@@ -105,7 +104,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                             @Override
                             public void onResponse(JSONArray jsonArray) {
                                 progressBar.setVisibility(View.GONE);
-                                productRepository.refreshdata(jsonArray);
+                                ProductRepository.refreshdata(jsonArray);
                                 loadCombo();
                             }
                         },
@@ -366,7 +365,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
 
     private class ListViewAdapter extends BaseAdapter {
 
-        private List<Category> categories = productRepository.getAllCategories();
+        private List<Category> categories = ProductRepository.getAllCategories();
 
         public int getCount() {
             return categories.size();

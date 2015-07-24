@@ -167,12 +167,7 @@ public class Cart implements Parcelable{
                   }
                   if(allMeat!=allDrink)
                   {
-                    if(allMeat>allDrink){
-                        return allMeat-allDrink;
-                    }
-                    else{
-                        return allMeat-allDrink;
-                    }
+                     return allMeat-allDrink;
                   }
               }
 
