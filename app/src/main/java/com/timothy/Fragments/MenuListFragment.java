@@ -184,12 +184,12 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
             SetingSum(cart);
 
             listViewAdapter.notifyDataSetChanged();
+            viewPagerCombo.setAdapter(comboPagerAdapter);
         }
     }
 
 
     private class ComboPagerAdapter extends PagerAdapter {
-
 
         private List<Combo> combos;
 
@@ -205,7 +205,6 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                 return combos.size() / 3 + 1;
         }
 
-
         @Override
         public boolean isViewFromObject(View view, Object o) {
             return view.equals(o);
@@ -215,7 +214,6 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
         public Object instantiateItem(ViewGroup container, int pagerPosition) {
             View inflate = getActivity().getLayoutInflater().inflate(R.layout.pageritemcombo_container, null);
             LinearLayout pagerContainer = (LinearLayout) inflate.findViewById(R.id.pagerContainer);
-
             int start = 3 * pagerPosition + 0;
             int end = 3 * pagerPosition + 2;
             int[] pagerItemProductViewIds = {R.id.pagerItem1, R.id.pagerItem2, R.id.pagerItem3};
@@ -236,10 +234,9 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
 
 
                 final TextView textViewProductCount = (TextView) productView.findViewById(R.id.textViewProductCount);
-                final String productId = combosvo.getId();
+                String productId = combosvo.getId();
 
-                textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(productId)));
-
+                textViewProductCount.setText(String.valueOf(cart.ComboCount(combosvo)));
 
                 Button btnMeat = (Button) productView.findViewById(R.id.btnMeat);
 

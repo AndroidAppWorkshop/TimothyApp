@@ -70,6 +70,7 @@ public class StringResources {
         public static String PropertyReg = "registration_id";
         public static String ProretyAppVersion = "appVersion";
         public static String Message = "message";
+        public static String RegId = "RegID";
 
         public static String Error = "Error";
         public static String Notice = "Notice";

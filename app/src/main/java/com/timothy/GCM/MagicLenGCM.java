@@ -1,6 +1,7 @@
 package com.timothy.GCM;
 
 import android.app.Activity;
+import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -30,7 +31,7 @@ import java.util.Map;
 import library.timothy.Resources.StringResources;
 import library.timothy.Resources.UriResources;
 
-public class MagicLenGCM {
+public class MagicLenGCM extends Application{
 
     private final static String SENDER_ID = StringResources.Gcm.SendId;
     private static final String PROPERTY_REG_ID = StringResources.Gcm.PropertyReg;
@@ -41,7 +42,6 @@ public class MagicLenGCM {
     private String Empty = StringResources.Gcm.Empty;
     private String REGIDforSend = Empty;
     private String regidforlocal = Empty;
-
 
     public static enum PlayServicesState {SUPPROT, NEED_PLAY_SERVICE, UNSUPPORT;}
 
@@ -60,7 +60,7 @@ public class MagicLenGCM {
 
     public MagicLenGCM(Activity activity, MagicLenGCMListener listener) {
         this.activity = activity;
-        GCMPPush(openGCM());
+        GCMcheck();
         setMagicLenGCMListener(listener);
     }
 
@@ -88,8 +88,8 @@ public class MagicLenGCM {
         }
     }
 
-    public void GCMPPush(GCMState GCMState) {
-        switch (GCMState) {
+    public MagicLenGCM GCMcheck() {
+        switch (openGCM()) {
             case NEED_REGISTER:
                 registerInBackground();
                 REGIDforSend = getRegistrationId();
@@ -104,6 +104,7 @@ public class MagicLenGCM {
             default:
                 break;
         }
+        return this;
     }
 
     private String getRegistrationId() {
@@ -159,9 +160,7 @@ public class MagicLenGCM {
         editor.commit();
     }
 
-    public String getSendREGID() {
-        return REGIDforSend;
-    }
+
 
     private void registerInBackground() {
         new AsyncTaskRegister().execute();
@@ -221,14 +220,14 @@ public class MagicLenGCM {
     }
 
     public void SendMessage(String message) {
-        Map<String, String> params = new HashMap<String, String>();
-        params.put(StringResources.Key.RegistrationId, REGIDforSend);
-        params.put(StringResources.Key.Message, message);
+//        Map<String, String> params = new HashMap<String, String>();
+//        params.put(StringResources.Key.RegistrationId, REGIDforSend);
+//        params.put(StringResources.Key.Message, message);
 
         BaseApplication.getInstance()
                 .addToRequestQueue(new JsonObjectRequest(Request.Method.POST,
                         UriResources.Server.PushNotification,
-                        new JSONObject(params),
+//                        new JSONObject(params),
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
@@ -255,5 +254,7 @@ public class MagicLenGCM {
     public String getAPIkey() {
         return getActivity().getSharedPreferences(StringResources.Key.ApiKey, Context.MODE_PRIVATE).getString(StringResources.Key.ApiKey, null);
     }
-
+    public String getSendRegID() {
+        return REGIDforSend;
+    }
 }

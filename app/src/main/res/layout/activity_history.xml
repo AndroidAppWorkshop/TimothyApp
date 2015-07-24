@@ -57,7 +57,8 @@
         android:id="@+id/EndLinear">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="horizontal">
             <ImageButton
                 android:layout_width="wrap_content"
@@ -70,28 +71,18 @@
                 android:id="@+id/history_orderBtn"
                 android:src="@drawable/history_ordericon"/>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
             <com.db.chart.view.BarChartView
                 xmlns:chart="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/barchart"
                 android:layout_width="match_parent"
-                android:background="#F67743"
+                android:background="#2f4f4f"
                 chart:chart_axisColor="@color/axis"
                 chart:chart_labelColor="@color/label"
                 chart:chart_axisBorderSpacing="25dp"
-                android:layout_height="0dp"
-                android:layout_weight=".22"
-                android:layout_marginTop="2dp"
-                android:layout_marginLeft="7dp"
-                android:layout_marginRight="7dp"
-                android:layout_marginBottom="2dp"
+                android:layout_height="150dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp" />
-        </LinearLayout>
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>

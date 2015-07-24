@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.timothy.Core.BaseApplication;
+import com.timothy.GCM.MagicLenGCM;
 import com.timothy.R;
 import library.timothy.Resources.StringResources;
 import library.timothy.Resources.UriResources;
@@ -59,10 +60,11 @@ public class LoginActivity extends Activity
         });
     }
 
-
     private void Login() {
 
         try {
+            MagicLenGCM gcm = new MagicLenGCM(this);
+
             Password = editTextPassword.getText().toString();
             Account = editTextAccount.getText().toString();
             progressBar.setVisibility(View.VISIBLE);
@@ -70,6 +72,7 @@ public class LoginActivity extends Activity
             JSONObject loginBody = new JSONObject();
             loginBody.put(StringResources.Key.Account, Account);
             loginBody.put(StringResources.Key.Password, Password);
+            loginBody.put(StringResources.Gcm.RegId,gcm.GCMcheck().getSendRegID());
 
             BaseApplication.getInstance().addToRequestQueue(
                     new JsonObjectRequest(Request.Method.POST, UriResources.Server.LogIn, loginBody,

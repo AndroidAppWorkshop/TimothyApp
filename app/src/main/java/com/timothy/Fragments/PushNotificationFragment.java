@@ -11,8 +11,6 @@ import android.widget.Toast;
 import com.timothy.GCM.MagicLenGCM;
 import com.timothy.R;
 
-import library.timothy.Shopping.Cart;
-
 
 public class PushNotificationFragment extends Fragment implements View.OnClickListener{
 
@@ -31,7 +29,6 @@ public class PushNotificationFragment extends Fragment implements View.OnClickLi
         send.setOnClickListener(this);
 
         magicLenGCM = new MagicLenGCM(getActivity());
-
         return view;
     }
 
@@ -39,9 +36,9 @@ public class PushNotificationFragment extends Fragment implements View.OnClickLi
     public void onClick(final View view) {
 
         if(!Message.getText().toString().trim().isEmpty())
-            magicLenGCM.SendMessage(    Message.getText().toString() );
+            magicLenGCM.GCMcheck().SendMessage(Message.getText().toString());
 
-        Toast.makeText(getActivity() ,getResources().getString(R.string.regId)+magicLenGCM.getSendREGID() , Toast.LENGTH_SHORT ).show();
+        Toast.makeText(getActivity() ,getResources().getString(R.string.regId)+magicLenGCM.getSendRegID() , Toast.LENGTH_SHORT ).show();
     }
     
 }

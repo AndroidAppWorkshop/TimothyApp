@@ -3,6 +3,7 @@ package com.timothy.Activitys;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,10 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.db.chart.Tools;
+import com.db.chart.model.Bar;
+import com.db.chart.model.BarSet;
+import com.db.chart.view.BarChartView;
 import com.timothy.Core.BaseApplication;
 import com.timothy.R;
 
@@ -51,6 +56,9 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
     private String apiKey;
     private EditText editTextEndDate;
     private EditText editTextStartDate;
+    private static BarChartView mBarChart;
+    private Paint mBarGridPaint;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +85,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         editTextEndDate.append(dateString);
         String date= new SimpleDateFormat("yyyyMMdd").format(c.getTime());
         loadOrderhistory(date);
+        initBarChart();
     }
     @Override
     public void onClick(View v) {
@@ -208,6 +217,40 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         public boolean isChildSelectable(int groupPosition, int childPosition) {
             return false;
         }
+    }
+    private void initBarChart(){
+
+        mBarChart = (BarChartView) findViewById(R.id.barchart);
+
+        mBarGridPaint = new Paint();
+        mBarGridPaint.setColor(this.getResources().getColor(R.color.orange));
+        mBarGridPaint.setStyle(Paint.Style.STROKE);
+        mBarGridPaint.setAntiAlias(true);
+        mBarGridPaint.setStrokeWidth(Tools.fromDpToPx(.75f));
+        updateBarChart();
+    }
+    private void updateBarChart(){
+
+        mBarChart.reset();
+        String[] barLabels = { "A" , "B" , "C" };
+        float[] barValues = {6.0f , 7.0f , 5.0f};
+        BarSet barSet = new BarSet();
+        Bar bar;
+        for(int i = 0; i < 3; i++){
+
+            bar = new Bar(barLabels[i], barValues[i]);
+
+            barSet.addBar(bar);
+        }
+        mBarChart.addData(barSet);
+
+        mBarChart.setSetSpacing(Tools.fromDpToPx(3));
+        mBarChart.setBarSpacing(Tools.fromDpToPx(14));
+
+        mBarChart.setBorderSpacing(0)
+                .setAxisBorderValues(0, 10, 2)
+
+                .show();
     }
 }
 
