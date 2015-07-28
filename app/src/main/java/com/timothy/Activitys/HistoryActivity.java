@@ -63,7 +63,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);  
         setContentView(R.layout.activity_history);
 
         DrawerLayout Dl = (DrawerLayout)findViewById(R.id.HistoryDrawer);
