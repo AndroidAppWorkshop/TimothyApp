@@ -95,8 +95,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         mMenu = menu;
-        if(LoginActivity.getResultApi().get("History")==false&&LoginActivity.getResultApi().get("Order")==false)
-        {mMenu.getItem(0).setVisible(false);}
+//        if(LoginActivity.getResultApi().get("History")==false&&LoginActivity.getResultApi().get("Order")==false)
+//        {mMenu.getItem(0).setVisible(false);}
         return true;
     }
 

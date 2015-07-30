@@ -56,7 +56,6 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
     private  ExpandableAdapter expandableAdapter;
     private SharedPreferences sharedPreferences;
     private String apiKey;
-    private EditText editTextEndDate;
     private EditText editTextStartDate;
     private static BarChartView mBarChart;
     private Paint mBarGridPaint;
@@ -74,17 +73,13 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         apiKey = sharedPreferences.getString(StringResources.Key.ApiKey, null);
 
         editTextStartDate = (EditText) findViewById(R.id.startDate);
-        editTextEndDate = (EditText) findViewById(R.id.endDate);
 
         editTextStartDate.setOnClickListener(this);
-        editTextEndDate.setOnClickListener(this);
         Calendar c = Calendar.getInstance();
 
         String dateString = new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
         editTextStartDate.setText(R.string.from);
-        editTextEndDate.setText(R.string.util);
         editTextStartDate.append(dateString);
-        editTextEndDate.append(dateString);
         String date= new SimpleDateFormat("yyyyMMdd").format(c.getTime());
         loadOrderhistory(date);
         initBarChart();
