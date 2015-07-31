@@ -24,7 +24,53 @@
     <string name="DrinkLess"> DrinktooLess </string>
     <string name="DrinkMore"> DrinktooMore </string>
     <string name="CheckAgain"> Please Check again </string>
-
     <string name="Message">message</string>
     <string name="Reponse">Reponse</string>
+
+    <string name="Activity_cart_Textview_Price">Price :</string>
+    <string name="Activity_cart_EditText_PaidPrice">PaidPrice</string>
+    <string name="Activity_cart_Button_ConfirmMeal">ConfirmMeal</string>
+
+    <string name="Activity_history_EditText_ChooseDate">ChooseDate</string>
+    <string name="Activity_history_Button_Charts">Charts</string>
+
+    <string name="Activity_login_EditText_Account">Account</string>
+    <string name="Activity_login_EditText_Password">Password</string>
+    <string name="Activity_login_Button_Login">Login</string>
+
+    <string name="Activity_send_TextView_Paid">Paid :</string>
+    <string name="Activity_send_TextView_Zero">0</string>
+    <string name="Activity_send_TextView_Discount">Discount :</string>
+    <string name="Activity_send_Button_ReturnOrder">ReturnOrder</string>
+
+    <string name="Cart_adapter_Button_Add">Add</string>
+    <string name="Cart_adapter_Button_Sub">Sub</string>
+    <string name="Cart_adapter_Button_Delete">Delete</string>
+
+    <string name="Dialoglistview_adapter_Button_Add">Add</string>
+    <string name="Dialoglistview_adapter_Button_Sub">Sub</string>
+    <string name="Dialoglistview_adapter_TextView_Price">Price :</string>
+    <string name="Dialoglistview_adapter_TextView_Quantity">Quantity :</string>
+
+    <string name="ListGroup_Button_Delete">Delete</string>
+
+    <string name="Fragment_Menue_TextView_Combo">Combo</string>
+    <string name="Fragment_Menue_TextView_Total">Total :</string>
+    <string name="Fragment_Menue_TextView_Quantity">Quantity :</string>
+    <string name="Fragment_Menue_TextView_Checkout">Checkout</string>
+    <string name="Fragment_Menue_TextView_Zero">0</string>
+
+    <string name="PagerItem_Combo_TextView_Quantity">Quantity :</string>
+    <string name="PagerItem_Combo_Button_Order">Order</string>
+
+    <string name="PagerItem_Product_TextView_Quantity">Quantity :</string>
+    <string name="PagerItem_Product_TextView_Price">Price :</string>
+    <string name="PagerItem_Product_Button_Add">+</string>
+    <string name="PagerItem_Product_Button_Sub">-</string>
+
+
+
+
+
+
 </resources>

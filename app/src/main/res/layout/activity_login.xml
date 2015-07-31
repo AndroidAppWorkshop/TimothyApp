@@ -14,16 +14,16 @@
         <EditText
             android:id="@+id/editTextAccount"
             android:layout_width="match_parent"
-            android:hint="account"
+            android:hint="@string/Activity_login_EditText_Account"
             android:layout_height="wrap_content"/>
         <EditText android:id="@+id/editTextPassword"
             android:inputType="textPassword"
             android:layout_width="match_parent"
-            android:hint="password"
+            android:hint="@string/Activity_login_EditText_Password"
             android:layout_height="wrap_content"/>
 
         <Button
-            android:text="Login"
+            android:text="@string/Activity_login_Button_Login"
             android:id="@+id/buttonLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

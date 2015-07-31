@@ -19,19 +19,19 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="增加"
+        android:text="@string/Cart_adapter_Button_Add"
         android:id="@+id/add" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="減少"
+        android:text="@string/Cart_adapter_Button_Sub"
         android:id="@+id/sub" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="刪除"
+        android:text="@string/Cart_adapter_Button_Delete"
         android:id="@+id/delete" />
 
 </LinearLayout>

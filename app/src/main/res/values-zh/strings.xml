@@ -27,4 +27,45 @@
 
     <string name="Message"> 訊息 </string>
     <string name="Reponse"> 回報</string>
+
+    <string name="Activity_cart_Textview_Price">價格 :</string>
+    <string name="Activity_cart_EditText_PaidPrice">實收</string>
+    <string name="Activity_cart_Button_ConfirmMeal">確認點餐</string>
+
+    <string name="Activity_history_EditText_ChooseDate">選擇日期</string>
+    <string name="Activity_history_Button_Charts">顯示統計圖</string>
+
+    <string name="Activity_login_EditText_Account">帳號</string>
+    <string name="Activity_login_EditText_Password">密碼</string>
+    <string name="Activity_login_Button_Login">登入</string>
+
+    <string name="Activity_send_TextView_Paid">實收 :</string>
+    <string name="Activity_send_TextView_Zero">0</string>
+    <string name="Activity_send_TextView_Discount">折扣 :</string>
+    <string name="Activity_send_Button_ReturnOrder">返回點餐</string>
+
+    <string name="Cart_adapter_Button_Add">增加</string>
+    <string name="Cart_adapter_Button_Sub">減少</string>
+    <string name="Cart_adapter_Button_Delete">刪除</string>
+
+    <string name="Dialoglistview_adapter_Button_Add">增加</string>
+    <string name="Dialoglistview_adapter_Button_Sub">減少</string>
+    <string name="Dialoglistview_adapter_TextView_Price">價格 :</string>
+    <string name="Dialoglistview_adapter_TextView_Quantity">數量 :</string>
+
+    <string name="ListGroup_Button_Delete">刪除</string>
+
+    <string name="Fragment_Menue_TextView_Combo">套餐區</string>
+    <string name="Fragment_Menue_TextView_Total">總價 :</string>
+    <string name="Fragment_Menue_TextView_Quantity">數量 :</string>
+    <string name="Fragment_Menue_TextView_Checkout">結帳</string>
+    <string name="Fragment_Menue_TextView_Zero">0</string>
+
+    <string name="PagerItem_Combo_TextView_Quantity">數量 :</string>
+    <string name="PagerItem_Combo_Button_Order">點餐</string>
+
+    <string name="PagerItem_Product_TextView_Quantity">數量 :</string>
+    <string name="PagerItem_Product_TextView_Price">價格 :</string>
+    <string name="PagerItem_Product_Button_Add">+</string>
+    <string name="PagerItem_Product_Button_Sub">-</string>
 </resources>

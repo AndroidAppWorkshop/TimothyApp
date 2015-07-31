@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="價格:"
+                android:text="@string/Activity_cart_Textview_Price"
                 android:id="@+id/textView" />
 
             <TextView
@@ -61,13 +61,13 @@
                 android:inputType="number"
                 android:ems="10"
                 android:id="@+id/editText2"
-                android:hint="實收金額"
+                android:hint="@string/Activity_cart_EditText_PaidPrice"
                 android:layout_weight="0.62" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="確認點餐"
+                android:text="@string/Activity_cart_Button_ConfirmMeal"
                 android:id="@+id/button"
                 android:layout_weight="0.52" />
 

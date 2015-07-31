@@ -18,13 +18,13 @@
             <EditText android:id="@+id/startDate" android:layout_width="match_parent" android:layout_height="wrap_content"
                       android:focusable="false"
                       android:editable="false"
-                      android:text="請選擇開始日期"
+                      android:text="@string/Activity_history_EditText_ChooseDate"
                       android:drawableRight="@android:drawable/arrow_down_float" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="查詢"
+                android:text="@string/Activity_history_Button_Charts"
                 android:id="@+id/button3"
                 android:layout_gravity="right" />
         </LinearLayout>

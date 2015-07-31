@@ -28,14 +28,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="實收:"
+                android:text="@string/Activity_send_TextView_Paid"
                 android:id="@+id/textView3" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="0"
+                android:text="@string/Activity_send_TextView_Zero"
                 android:id="@+id/textView4" />
         </LinearLayout>
 
@@ -48,21 +48,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="折扣:"
+                android:text="@string/Activity_send_TextView_Discount"
                 android:id="@+id/textView5" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="0"
+                android:text="@string/Activity_send_TextView_Zero"
                 android:id="@+id/textView6" />
         </LinearLayout>
 
         <Button
             android:layout_width="155dp"
             android:layout_height="wrap_content"
-            android:text="返回點餐"
+            android:text="@string/Activity_send_Button_ReturnOrder"
             android:id="@+id/button2"
             android:layout_gravity="right" />
     </LinearLayout>
