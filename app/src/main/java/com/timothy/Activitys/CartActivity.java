@@ -28,11 +28,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import library.timothy.Resources.StringResources;
 import library.timothy.Resources.UriResources;
 import library.timothy.Shopping.Cart;
+import library.timothy.Shopping.Combo;
+import library.timothy.Shopping.ComboDetail;
+import library.timothy.Shopping.ComboRepository;
 import library.timothy.Shopping.ProductRepository;
 
 
@@ -128,7 +132,8 @@ public class CartActivity extends Activity implements View.OnClickListener{
                                 @Override
                                 public void onResponse(JSONObject response) {
                                     Log.i(getResources().getString(R.string.Reponse), response.optString(StringResources.Key.True));
-                                    if (response.optString(StringResources.Key.True).equals(StringResources.Key.Success)) {
+                                    if (!response.optString("false").equals("Failure")) {
+                                        Toast.makeText(CartActivity.this,"訂單編號:"+response.optString("true"), Toast.LENGTH_SHORT).show();
                                         Intent it = new Intent(CartActivity.this, SendActivity.class);
                                         it.putExtra(StringResources.Key.Realprice, realprice);
                                         it.putExtra(StringResources.Key.Disprice, disprice);
@@ -136,6 +141,11 @@ public class CartActivity extends Activity implements View.OnClickListener{
                                         startActivity(it);
                                         finish();
                                         progressBar.setVisibility(View.INVISIBLE);
+                                    }
+                                    else
+                                    {
+                                        progressBar.setVisibility(View.INVISIBLE);
+                                        Toast.makeText(CartActivity.this,response.optString("false"), Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             },
@@ -166,15 +176,47 @@ public class CartActivity extends Activity implements View.OnClickListener{
             int count = entry.getValue();
             if(count>0)
             {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put(StringResources.Key.ProductId, productId);
-                jsonObject.put(StringResources.Key.Quantity, count);
-                cartarray.put(jsonObject);
+                if(CheckComboID(productId))
+                {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put(StringResources.Key.ComboProductID, productId);
+                    jsonObject.put(StringResources.Key.Quantity, count);
+                    cartarray.put(jsonObject);
+                }
+                else
+                {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put(StringResources.Key.ProductId, productId);
+                    jsonObject.put(StringResources.Key.Quantity, count);
+                    cartarray.put(jsonObject);
+                }
+
             }
 
         }
 
     }
+
+    public  Boolean CheckComboID(String productId)
+    {
+        List<Combo> allcombos = ComboRepository.getCompareCombos();
+
+        for (Combo combo : allcombos) {
+            List<ComboDetail> detailsMeat = combo.getDetails();
+
+            for (ComboDetail detail : detailsMeat) {
+                if(detail.getProductId().equals(productId))
+                {
+                    return true;
+                }
+
+            }
+        }
+        return false;
+    }
+
+    //response.optString(StringResources.Key.True).equals(StringResources.Key.Success)
+
 
 }
 
