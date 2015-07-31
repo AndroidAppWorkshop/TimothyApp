@@ -24,6 +24,7 @@ public class StringResources {
         public static String Realprice = "Realprice";
         public static String ProductId = "productID";
         public static String ComboProductID = "comboProductID";
+        public static String ComboDrinkID = "comboDrinkID";
         public static String Quantity = "quantity";
         public static String TotalPrice = "totalPrice";
         public static String Discount = "discount";

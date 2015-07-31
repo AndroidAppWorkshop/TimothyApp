@@ -183,6 +183,13 @@ public class CartActivity extends Activity implements View.OnClickListener{
                     jsonObject.put(StringResources.Key.Quantity, count);
                     cartarray.put(jsonObject);
                 }
+                else if(CheckDrinkID(productId))
+                {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put(StringResources.Key.ComboDrinkID, productId);
+                    jsonObject.put(StringResources.Key.Quantity, count);
+                    cartarray.put(jsonObject);
+                }
                 else
                 {
                     JSONObject jsonObject = new JSONObject();
@@ -215,7 +222,26 @@ public class CartActivity extends Activity implements View.OnClickListener{
         return false;
     }
 
-    //response.optString(StringResources.Key.True).equals(StringResources.Key.Success)
+    public  Boolean CheckDrinkID(String productId)
+    {
+        List<Combo> allcombos = ComboRepository.getCompareCombos();
+
+        for (Combo combo : allcombos) {
+            List<ComboDetail> detailsDrink = combo.getDrinkDetails();
+
+            for (ComboDetail detail : detailsDrink) {
+                if(detail.getProductId().equals(productId))
+                {
+                    return true;
+                }
+
+            }
+        }
+        return false;
+    }
+
+
+
 
 
 }
