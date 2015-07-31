@@ -36,7 +36,7 @@ public class DrawerAdapter  extends ArrayAdapter<DrawerAdapter.DrawerItem> {
             drawerHolder = new DrawerItemHolder();
 
             view = inflater.inflate(layoutResID, parent, false);
-            drawerHolder.ItemName = (TextView) view.findViewById(R.id.DraText);
+//            drawerHolder.ItemName = (TextView) view.findViewById(R.id.DraText);
             drawerHolder.icon = (ImageView) view.findViewById(R.id.DraiImage);
 
             view.setTag(drawerHolder);
@@ -48,12 +48,12 @@ public class DrawerAdapter  extends ArrayAdapter<DrawerAdapter.DrawerItem> {
         DrawerItem dItem = (DrawerItem) this.drawerItemList.get(position);
 
         drawerHolder.icon.setImageDrawable(view.getResources().getDrawable(dItem.getImgResID()));
-        drawerHolder.ItemName.setText(dItem.getItemName());
+//        drawerHolder.ItemName.setText(dItem.getItemName());
 
         return view;
     }
     private static class DrawerItemHolder {
-        TextView ItemName;
+//        TextView ItemName;
         ImageView icon;
     }
 
@@ -61,9 +61,9 @@ public class DrawerAdapter  extends ArrayAdapter<DrawerAdapter.DrawerItem> {
         String ItemName;
         int imgResID;
 
-        public DrawerItem(String itemName, int imgResID) {
+        public DrawerItem(int imgResID) {
             super();
-            ItemName = itemName;
+//            ItemName = itemName;
             this.imgResID = imgResID;
         }
 

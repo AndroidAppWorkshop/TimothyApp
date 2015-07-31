@@ -30,6 +30,7 @@ import com.db.chart.Tools;
 import com.db.chart.model.Bar;
 import com.db.chart.model.BarSet;
 import com.db.chart.view.BarChartView;
+import com.db.chart.view.ChartView;
 import com.timothy.Core.BaseApplication;
 import com.timothy.R;
 
@@ -277,7 +278,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
 
             BarChart.setBorderSpacing(0)
                     .setAxisBorderValues(0, Max, Max / 5)
-                    .setGrid(BarChartView.GridType.FULL, BarGridPaint)
+                    .setGrid(BarChartView.GridType.FULL , BarGridPaint)
                     .show();
         }
     }
