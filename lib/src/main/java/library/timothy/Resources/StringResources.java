@@ -50,8 +50,8 @@ public class StringResources {
         public static String Combodrink = "combodrink";
         public static String Price = "price";
         public static String Meat = "meat";
-        public static String DrinkID = "DrinkID";
-        public static String DrinkName = "DrinkName";
+        public static String DrinkID = "drinkID";
+        public static String DrinkName = "drinkName";
         public static String Drink = "Drink";
 
         public static String ProductID = "ProductId";

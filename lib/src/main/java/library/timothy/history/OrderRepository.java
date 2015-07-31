@@ -49,6 +49,7 @@ public class OrderRepository {
 
         return (ProductName.isEmpty() || ProductName.equals(StringResources.Key.Null)) ? ComboName : ProductName;
     }
+
     public static Map<String, Order> getOrdersMap() {
         return orders;
     }
