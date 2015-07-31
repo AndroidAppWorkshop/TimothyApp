@@ -30,7 +30,7 @@ public class OrderRepository {
                 for (int j = 0; j < detailsArray.length(); j++) {
                     JSONObject detailObject = detailsArray.getJSONObject(j);
 
-                    Product product=new Product(detailObject.getString(StringResources.Key.OrderID),detailObject.getString(StringResources.Key.ProductName),
+                    Product product=new Product(detailObject.getString(StringResources.Key.OrderID),getDetailName(detailObject),
                             detailObject.getInt(StringResources.Key.Quantity));
                     order.getProducts().add(product);
                 }
@@ -42,6 +42,13 @@ public class OrderRepository {
         }
     }
 
+    public static String getDetailName(JSONObject detailObject ) throws JSONException {
+        String ProductName = detailObject.getString(StringResources.Key.ProductName);
+
+        String ComboName = detailObject.getString(StringResources.Key.ComboName);
+
+        return (ProductName.isEmpty() || ProductName.equals(StringResources.Key.Null)) ? ComboName : ProductName;
+    }
     public static Map<String, Order> getOrdersMap() {
         return orders;
     }

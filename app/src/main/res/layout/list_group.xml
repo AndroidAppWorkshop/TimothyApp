@@ -9,6 +9,7 @@
         android:layout_weight="7"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:textColor="@color/action_bar_color"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
         android:id="@+id/groupText"/>

@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Activity_history_Button_Charts"
-                android:id="@+id/button3"
+                android:id="@+id/quest"
                 android:layout_gravity="right" />
         </LinearLayout>
 
@@ -45,16 +45,16 @@
 
     </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:orientation="vertical"
         android:layout_gravity="end"
-        android:background="#2f4f4f"
+        android:background="@color/action_bar_color"
         android:id="@+id/EndLinear">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight=".20"
             android:orientation="horizontal">
             <ImageButton
                 android:layout_width="wrap_content"
@@ -67,18 +67,20 @@
                 android:id="@+id/history_orderBtn"
                 android:src="@drawable/history_ordericon"/>
         </LinearLayout>
-            <com.db.chart.view.BarChartView
-                xmlns:chart="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/barchart"
-                android:layout_width="match_parent"
-                android:background="#2f4f4f"
-                chart:chart_axisColor="@color/axis"
-                chart:chart_labelColor="@color/label"
-                chart:chart_axisBorderSpacing="25dp"
-                android:layout_height="150dp"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:paddingLeft="6dp"
-                android:paddingRight="6dp" />
+        <com.db.chart.view.BarChartView
+            xmlns:chart="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/barchart"
+            android:layout_width="match_parent"
+            android:background="#2f4f4f"
+            chart:chart_axisColor="@color/axis"
+            chart:chart_labelColor="@color/label"
+            chart:chart_axisBorderSpacing="25dp"
+            android:layout_height="0dp"
+            android:layout_weight=".70"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp">
+        </com.db.chart.view.BarChartView>
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>

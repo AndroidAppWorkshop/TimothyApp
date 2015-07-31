@@ -5,13 +5,16 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
@@ -35,12 +38,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import library.timothy.Resources.StringResources;
 import library.timothy.Resources.UriResources;
@@ -57,16 +58,19 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
     private SharedPreferences sharedPreferences;
     private String apiKey;
     private EditText editTextStartDate;
-    private static BarChartView mBarChart;
-    private Paint mBarGridPaint;
+    private static BarChartView BarChart;
+    private Paint BarGridPaint;
+    private Button quest;
+    private DrawerLayout Drawer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);  
         setContentView(R.layout.activity_history);
 
-        DrawerLayout Dl = (DrawerLayout)findViewById(R.id.HistoryDrawer);
-        Dl.setDrawerShadow(R.drawable.drashadow, Gravity.END);
+        Drawer = (DrawerLayout)findViewById(R.id.HistoryDrawer);
+        Drawer.setDrawerShadow(R.drawable.drashadow, GravityCompat.END);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
         expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
         sharedPreferences = this.getSharedPreferences(StringResources.Key.ApiKey, Context.MODE_PRIVATE);
@@ -75,6 +79,8 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         editTextStartDate = (EditText) findViewById(R.id.startDate);
 
         editTextStartDate.setOnClickListener(this);
+        quest = (Button)findViewById(R.id.quest);
+        quest.setOnClickListener(this);
         Calendar c = Calendar.getInstance();
 
         String dateString = new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
@@ -86,6 +92,10 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
     }
     @Override
     public void onClick(View v) {
+        if (v == quest) {
+            Drawer.openDrawer(Gravity.END);
+            return ;
+        }
         Calendar calendar = Calendar.getInstance();
         final EditText edit = (EditText)v;
         final int text = (v == editTextStartDate) ? R.string.from : R.string.util;
@@ -142,6 +152,15 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                         return headers;
                     }
                 });
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if(Drawer.isDrawerOpen(Gravity.END)) {
+                Drawer.closeDrawer(Gravity.END);
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
     private void renderlistview() {
         expandableAdapter = new ExpandableAdapter();
@@ -219,6 +238,9 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
 
         public void updateBarChart(){
             Map<String,Integer> map = new HashMap();
+            BarChart.reset();
+            if(orders.size() < 2)
+                return ;
 
             for(Order order : orders) {
                 int size = order.getProducts().size();
@@ -231,8 +253,6 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                 }
             }
 
-            mBarChart.reset();
-
             BarSet barSet = new BarSet();
             Bar bar;
             int Max =0 ;
@@ -243,31 +263,33 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                 int Value = entry.getValue();
 
                 if(Max < Value) Max = Value;
+                if(!Key.equals(StringResources.Key.Null)){
+                    bar = new Bar(Key , (float)Value);
+                    barSet.setColor(getResources().getColor(R.color.bar_fill2));
 
-                bar = new Bar(Key , (float)Value);
-
-                barSet.addBar(bar);
+                    barSet.addBar(bar);
+                }
             }
-            mBarChart.addData(barSet);
+            BarChart.addData(barSet);
 
-            mBarChart.setSetSpacing(Tools.fromDpToPx(2));
-            mBarChart.setBarSpacing(Tools.fromDpToPx(10));
+            BarChart.setSetSpacing(Tools.fromDpToPx(2));
+            BarChart.setBarSpacing(Tools.fromDpToPx(9));
 
-            mBarChart.setBorderSpacing(0)
-                    .setAxisBorderValues(0, Max, Max / 3 )
-
+            BarChart.setBorderSpacing(0)
+                    .setAxisBorderValues(0, Max, Max / 5)
+                    .setGrid(BarChartView.GridType.FULL, BarGridPaint)
                     .show();
         }
     }
     private void initBarChart(){
 
-        mBarChart = (BarChartView) findViewById(R.id.barchart);
+        BarChart = (BarChartView) findViewById(R.id.barchart);
 
-        mBarGridPaint = new Paint();
-        mBarGridPaint.setColor(this.getResources().getColor(R.color.white));
-        mBarGridPaint.setStyle(Paint.Style.STROKE);
-        mBarGridPaint.setAntiAlias(true);
-        mBarGridPaint.setStrokeWidth(Tools.fromDpToPx(.75f));
+        BarGridPaint = new Paint();
+        BarGridPaint.setColor(this.getResources().getColor(R.color.white));
+        BarGridPaint.setStyle(Paint.Style.STROKE);
+        BarGridPaint.setAntiAlias(true);
+        BarGridPaint.setStrokeWidth(Tools.fromDpToPx(.75f));
     }
 
 }

@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private List<DrawerAdapter.DrawerItem> getList() {
         List<DrawerAdapter.DrawerItem> list = new ArrayList<>();
         String[] DraName = {getResources().getString(R.string.history), getResources().getString(R.string.order)};
-        int[] DraIcon = {R.drawable.menuicon, R.drawable.testicon};
+        int[] DraIcon = {R.drawable.menuicon, R.drawable.ordericon};
         for (int position = 0; position < DraName.length; position++) {
             list.add(new DrawerAdapter.DrawerItem(DraName[position], DraIcon[position]));
         }

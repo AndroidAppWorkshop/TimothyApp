@@ -59,6 +59,8 @@ public class StringResources {
         public static String Image = "Image";
         public static String CategoryID = "CategoryID";
 
+        public static String Null = "null";
+
     }
     public static class Text {
         public static String Undone = "未核銷";
