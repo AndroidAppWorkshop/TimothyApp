@@ -137,15 +137,14 @@ public class LoginActivity extends Activity
                             @Override
                             public void onResponse(JSONArray jsonArray) {
                                 progressBar.setVisibility(View.GONE);
-                        //      ProductRepository.refreshdata(jsonArray);
-                                saveApiResult("Product",true);
+                                saveApiResult(StringResources.Key.Product,true);
                             }
                         },
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
                                 progressBar.setVisibility(View.GONE);
-                                saveApiResult("Product",false);
+                                saveApiResult(StringResources.Key.Product,false);
                             }
                         }) {
                     @Override
@@ -167,15 +166,14 @@ public class LoginActivity extends Activity
                             @Override
                             public void onResponse(JSONArray jsonArray) {
                                 progressBar.setVisibility(View.GONE);
-                               // ComboRepository.refreshData(jsonArray);
-                                saveApiResult("Combo",true);
+                                saveApiResult(StringResources.Key.Combo,true);
                             }
                         },
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
                                 progressBar.setVisibility(View.GONE);
-                                saveApiResult("Combo",false);
+                                saveApiResult(StringResources.Key.Combo,false);
                             }
                         }) {
                     @Override
@@ -203,14 +201,14 @@ public class LoginActivity extends Activity
                             @Override
                             public void onResponse(JSONArray jsonArray) {
                                 progressBar.setVisibility(View.GONE);
-                                saveApiResult("History",true);
+                                saveApiResult(StringResources.Key.History,true);
                             }
                         },
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
                                 progressBar.setVisibility(View.GONE);
-                                saveApiResult("History",false);
+                                saveApiResult(StringResources.Key.History,false);
                             }
                         }) {
                     @Override
@@ -232,14 +230,14 @@ public class LoginActivity extends Activity
                             @Override
                             public void onResponse(JSONArray jsonArray) {
                                 progressBar.setVisibility(View.GONE);
-                                saveApiResult("Order",true);
+                                saveApiResult(StringResources.Key.Order,true);
                             }
                         },
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
                                 progressBar.setVisibility(View.GONE);
-                                saveApiResult("Order",false);
+                                saveApiResult(StringResources.Key.Order,false);
                             }
                         }) {
                     @Override
@@ -262,7 +260,7 @@ public class LoginActivity extends Activity
 
     private void goToNextActivity() {
         Log.i("result", resultApi.toString());
-        if(resultApi.get("Combo")&&resultApi.get("Product")) {
+        if(resultApi.get(StringResources.Key.Combo)&&resultApi.get(StringResources.Key.Product)) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();

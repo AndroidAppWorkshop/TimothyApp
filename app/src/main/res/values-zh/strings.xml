@@ -27,6 +27,7 @@
 
     <string name="Message"> 訊息 </string>
     <string name="Reponse"> 回報</string>
+    <string name="OrderNumber">訂單編號 :</string>
 
     <string name="Activity_cart_Textview_Price">價格 :</string>
     <string name="Activity_cart_EditText_PaidPrice">實收</string>

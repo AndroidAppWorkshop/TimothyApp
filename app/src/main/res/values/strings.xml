@@ -25,7 +25,8 @@
     <string name="DrinkMore"> DrinktooMore </string>
     <string name="CheckAgain"> Please Check again </string>
     <string name="Message">message</string>
-    <string name="Reponse">Reponse</string>
+    <string name="OrderNumber">order number :</string>
+
 
     <string name="Activity_cart_Textview_Price">Price :</string>
     <string name="Activity_cart_EditText_PaidPrice">PaidPrice</string>

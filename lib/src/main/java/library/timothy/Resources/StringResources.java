@@ -31,6 +31,7 @@ public class StringResources {
         public static String CartDetail = "cartDetail";
         public static String OrderDetail = "orderDetail";
         public static String True = "true";
+        public static String False = "false";
         public static String Success = "Success";
         public static String Date = "date";
 
@@ -41,11 +42,13 @@ public class StringResources {
         public static String ProductName = "productName";
 
         public static String OrderID = "orderID";
+        public static String Order = "Order";
         public static String Status = "status";
         public static String Undone = "undone";
         public static String Totalprice = "totalprice";
 
         public static String ComboId = "comboId";
+        public static String Combo = "Combo";
         public static String ComboName = "comboName";
         public static String Detail = "detail";
         public static String Combodrink = "combodrink";
@@ -55,6 +58,7 @@ public class StringResources {
         public static String DrinkName = "drinkName";
         public static String Drink = "Drink";
 
+        public static String Product = "Product";
         public static String ProductID = "ProductId";
         public static String Productname = "ProductName";
         public static String ProductPrice = "ProductPrice";
@@ -62,6 +66,8 @@ public class StringResources {
         public static String CategoryID = "CategoryID";
 
         public static String Null = "null";
+        public static String History = "History";
+
 
     }
     public static class Text {

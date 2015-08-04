@@ -2,6 +2,7 @@ package library.timothy.Shopping;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.HashMap;
 import java.util.List;
@@ -144,6 +145,7 @@ public class Cart implements Parcelable{
         }
 
         public  int ComboSetup(Combo combosvo) {
+//            ProductRepository productRepository = new ProductRepository();
             int allMeat = 0, allDrink = 0;
             List<Combo> allcombos = ComboRepository.getCompareCombos();
 
@@ -152,11 +154,19 @@ public class Cart implements Parcelable{
 
                     for (ComboDetail detail : detailsMeat) {
                         Integer countInProduct = productInCart.get(detail.getProductId());
+//                       Product produc= productRepository.findProductById();
                         if (countInProduct != null) {
                             allMeat += countInProduct.intValue();
+//                            Log.i("肉",String.valueOf(allMeat));
                         }
                     }
                 }
+//            for (Map.Entry<String, Integer> entry : productInCart.entrySet()) {
+//                String productId = entry.getKey();
+//                int count = entry.getValue();
+//                Product product = productRepository.findProductById(productId);
+//                Log.i(product.getName(),String.valueOf(count));
+//            }
               if (combosvo.getId() == "Drink") {
                   List<ComboDetail> detailsDrink = combosvo.getDetails();
                   for (ComboDetail detail : detailsDrink) {

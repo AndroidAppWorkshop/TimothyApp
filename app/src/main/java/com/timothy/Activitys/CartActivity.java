@@ -131,9 +131,8 @@ public class CartActivity extends Activity implements View.OnClickListener{
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject response) {
-                                    Log.i(getResources().getString(R.string.Reponse), response.optString(StringResources.Key.True));
-                                    if (!response.optString("false").equals("Failure")) {
-                                        Toast.makeText(CartActivity.this,"訂單編號:"+response.optString("true"), Toast.LENGTH_SHORT).show();
+                                    if (!response.optString(StringResources.Key.False).equals(StringResources.Key.Failure)) {
+                                        Toast.makeText(CartActivity.this,getResources().getString(R.string.OrderNumber)+response.optString(StringResources.Key.True), Toast.LENGTH_SHORT).show();
                                         Intent it = new Intent(CartActivity.this, SendActivity.class);
                                         it.putExtra(StringResources.Key.Realprice, realprice);
                                         it.putExtra(StringResources.Key.Disprice, disprice);
@@ -145,7 +144,7 @@ public class CartActivity extends Activity implements View.OnClickListener{
                                     else
                                     {
                                         progressBar.setVisibility(View.INVISIBLE);
-                                        Toast.makeText(CartActivity.this,response.optString("false"), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(CartActivity.this,response.optString(StringResources.Key.False), Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             },
