@@ -15,7 +15,7 @@ public class HistoryOrder {
         this.status = status;
 //        this.totalprice=totalprice;
 //        this.discount=discount;
-    }
+    }    
 
     public String getId() {
         return orderid;

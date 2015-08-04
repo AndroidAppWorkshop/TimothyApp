@@ -1,6 +1,5 @@
 package library.timothy.history;
 
-import library.timothy.R;
 import library.timothy.Resources.StringResources;
 
 /**

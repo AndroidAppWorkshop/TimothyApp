@@ -14,7 +14,7 @@ import library.timothy.Resources.StringResources;
 
 public class OrderRepository {
 
-    private static final Map<String, Order> orders = new LinkedHashMap<String, Order>();
+    private static final Map<String, HistoryOrder> orders = new LinkedHashMap<String, HistoryOrder>();
 
     public static void refreshData(JSONArray jsonArray) {
         orders.clear();
@@ -22,7 +22,7 @@ public class OrderRepository {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 String orderid=jsonObject.getString(StringResources.Key.OrderID);
-                Order order=new Order(jsonObject.getString(StringResources.Key.OrderID),
+                HistoryOrder order=new HistoryOrder(jsonObject.getString(StringResources.Key.OrderID),
                         (jsonObject.getString(StringResources.Key.Status).equals(StringResources.Key.Undone)) ? StringResources.Text.Undone:StringResources.Text.Done);
                 order.getProducts().add(new Status(jsonObject.getInt(StringResources.Key.Totalprice),jsonObject.getInt(StringResources.Key.Discount)));
                 JSONArray detailsArray = jsonObject.getJSONArray(StringResources.Key.OrderDetail);
@@ -43,19 +43,18 @@ public class OrderRepository {
     }
 
     public static String getDetailName(JSONObject detailObject ) throws JSONException {
-        String ProductName = detailObject.getString(StringResources.Key.ProductName);
 
-        String ComboName = detailObject.getString(StringResources.Key.ComboName);
-
-        return (ProductName.isEmpty() || ProductName.equals(StringResources.Key.Null)) ? ComboName : ProductName;
+        return  (detailObject.isNull(StringResources.Key.ProductName)? "" : detailObject.getString(StringResources.Key.ProductName)   )+
+                (detailObject.isNull(StringResources.Key.ComboName)  ? "" : detailObject.getString(StringResources.Key.ComboName)     )+
+                (detailObject.isNull(StringResources.Key.ComboDrinkName)  ? "" : detailObject.getString(StringResources.Key.ComboDrinkName));
     }
 
-    public static Map<String, Order> getOrdersMap() {
+    public static Map<String, HistoryOrder> getOrdersMap() {
         return orders;
     }
 
-    public static List<Order> getOrders() {
-        List<Order> list = new LinkedList<Order>();
+    public static List<HistoryOrder> getOrders() {
+        List<HistoryOrder> list = new LinkedList<HistoryOrder>();
         list.addAll(orders.values());
         return list;
     }
