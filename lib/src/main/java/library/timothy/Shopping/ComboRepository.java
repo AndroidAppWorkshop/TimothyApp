@@ -79,6 +79,7 @@ public class ComboRepository {
 
     public static void adddrinkcombo(String comboId)
     {
+        comparelist.clear();
         comparelist.addAll(combos.values());
         Combo comboVo = new Combo();
         comboVo.setId(StringResources.Key.Drink);

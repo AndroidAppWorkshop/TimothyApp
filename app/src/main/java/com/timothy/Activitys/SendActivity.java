@@ -3,6 +3,7 @@ package com.timothy.Activitys;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -68,6 +69,18 @@ public class SendActivity extends Activity {
         });
 
     }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            Intent it=new Intent(SendActivity.this,MainActivity.class);
+            it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(it);
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 
 
 }
