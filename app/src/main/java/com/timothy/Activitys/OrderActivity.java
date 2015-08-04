@@ -15,7 +15,7 @@ public class OrderActivity extends Activity implements View.OnClickListener {
 
     ExpandableListView orderList;
     ExpandableListAdapter expandableListAdapter;
-    Button testBtn, reQuestBtn;
+    Button  reQuestBtn;
     Context context;
     Intent it;
 
@@ -27,7 +27,6 @@ public class OrderActivity extends Activity implements View.OnClickListener {
         orderList = (ExpandableListView) findViewById(R.id.Order_List);
         context = getApplicationContext();
         expandableListAdapter = new ExpandableListAdapter(this,orderList);
-        testBtn = (Button) findViewById(R.id.testBtn);
         reQuestBtn = (Button) findViewById(R.id.reQuestBtn);
         reQuestBtn.setOnClickListener(this);
     }

@@ -30,7 +30,6 @@ import com.db.chart.Tools;
 import com.db.chart.model.Bar;
 import com.db.chart.model.BarSet;
 import com.db.chart.view.BarChartView;
-import com.db.chart.view.ChartView;
 import com.timothy.Core.BaseApplication;
 import com.timothy.R;
 
@@ -46,9 +45,9 @@ import java.util.Map;
 
 import library.timothy.Resources.StringResources;
 import library.timothy.Resources.UriResources;
-import library.timothy.history.Order;
-import library.timothy.history.OrderRepository;
-import library.timothy.history.Product;
+import library.timothy.History.HistoryOrder;
+import library.timothy.History.OrderRepository;
+import library.timothy.History.Product;
 
 public class HistoryActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -67,7 +66,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);  
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
         Drawer = (DrawerLayout)findViewById(R.id.HistoryDrawer);
@@ -99,7 +98,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         }
         Calendar calendar = Calendar.getInstance();
         final EditText edit = (EditText)v;
-        final int text = (v == editTextStartDate) ? R.string.from : R.string.util;
+        final int text = R.string.from ;
         new DatePickerDialog(HistoryActivity.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -112,6 +111,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                 edit.setText(getResources().getString(text));
                 edit.append(dateString);
                 loadOrderhistory(date);
+                BarChart.removeAllViews();
             }},
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
@@ -170,7 +170,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
 
     class ExpandableAdapter extends BaseExpandableListAdapter {
 
-        private List<Order> orders = OrderRepository.getOrders();
+        private List<HistoryOrder> orders = OrderRepository.getOrders();
         ExpandableAdapter() {updateBarChart();}
 
         public int getGroupCount() {
@@ -212,7 +212,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.listitem_historyorder, null);
             }
-            Order order = orders.get(groupPosition);
+            HistoryOrder order = orders.get(groupPosition);
 
             TextView OrderId = (TextView) convertView.findViewById(R.id.textViewOrderId);
             OrderId.setText(order.getId() + "(" + (order.getProducts().size()-1) + ")"+" "+order.getstatus());
@@ -238,46 +238,48 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         public void updateBarChart(){
-            Map<String,Integer> map = new HashMap();
+            Map<String,Integer> ChartMap = new HashMap();
             BarChart.reset();
             if(orders.size() < 2)
                 return ;
 
-            for(Order order : orders) {
+            for(HistoryOrder order : orders) {
                 int size = order.getProducts().size();
                 for (int index = 1; index < size; index++) {
                     Product product = order.getProducts().get(index) ;
-                    if(map.containsKey(product.getName()))
-                        map.put(product.getName() , map.get(product.getName())+product.getquantity());
+                    if(ChartMap.containsKey(product.getName()))
+                        ChartMap.put(product.getName() , ChartMap.get(product.getName())+product.getquantity());
                     else
-                        map.put(product.getName() , product.getquantity());
+                        ChartMap.put(product.getName() , product.getquantity());
                 }
             }
 
             BarSet barSet = new BarSet();
             Bar bar;
-            int Max =0 ;
-            for(Map.Entry<String , Integer> entry : map.entrySet()){
+            int Max = 10 ;
+            for(Map.Entry<String , Integer> entry : ChartMap.entrySet()){
 
                 String Key = entry.getKey();
 
                 int Value = entry.getValue();
 
-                if(Max < Value) Max = Value;
-                if(!Key.equals(StringResources.Key.Null)){
-                    bar = new Bar(Key , (float)Value);
-                    barSet.setColor(getResources().getColor(R.color.bar_fill2));
+                bar = new Bar(Key , (float)Value);
+                barSet.setColor(getResources().getColor(R.color.bar_fill2));
 
+                if(Max < Value)
+                    Max = Value;
+
+                if(!Key.equals(StringResources.Key.Null) || Key.isEmpty() )
                     barSet.addBar(bar);
-                }
             }
+            int divid = Max / 5 + 1;
             BarChart.addData(barSet);
 
             BarChart.setSetSpacing(Tools.fromDpToPx(2));
             BarChart.setBarSpacing(Tools.fromDpToPx(9));
 
             BarChart.setBorderSpacing(0)
-                    .setAxisBorderValues(0, Max, Max / 5)
+                    .setAxisBorderValues(0, Max, divid)
                     .setGrid(BarChartView.GridType.FULL , BarGridPaint)
                     .show();
         }

@@ -52,6 +52,7 @@ public class StringResources {
         public static String ComboName = "comboName";
         public static String Detail = "detail";
         public static String Combodrink = "combodrink";
+        public static String ComboDrinkName = "comboDrinkName";
         public static String Price = "price";
         public static String Meat = "meat";
         public static String DrinkID = "drinkID";
@@ -75,6 +76,7 @@ public class StringResources {
         public static String Done = "已核銷";
         public static String Discount = "折扣 :";
         public static String AllPrice = "總價 :";
+        public static String Empty = "空";
 
     }
     public static class Gcm {

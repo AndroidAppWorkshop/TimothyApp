@@ -13,9 +13,11 @@
     <color name="dimgray">#696969</color>
     <color name="black">#000000</color>
     <color name="cornsilk">#fff8dc</color>
+    <color name="primary">#795548</color>
+    <color name="lightprimary">#d7ccc8</color>
+    <color name="divider">#b6b6b6</color>
 
-    <color name="axis">#ffffff</color>
-    <color name="label">#ffffff</color>
+
     <color name="bar_bg">#f67743</color>
     <color name="bar_bgbar">#d96739</color>
     <color name="bar_fill1">#fed4c2</color>

@@ -36,7 +36,7 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
 
                 Intent intentNextAction = new Intent(context, OrderActivity.class);
 
-                intentNextAction.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intentNextAction.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
                 MagicLenGCM
                         .sendLocalNotification(context,

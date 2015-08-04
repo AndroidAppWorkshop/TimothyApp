@@ -10,15 +10,15 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="@color/action_bar_color"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:paddingRight="?android:attr/expandableListPreferredItemIndicatorRight"
         android:id="@+id/groupText"/>
     <Button
         android:layout_width="0dp"
         android:layout_weight="2"
         android:layout_height="wrap_content"
         android:text="@string/ListGroup_Button_Delete"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/DeleteBtn"/>
 
 </LinearLayout>

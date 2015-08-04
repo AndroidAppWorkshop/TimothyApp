@@ -24,9 +24,6 @@ import com.timothy.GCM.MagicLenGCM;
 import com.timothy.R;
 import library.timothy.Resources.StringResources;
 import library.timothy.Resources.UriResources;
-import library.timothy.Shopping.ComboRepository;
-import library.timothy.Shopping.ProductRepository;
-import library.timothy.history.OrderRepository;
 
 import org.json.JSONArray;
 import org.json.JSONException;

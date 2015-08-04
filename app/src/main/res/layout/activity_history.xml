@@ -67,20 +67,20 @@
                 android:id="@+id/history_orderBtn"
                 android:src="@drawable/history_ordericon"/>
         </LinearLayout>
-        <com.db.chart.view.BarChartView
-            xmlns:chart="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/barchart"
-            android:layout_width="match_parent"
-            android:background="#2f4f4f"
-            chart:chart_axisColor="@color/axis"
-            chart:chart_labelColor="@color/label"
-            chart:chart_axisBorderSpacing="25dp"
-            android:layout_height="0dp"
-            android:layout_weight=".70"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
-            android:paddingLeft="6dp"
-            android:paddingRight="6dp">
-        </com.db.chart.view.BarChartView>
+            <com.db.chart.view.BarChartView
+                xmlns:chart="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/barchart"
+                android:layout_width="match_parent"
+                android:background="@color/primary"
+                chart:chart_axisColor="@color/divider"
+                chart:chart_labelColor="@color/divider"
+                chart:chart_axisBorderSpacing="25dp"
+                android:layout_height="0dp"
+                android:layout_weight=".70"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp">
+            </com.db.chart.view.BarChartView>
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>

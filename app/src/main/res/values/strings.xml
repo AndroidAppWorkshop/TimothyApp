@@ -26,6 +26,7 @@
     <string name="CheckAgain"> Please Check again </string>
     <string name="Message">message</string>
     <string name="OrderNumber">order number :</string>
+    <string name="Delete"> Order Done </string>
 
 
     <string name="Activity_cart_Textview_Price">Price :</string>
