@@ -45,9 +45,9 @@ import java.util.Map;
 
 import library.timothy.Resources.StringResources;
 import library.timothy.Resources.UriResources;
-import library.timothy.history.HistoryOrder;
-import library.timothy.history.OrderRepository;
-import library.timothy.history.Product;
+import library.timothy.History.HistoryOrder;
+import library.timothy.History.OrderRepository;
+import library.timothy.History.Product;
 
 public class HistoryActivity extends AppCompatActivity implements View.OnClickListener{
 

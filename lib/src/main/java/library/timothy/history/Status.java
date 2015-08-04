@@ -1,4 +1,4 @@
-package library.timothy.history;
+package library.timothy.History;
 
 import library.timothy.Resources.StringResources;
 

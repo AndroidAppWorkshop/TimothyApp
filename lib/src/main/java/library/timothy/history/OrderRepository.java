@@ -1,4 +1,4 @@
-package library.timothy.history;
+package library.timothy.History;
 
 import org.json.JSONArray;
 import org.json.JSONException;
