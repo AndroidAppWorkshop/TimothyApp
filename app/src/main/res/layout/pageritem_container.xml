@@ -6,6 +6,16 @@
               android:layout_height="match_parent"
         >
     <include android:id="@+id/pagerItem1" layout="@layout/pageritem_product"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="8dp"
+        android:layout_height="match_parent"></LinearLayout>
+
     <include android:id="@+id/pagerItem2" layout="@layout/pageritem_product"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="8dp"
+        android:layout_height="match_parent"></LinearLayout>
+
     <include android:id="@+id/pagerItem3" layout="@layout/pageritem_product"/>
 </LinearLayout>
