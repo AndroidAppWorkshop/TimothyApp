@@ -178,5 +178,42 @@ public class Cart implements Parcelable{
         }
 
 
+    public  Boolean ComboCheck() {
+        int allMeat = 0, allDrink = 0;
+        List<Combo> allcombos = ComboRepository.getCompareCombos();
+
+        for (Combo combo : allcombos) {
+            List<ComboDetail> detailsMeat = combo.getDetails();
+
+            for (ComboDetail detail : detailsMeat) {
+                Integer countInProduct = productInCart.get(detail.getProductId());
+
+                if (countInProduct != null) {
+                    allMeat += countInProduct.intValue();
+                }
+            }
+        }
+
+
+       List<ComboDetail> detailsDrink = allcombos.get(0).getDrinkDetails();
+        for (ComboDetail detail : detailsDrink) {
+              Integer countInProduct = productInCart.get(detail.getProductId());
+              if (countInProduct != null) {
+                    allDrink += countInProduct.intValue();
+               }
+            }
+
+        if(allDrink==allMeat)
+        {
+            return true;
+        }
+       return false;
+    }
+
+
 }
+
+
+
+
 

@@ -168,9 +168,15 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Intent it = new Intent(getActivity(), CartActivity.class);
-        it.putExtra(StringResources.Key.Data, cart);
-        startActivityForResult(it, StringResources.Index.ActivityResult);
+        if(cart.ComboCheck()) {
+            Intent it = new Intent(getActivity(), CartActivity.class);
+            it.putExtra(StringResources.Key.Data, cart);
+            startActivityForResult(it, StringResources.Index.ActivityResult);
+        }
+        else
+        {
+            Toast.makeText(getActivity(), "套餐數量不符合,請置飲料區確認", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
