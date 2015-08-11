@@ -1,9 +1,12 @@
 package com.timothy.Activitys;
 
+import android.animation.PropertyValuesHolder;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,12 +16,15 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,9 +33,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.db.chart.Tools;
+import com.db.chart.listener.OnEntryClickListener;
 import com.db.chart.model.Bar;
 import com.db.chart.model.BarSet;
 import com.db.chart.view.BarChartView;
+import com.db.chart.view.Tooltip;
 import com.timothy.Core.BaseApplication;
 import com.timothy.R;
 
@@ -38,6 +46,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -49,12 +58,12 @@ import library.timothy.History.HistoryOrder;
 import library.timothy.History.OrderRepository;
 import library.timothy.History.Product;
 
-public class HistoryActivity extends AppCompatActivity implements View.OnClickListener{
+public class HistoryActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     private ExpandableListView expandableListView;
     private ProgressBar progressBar;
-    private  ExpandableAdapter expandableAdapter;
+    private ExpandableAdapter expandableAdapter;
     private SharedPreferences sharedPreferences;
     private String apiKey;
     private EditText editTextStartDate;
@@ -62,7 +71,9 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
     private Paint BarGridPaint;
     private Button quest;
     private DrawerLayout Drawer;
-
+    private List<String> Barlist;
+    private TextView value;
+    private OnEntryClickListener OnEntryClickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,6 +182,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
     class ExpandableAdapter extends BaseExpandableListAdapter {
 
         private List<HistoryOrder> orders = OrderRepository.getOrders();
+        private Map<String , Integer> counts = OrderRepository.getCounts();
         ExpandableAdapter() {updateBarChart();}
 
         public int getGroupCount() {
@@ -238,32 +250,21 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         public void updateBarChart(){
-            Map<String,Integer> ChartMap = new HashMap();
-            BarChart.reset();
-            if(orders.size() < 2)
-                return ;
 
-            for(HistoryOrder order : orders) {
-                int size = order.getProducts().size();
-                for (int index = 1; index < size; index++) {
-                    Product product = order.getProducts().get(index) ;
-                    if(ChartMap.containsKey(product.getName()))
-                        ChartMap.put(product.getName() , ChartMap.get(product.getName())+product.getquantity());
-                    else
-                        ChartMap.put(product.getName() , product.getquantity());
-                }
-            }
+            BarChart.reset();
+            if(counts.size() < 2)
+                return ;
 
             BarSet barSet = new BarSet();
             Bar bar;
             int Max = 10 ;
-            for(Map.Entry<String , Integer> entry : ChartMap.entrySet()){
+            for(Map.Entry<String , Integer> entry : counts.entrySet()){
 
                 String Key = entry.getKey();
 
                 int Value = entry.getValue();
 
-                bar = new Bar(Key , (float)Value);
+                bar = new Bar("" , (float)Value);
                 barSet.setColor(getResources().getColor(R.color.bar_fill2));
 
                 if(Max < Value)
@@ -272,12 +273,14 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                 if(!Key.equals(StringResources.Key.Null) || Key.isEmpty() )
                     barSet.addBar(bar);
             }
+            Barlist = new ArrayList<>();
+            Barlist.addAll(counts.keySet());
             int divid = Max / 5 + 1;
             BarChart.addData(barSet);
 
             BarChart.setSetSpacing(Tools.fromDpToPx(2));
             BarChart.setBarSpacing(Tools.fromDpToPx(9));
-
+            BarChart.setOnEntryClickListener(OnEntryClickListener);
             BarChart.setBorderSpacing(0)
                     .setAxisBorderValues(0, Max, divid)
                     .setGrid(BarChartView.GridType.FULL , BarGridPaint)
@@ -287,14 +290,23 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
     private void initBarChart(){
 
         BarChart = (BarChartView) findViewById(R.id.barchart);
-
+        value = (TextView)findViewById(R.id.value);
         BarGridPaint = new Paint();
         BarGridPaint.setColor(this.getResources().getColor(R.color.white));
         BarGridPaint.setStyle(Paint.Style.STROKE);
         BarGridPaint.setAntiAlias(true);
-        BarGridPaint.setStrokeWidth(Tools.fromDpToPx(.75f));
+        BarGridPaint.setStrokeWidth(Tools.fromDpToPx(.50f));
+        OnEntryClickListener = new OnEntryClickListener() {
+            @Override
+            public void onClick(int setIndex, int entryIndex, Rect rect){
+                AlphaAnimation animation = new AlphaAnimation(0.1f,1.0f);
+                animation.setDuration(1000);
+                value.setAnimation(animation);
+                String text = Barlist.get(entryIndex);
+                value.setText(text);
+            }
+        };
     }
-
 }
 
 

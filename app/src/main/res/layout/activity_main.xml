@@ -32,13 +32,11 @@
 
         </android.support.v4.view.ViewPager>
 
-
-
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:background="@color/action_bar_color"
+        android:background="@color/secondary"
         android:layout_gravity="end">
         <ListView
             android:layout_width="wrap_content"

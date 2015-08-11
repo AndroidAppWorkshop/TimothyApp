@@ -67,6 +67,14 @@
                 android:id="@+id/history_orderBtn"
                 android:src="@drawable/history_ordericon"/>
         </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:paddingTop="5dp"
+            android:layout_weight=".16"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/value"/>
+
             <com.db.chart.view.BarChartView
                 xmlns:chart="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/barchart"
@@ -81,6 +89,7 @@
                 android:paddingBottom="6dp"
                 android:paddingLeft="6dp"
                 android:paddingRight="6dp">
+
             </com.db.chart.view.BarChartView>
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>

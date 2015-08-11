@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,7 +18,9 @@ public class OrderRepository {
 
     private static final Map<String, HistoryOrder> orders = new LinkedHashMap<String, HistoryOrder>();
 
+    private static final Map<String , Integer> counts= new HashMap<>();
     public static void refreshData(JSONArray jsonArray) {
+        counts.clear();
         orders.clear();
         try {
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -30,13 +34,14 @@ public class OrderRepository {
                 for (int j = 0; j < detailsArray.length(); j++) {
                     JSONObject detailObject = detailsArray.getJSONObject(j);
 
-                    Product product=new Product(detailObject.getString(StringResources.Key.OrderID),getDetailName(detailObject),
+                    Product product = new Product(detailObject.getString(StringResources.Key.OrderID), getDetailName(detailObject),
                             detailObject.getInt(StringResources.Key.Quantity));
+
+
                     order.getProducts().add(product);
                 }
                 orders.put(orderid,order);
             }
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -44,9 +49,19 @@ public class OrderRepository {
 
     public static String getDetailName(JSONObject detailObject ) throws JSONException {
 
-        return  (detailObject.isNull(StringResources.Key.ProductName)? "" : detailObject.getString(StringResources.Key.ProductName)   )+
-                (detailObject.isNull(StringResources.Key.ComboName)  ? "" : detailObject.getString(StringResources.Key.ComboName)     )+
-                (detailObject.isNull(StringResources.Key.ComboDrinkName)  ? "" : detailObject.getString(StringResources.Key.ComboDrinkName));
+        String name =
+                (detailObject.isNull(StringResources.Key.ProductName) ? ""   : detailObject.getString(StringResources.Key.ProductName)   )+
+                        (detailObject.isNull(StringResources.Key.ComboName)   ? ""   : detailObject.getString(StringResources.Key.ComboName)     );
+
+        if(!detailObject.isNull(StringResources.Key.ComboDrinkName))
+            return detailObject.getString(StringResources.Key.ComboDrinkName);
+
+        if (counts.containsKey(name))
+            counts.put(name, counts.get(name) + detailObject.getInt(StringResources.Key.Quantity));
+        else
+            counts.put(name , detailObject.getInt(StringResources.Key.Quantity));
+
+        return  name ;
     }
 
     public static Map<String, HistoryOrder> getOrdersMap() {
@@ -58,6 +73,7 @@ public class OrderRepository {
         list.addAll(orders.values());
         return list;
     }
-
-
+    public static Map<String , Integer> getCounts(){
+        return counts;
+    }
 }
