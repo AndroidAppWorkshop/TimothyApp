@@ -79,7 +79,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
-
+        
         Drawer = (DrawerLayout)findViewById(R.id.HistoryDrawer);
         Drawer.setDrawerShadow(R.drawable.drashadow, GravityCompat.END);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);

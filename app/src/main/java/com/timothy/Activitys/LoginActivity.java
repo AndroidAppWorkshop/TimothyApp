@@ -30,11 +30,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -53,7 +51,7 @@ public class LoginActivity extends Activity
     private String apiKey;
     private MagicLenGCM gcm;
     private  static Map<String, Boolean>  resultApi = new HashMap<String, Boolean>();
-    private  static Set<String> set = new HashSet<>();
+    private  static Set<String> AuthorizationSet = new HashSet<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -255,7 +253,7 @@ public class LoginActivity extends Activity
     {
         resultApi.put(apiId, use);
         if(use)
-            set.add(apiId);
+            AuthorizationSet.add(apiId);
 
         if(resultApi.size()==4) {
             goToNextActivity();
@@ -263,7 +261,7 @@ public class LoginActivity extends Activity
     }
     private void saveResult() {
         SharedPreferences sharedPreferences = getSharedPreferences(StringResources.Key.Login , MODE_PRIVATE);
-        sharedPreferences.edit().putStringSet(StringResources.Key.Login , set).commit();
+        sharedPreferences.edit().putStringSet(StringResources.Key.Login , AuthorizationSet).commit();
     }
 
     private void goToNextActivity() {

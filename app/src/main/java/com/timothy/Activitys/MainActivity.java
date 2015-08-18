@@ -106,9 +106,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         getMenuInflater().inflate(R.menu.main, menu);
         mMenu = menu;
         mMenu.getItem(1).setVisible(false);
-        Set<String> set = getSharedPreferences(StringResources.Key.Login , MODE_PRIVATE)
+        Set<String> AuthorizationSet = getSharedPreferences(StringResources.Key.Login , MODE_PRIVATE)
                 .getStringSet(StringResources.Key.Login, null);
-        if(set != null && !set.contains(StringResources.Key.History) && !set.contains(StringResources.Key.Order)) {
+        if(AuthorizationSet != null && !AuthorizationSet.contains(StringResources.Key.History) && !AuthorizationSet.contains(StringResources.Key.Order)) {
             mMenu.getItem(0).setVisible(false);
         }
         return true;
