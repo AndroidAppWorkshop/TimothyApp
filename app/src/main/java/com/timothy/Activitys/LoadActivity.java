@@ -33,7 +33,7 @@ public class LoadActivity extends Activity {
         context = getApplicationContext();
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         ImageView loadingImage = (ImageView) findViewById(R.id.LoadImage);
-        loadingImage.setImageResource(R.drawable.historyicon);
+        loadingImage.setImageResource(R.drawable.actionbar_menu);
 
         AlphaAnimation animation = new AlphaAnimation(0.1f, 1.0f);
         animation.setDuration(3000);
@@ -50,12 +50,14 @@ public class LoadActivity extends Activity {
             public void onAnimationEnd(Animation animation) {
 
              if (getSharedPreferences(StringResources.Key.ApiKey, MODE_PRIVATE)
-                                .getString(StringResources.Key.ApiKey, null) != null) {
+                                .getString(StringResources.Key.ApiKey, null) != null &&
+                getSharedPreferences(StringResources.Key.Login , MODE_PRIVATE)
+                                .getStringSet(StringResources.Key.Login, null ) != null ) {
                  intent.setClass(context , MainActivity.class);
                  startActivity(intent);
              }
              else
-             startActivity(intent);
+                 startActivity(intent);
 
              progressBar.setVisibility(View.INVISIBLE);
              finish();

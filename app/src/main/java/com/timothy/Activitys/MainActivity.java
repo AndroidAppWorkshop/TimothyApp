@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -24,16 +25,18 @@ import com.timothy.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import library.timothy.Resources.StringResources;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener , View.OnClickListener{
 
-    ListView LV;
+//    ListView LV;
     DrawerLayout DL;
     Menu mMenu;
     ViewPager viewPager;
     Fragment Fra = null;
+    ImageButton HistoryBtn , OrderBtn;
     int MenuPage = 0;
 
     @Override
@@ -42,9 +45,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_main);
 
         DL = (DrawerLayout) findViewById(R.id.DraOut);
-        LV = (ListView) findViewById(R.id.LV);
-        LV.setAdapter(new DrawerAdapter(this, R.layout.drawerlist, getList()));
-        LV.setOnItemClickListener(this);
+        HistoryBtn = (ImageButton)findViewById(R.id.DraHistory);
+        OrderBtn = (ImageButton)findViewById(R.id.DraOrder);
+//        LV = (ListView) findViewById(R.id.LV);
+//        LV.setAdapter(new DrawerAdapter(this, R.layout.drawerlist, getList()));
+//        LV.setOnItemClickListener(this);
+        HistoryBtn.setImageResource(R.drawable.historyicon);
+        OrderBtn.setImageResource(R.drawable.ordericon);
+        HistoryBtn.setOnClickListener(this);
+        OrderBtn.setOnClickListener(this);
         DL.setDrawerShadow(R.drawable.drashadow, GravityCompat.END);
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
@@ -61,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
         return list;
     }
+
+
 
     class PagerAdapter extends FragmentPagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
 
@@ -94,8 +105,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         mMenu = menu;
-        if(LoginActivity.getResultApi().get(StringResources.Key.History)==false&&LoginActivity.getResultApi().get(StringResources.Key.Order)==false)
-        {mMenu.getItem(0).setVisible(false);}
+        mMenu.getItem(1).setVisible(false);
+        Set<String> set = getSharedPreferences(StringResources.Key.Login , MODE_PRIVATE)
+                .getStringSet(StringResources.Key.Login, null);
+        if(set != null && !set.contains(StringResources.Key.History) && !set.contains(StringResources.Key.Order)) {
+            mMenu.getItem(0).setVisible(false);
+        }
         return true;
     }
 
@@ -110,22 +125,25 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 DL.closeDrawer(Gravity.END);
             }
             return true;
+        }else if (id == mMenu.getItem(1).getItemId()){
+            getSharedPreferences(StringResources.Key.Login , MODE_PRIVATE).edit().remove(StringResources.Key.Login).commit();
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        android.support.v4.app.FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
-        ft1.addToBackStack(StringResources.Key.BackStack);
+    }
+    @Override
+    public void onClick(View v) {
 
-        switch (position) {
+        switch (v.getId()) {
 
-            case 0:
+            case R.id.DraHistory :
                 Intent it = new Intent(this, HistoryActivity.class);
                 startActivity(it);
                 break;
-            case 1:
+            case R.id.DraOrder :
                 Intent intentNextAction = new Intent(this, OrderActivity.class);
                 intentNextAction.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intentNextAction);

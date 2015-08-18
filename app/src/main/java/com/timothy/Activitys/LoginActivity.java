@@ -30,9 +30,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class LoginActivity extends Activity
 {
@@ -49,6 +53,7 @@ public class LoginActivity extends Activity
     private String apiKey;
     private MagicLenGCM gcm;
     private  static Map<String, Boolean>  resultApi = new HashMap<String, Boolean>();
+    private  static Set<String> set = new HashSet<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -249,14 +254,21 @@ public class LoginActivity extends Activity
     private void saveApiResult(String apiId,Boolean use)
     {
         resultApi.put(apiId, use);
+        if(use)
+            set.add(apiId);
 
         if(resultApi.size()==4) {
             goToNextActivity();
         }
     }
+    private void saveResult() {
+        SharedPreferences sharedPreferences = getSharedPreferences(StringResources.Key.Login , MODE_PRIVATE);
+        sharedPreferences.edit().putStringSet(StringResources.Key.Login , set).commit();
+    }
 
     private void goToNextActivity() {
         Log.i("result", resultApi.toString());
+        saveResult();
         if(resultApi.get(StringResources.Key.Combo)&&resultApi.get(StringResources.Key.Product)) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
@@ -272,6 +284,6 @@ public class LoginActivity extends Activity
     }
 
     public  static Map<String, Boolean> getResultApi() {
-        return resultApi;
+        return resultApi ;
     }
 }

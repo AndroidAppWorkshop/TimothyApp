@@ -5,9 +5,16 @@
     xmlns:ActionBar="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/MenuBtn02"
+        android:orderInCategory="1"
+        android:icon="@drawable/logout"
+        ActionBar:showAsAction="ifRoom"
+        android:title="MenuBtn01"/>
+    <item
         android:id="@+id/MenuBtn01"
         android:orderInCategory="0"
         android:icon="@drawable/actionbar_menu"
         ActionBar:showAsAction="ifRoom"
         android:title="MenuBtn01"/>
+
 </menu>

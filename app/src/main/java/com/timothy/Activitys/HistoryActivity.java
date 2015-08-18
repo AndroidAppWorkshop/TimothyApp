@@ -295,7 +295,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         BarGridPaint.setColor(this.getResources().getColor(R.color.white));
         BarGridPaint.setStyle(Paint.Style.STROKE);
         BarGridPaint.setAntiAlias(true);
-        BarGridPaint.setStrokeWidth(Tools.fromDpToPx(.50f));
+        BarGridPaint.setStrokeWidth(Tools.fromDpToPx(0.8f));
         OnEntryClickListener = new OnEntryClickListener() {
             @Override
             public void onClick(int setIndex, int entryIndex, Rect rect){

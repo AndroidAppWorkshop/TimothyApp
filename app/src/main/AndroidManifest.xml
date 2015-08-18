@@ -25,18 +25,17 @@
         <activity android:name=".Activitys.OrderActivity" />
         <activity android:name="org.achartengine.GraphicalActivity" />
         <activity android:name="com.timothy.Activitys.LoginActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name="com.timothy.Activitys.SendActivity" />
         <activity android:name="com.timothy.Activitys.CartActivity" />
         <activity android:name=".Activitys.HistoryActivity" />
 
         <activity android:name=".Activitys.LoadActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <receiver
             android:name="com.timothy.GCM.GcmBroadcastReceiver"

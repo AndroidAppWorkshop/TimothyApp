@@ -35,12 +35,19 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:background="@color/secondary"
         android:layout_gravity="end">
-        <ListView
+        <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:id="@+id/LV"/>
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:id="@+id/DraHistory" />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:id="@+id/DraOrder" />
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>

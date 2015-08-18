@@ -68,7 +68,7 @@ public class StringResources {
 
         public static String Null = "null";
         public static String History = "History";
-
+        public static String Login = "Login";
 
     }
     public static class Text {
