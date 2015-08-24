@@ -33,7 +33,7 @@ public class LoadActivity extends Activity {
         context = getApplicationContext();
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         ImageView loadingImage = (ImageView) findViewById(R.id.LoadImage);
-        loadingImage.setImageResource(R.drawable.actionbar_menu);
+        loadingImage.setImageResource(R.drawable.timothycafe);
 
         AlphaAnimation animation = new AlphaAnimation(0.1f, 1.0f);
         animation.setDuration(3000);

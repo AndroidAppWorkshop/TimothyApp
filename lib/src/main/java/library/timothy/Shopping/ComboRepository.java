@@ -31,8 +31,10 @@ public class ComboRepository {
 
                 comboId = jsonObject.getString(StringResources.Key.ComboId);
                 String comboName=jsonObject.getString(StringResources.Key.ComboName);
+                String Image = jsonObject.getString(StringResources.Key.Image);
                 comboVo.setId(comboId);
                 comboVo.setName(comboName);
+                comboVo.setImage(Image);
 
                 category=new Category(comboId);
                 category.setName(comboName);

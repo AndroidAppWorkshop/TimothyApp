@@ -29,6 +29,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.Volley;
 import com.timothy.Activitys.CartActivity;
 import com.timothy.Cache.LruBitmapCache;
 import com.timothy.Core.BaseApplication;
@@ -235,7 +236,8 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
 
                 TextView textViewProductName = (TextView) productView.findViewById(R.id.textViewProductName);
                 textViewProductName.setText(combosvo.getName());
-
+                NetworkImageView Image = (NetworkImageView)productView.findViewById(R.id.image);
+                Image.setImageUrl(combosvo.getImage() , BaseApplication.getInstance().getImageLoader() );
                 final TextView textViewProductCount = (TextView) productView.findViewById(R.id.textViewProductCount);
                 String productId = combosvo.getId();
 
@@ -429,8 +431,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
             this.products = products;
         }
 
-        NetworkImageView image;
-        RequestQueue queue;
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
         LruBitmapCache cache;
         com.android.volley.toolbox.ImageLoader ImageLoader;
 
@@ -468,7 +469,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                 textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(productId)));
 
                 NetworkImageView imageView = (NetworkImageView) productView.findViewById(R.id.image);
-                imageView.setImageUrl(product.getimage(), BaseApplication.getInstance().getImageLoader());
+                imageView.setImageUrl(product.getimage(), ImageLoader);
 
                 Button btnAdd = (Button) productView.findViewById(R.id.btnAdd);
 
