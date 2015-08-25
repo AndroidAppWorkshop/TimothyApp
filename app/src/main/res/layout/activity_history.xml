@@ -76,7 +76,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:paddingTop="5dp"
-                android:layout_weight=".15"
+                android:layout_weight=".08"
+                android:padding="6dp"
+                android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:id="@+id/value"/>
 
@@ -90,7 +92,7 @@
                 chart:chart_axisBorderSpacing="25dp"
                 android:layout_height="0dp"
                 android:layout_weight=".85"
-                android:paddingTop="6dp"
+                android:paddingTop="10dp"
                 android:paddingBottom="6dp"
                 android:paddingLeft="6dp"
                 android:paddingRight="6dp">

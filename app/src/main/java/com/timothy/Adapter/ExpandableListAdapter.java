@@ -91,7 +91,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(final int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
-        String headerTitle = context.getResources().getString(R.string.serialNumber) + getGroup(groupPosition) ;
+        String headerTitle = StringResources.Text.SerialNumber + getGroup(groupPosition) ;
         if (convertView == null) {
             LayoutInflater infalInflater =
                     (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

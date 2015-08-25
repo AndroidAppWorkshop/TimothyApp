@@ -252,8 +252,6 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         public void updateBarChart(){
 
             BarChart.reset();
-            if(counts.size() < 2)
-                return ;
 
             BarSet barSet = new BarSet();
             Bar bar;
@@ -265,13 +263,13 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                 int Value = entry.getValue();
 
                 bar = new Bar("" , (float)Value);
-                barSet.setColor(getResources().getColor(R.color.bar_fill2));
+                bar.setColor(getResources().getColor(R.color.bar_fill2));
 
                 if(Max < Value)
                     Max = Value;
-
+                
                 if(!Key.equals(StringResources.Key.Null) || Key.isEmpty() )
-                    barSet.addBar(bar);
+                barSet.addBar(bar);
             }
             Barlist = new ArrayList<>();
             Barlist.addAll(counts.keySet());
@@ -295,7 +293,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         BarGridPaint.setColor(this.getResources().getColor(R.color.white));
         BarGridPaint.setStyle(Paint.Style.STROKE);
         BarGridPaint.setAntiAlias(true);
-        BarGridPaint.setStrokeWidth(Tools.fromDpToPx(0.8f));
+        BarGridPaint.setStrokeWidth(Tools.fromDpToPx(0.70f));
         OnEntryClickListener = new OnEntryClickListener() {
             @Override
             public void onClick(int setIndex, int entryIndex, Rect rect){

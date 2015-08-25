@@ -12,7 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="6"
+        android:layout_weight="5"
         android:orientation="vertical">
         <TextView android:layout_width="wrap_content"
             android:layout_height="0dp"
@@ -22,7 +22,7 @@
         <com.android.volley.toolbox.NetworkImageView
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="5"
+            android:layout_weight="6"
             android:layout_gravity="center_horizontal"
             android:id="@+id/image" />
     </LinearLayout>
