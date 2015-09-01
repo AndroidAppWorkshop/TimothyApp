@@ -72,7 +72,7 @@ public class StringResources {
 
     }
     public static class Text {
-        public static String SerialNumber = "單號";
+        public static String Drink = "附餐飲料";
         public static String Undone = "未核銷";
         public static String Done = "已核銷";
         public static String Discount = "折扣 :";

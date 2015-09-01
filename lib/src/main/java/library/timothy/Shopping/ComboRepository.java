@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import library.timothy.R;
 import library.timothy.Resources.StringResources;
 
 public class ComboRepository {
@@ -85,7 +86,7 @@ public class ComboRepository {
         comparelist.addAll(combos.values());
         Combo comboVo = new Combo();
         comboVo.setId(StringResources.Key.Drink);
-                comboVo.setName("附餐飲料");
+                comboVo.setName(StringResources.Text.Drink);
         List<ComboDetail> drinkdetails=combos.get(comboId).getDrinkDetails();
         for(int i=0;i<drinkdetails.size();i++)
         {

@@ -267,7 +267,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
 
                 if(Max < Value)
                     Max = Value;
-                
+
                 if(!Key.equals(StringResources.Key.Null) || Key.isEmpty() )
                 barSet.addBar(bar);
             }

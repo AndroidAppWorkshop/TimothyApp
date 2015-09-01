@@ -1,6 +1,7 @@
 package com.timothy.GCM;
 
 import android.app.Activity;
+import android.app.KeyguardManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
+import com.timothy.Activitys.AlertActivity;
 import com.timothy.Activitys.OrderActivity;
 import com.timothy.R;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -18,7 +20,7 @@ import library.timothy.Resources.StringResources;
 public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
 
     public static final int NOTIFICATION_ID = 0;
-
+    private Class Class ;
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle extras = intent.getExtras();
@@ -26,6 +28,8 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
         String messageType = gcm.getMessageType(intent);
         Resources res = context.getResources();
 
+        KeyguardManager km = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+        boolean showingLocked = km.inKeyguardRestrictedInputMode();
         if (!extras.isEmpty()) {
             if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
                 Log.i(getClass() + res.getString(R.string.GcmError), extras.toString());
@@ -34,8 +38,14 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                 Log.i(getClass() + res.getString(R.string.GcmMessage), extras.toString());
 
-                Intent intentNextAction = new Intent(context, OrderActivity.class);
+//                if (showingLocked){
+//                    Intent it = new Intent(context , AlertActivity.class);
+//                    it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    context.startActivity(it);
+//                }
 
+
+                Intent intentNextAction = new Intent(context, OrderActivity.class );
                 intentNextAction.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
                 MagicLenGCM
@@ -49,6 +59,7 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
                                         PendingIntent.FLAG_UPDATE_CURRENT)
                         );
             }
+
         }
         setResultCode(Activity.RESULT_OK);
     }

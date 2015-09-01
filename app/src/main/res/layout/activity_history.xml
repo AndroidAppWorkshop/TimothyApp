@@ -78,6 +78,7 @@
                 android:paddingTop="5dp"
                 android:layout_weight=".08"
                 android:padding="6dp"
+                android:textColor="@color/ghostwhite"
                 android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:id="@+id/value"/>

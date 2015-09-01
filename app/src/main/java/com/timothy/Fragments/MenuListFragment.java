@@ -238,6 +238,8 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                 textViewProductName.setText(combosvo.getName());
                 NetworkImageView Image = (NetworkImageView)productView.findViewById(R.id.image);
                 Image.setImageUrl(combosvo.getImage() , BaseApplication.getInstance().getImageLoader() );
+                Image.setDrawingCacheEnabled(true);
+                Image.setDefaultImageResId(R.drawable.drinks);
                 final TextView textViewProductCount = (TextView) productView.findViewById(R.id.textViewProductCount);
                 String productId = combosvo.getId();
 
@@ -437,8 +439,8 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
 
         @Override
         public Object instantiateItem(ViewGroup container, int pagerPosition) {
-            cache = new LruBitmapCache();
-            ImageLoader = new ImageLoader(queue, cache);
+//            cache = new LruBitmapCache();
+            ImageLoader =BaseApplication.getInstance().getImageLoader();
             View inflate = getActivity().getLayoutInflater().inflate(R.layout.pageritem_container, null);
             LinearLayout pagerContainer = (LinearLayout) inflate.findViewById(R.id.pagerContainer);
 
@@ -469,7 +471,9 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                 textViewProductCount.setText(String.valueOf(cart.getProductCountInCart(productId)));
 
                 NetworkImageView imageView = (NetworkImageView) productView.findViewById(R.id.image);
+
                 imageView.setImageUrl(product.getimage(), ImageLoader);
+                imageView.setDrawingCacheEnabled(true);
 
                 Button btnAdd = (Button) productView.findViewById(R.id.btnAdd);
 

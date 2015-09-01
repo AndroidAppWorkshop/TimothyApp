@@ -29,6 +29,7 @@
         <activity android:name="com.timothy.Activitys.SendActivity" />
         <activity android:name="com.timothy.Activitys.CartActivity" />
         <activity android:name=".Activitys.HistoryActivity" />
+        <activity android:name=".Activitys.AlertActivity"/>
 
         <activity android:name=".Activitys.LoadActivity">
             <intent-filter>
@@ -43,6 +44,7 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED"/>
                 <category android:name="com.timothy" />
             </intent-filter>
         </receiver>
