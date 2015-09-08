@@ -16,6 +16,7 @@ public class BaseApplication extends Application {
     private static BaseApplication instance;
     private RequestQueue requestQueue;
     private ImageLoader imageLoader;
+    private LruBitmapCache LruBitmapCache;
 
     public static synchronized BaseApplication getInstance() {
         return instance;
@@ -49,8 +50,9 @@ public class BaseApplication extends Application {
 
     public ImageLoader getImageLoader() {
         if (this.imageLoader == null) {
+            LruBitmapCache = new LruBitmapCache();
             this.imageLoader = new ImageLoader(getRequestQueue(),
-                    new LruBitmapCache());
+                    LruBitmapCache);
         }
 
         return this.imageLoader;

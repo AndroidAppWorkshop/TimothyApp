@@ -37,12 +37,13 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
                 Log.i(getClass() + res.getString(R.string.GcmDelete), extras.toString());
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                 Log.i(getClass() + res.getString(R.string.GcmMessage), extras.toString());
+        String content = extras.getString(StringResources.Gcm.Message);
+//                if (showingLocked)
+                    Intent it = new Intent(context , AlertActivity.class);
+                    it.putExtra(StringResources.Gcm.Message, content);
+                    it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(it);
 
-//                if (showingLocked){
-//                    Intent it = new Intent(context , AlertActivity.class);
-//                    it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    context.startActivity(it);
-//                }
 
 
                 Intent intentNextAction = new Intent(context, OrderActivity.class );
@@ -52,7 +53,7 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
                         .sendLocalNotification(context,
                                 NOTIFICATION_ID, R.drawable.actionbar_menu,
                                 res.getString(R.string.FromServer),
-                                extras.getString(StringResources.Gcm.Message),
+                                content,
                                 res.getString(R.string.app_name), true,
                                 PendingIntent.getActivity(context,
                                         NOTIFICATION_ID, intentNextAction,

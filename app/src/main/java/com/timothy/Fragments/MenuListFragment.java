@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -63,7 +64,7 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
     private SharedPreferences sharedPreferences;
     private String apiKey;
     private ListViewAdapter listViewAdapter;
-    View view;
+    private View view;
     private ViewPager viewPagerCombo;
     private ComboPagerAdapter comboPagerAdapter;
     private Resources res;
@@ -237,9 +238,13 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                 TextView textViewProductName = (TextView) productView.findViewById(R.id.textViewProductName);
                 textViewProductName.setText(combosvo.getName());
                 NetworkImageView Image = (NetworkImageView)productView.findViewById(R.id.image);
-                Image.setImageUrl(combosvo.getImage() , BaseApplication.getInstance().getImageLoader() );
-                Image.setDrawingCacheEnabled(true);
-                Image.setDefaultImageResId(R.drawable.drinks);
+
+                Image.setImageUrl(combosvo.getImage(), BaseApplication.getInstance().getImageLoader());
+                Image.setDefaultImageResId(R.drawable.loading);
+                if( i == combos.size()-1)
+                    Image.setDefaultImageResId(R.drawable.drinks);
+
+
                 final TextView textViewProductCount = (TextView) productView.findViewById(R.id.textViewProductCount);
                 String productId = combosvo.getId();
 
@@ -433,14 +438,12 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
             this.products = products;
         }
 
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
-        LruBitmapCache cache;
-        com.android.volley.toolbox.ImageLoader ImageLoader;
-
+        ImageLoader Loader;
         @Override
         public Object instantiateItem(ViewGroup container, int pagerPosition) {
-//            cache = new LruBitmapCache();
-            ImageLoader =BaseApplication.getInstance().getImageLoader();
+
+            Loader =BaseApplication.getInstance().getImageLoader();
+
             View inflate = getActivity().getLayoutInflater().inflate(R.layout.pageritem_container, null);
             LinearLayout pagerContainer = (LinearLayout) inflate.findViewById(R.id.pagerContainer);
 
@@ -472,8 +475,8 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
 
                 NetworkImageView imageView = (NetworkImageView) productView.findViewById(R.id.image);
 
-                imageView.setImageUrl(product.getimage(), ImageLoader);
-                imageView.setDrawingCacheEnabled(true);
+                imageView.setDefaultImageResId(R.drawable.loading);
+                imageView.setImageUrl(product.getimage(), Loader);
 
                 Button btnAdd = (Button) productView.findViewById(R.id.btnAdd);
 

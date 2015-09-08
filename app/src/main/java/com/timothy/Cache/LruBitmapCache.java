@@ -8,7 +8,7 @@ import com.android.volley.toolbox.ImageLoader;
 public class LruBitmapCache extends LruCache<String, Bitmap> implements ImageLoader.ImageCache {
     public static int getDefaultLruCacheSize() {
         final int maxMemory =
-                (int) (Runtime.getRuntime().maxMemory() / 1024);
+                (int) (Runtime.getRuntime().maxMemory() );
         final int cacheSize = maxMemory / 8 ;
         return cacheSize;
     }
@@ -19,6 +19,7 @@ public class LruBitmapCache extends LruCache<String, Bitmap> implements ImageLoa
 
     @Override
     protected int sizeOf(String key, Bitmap value) {
+
         return value.getRowBytes() * value.getHeight();
     }
 

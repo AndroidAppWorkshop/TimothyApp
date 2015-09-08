@@ -16,13 +16,13 @@
         android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content" android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2.2"
             android:id="@+id/textViewProductName"
             />
         <com.android.volley.toolbox.NetworkImageView
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="5"
+            android:layout_weight="7.8"
             android:layout_gravity="center_horizontal"
             android:id="@+id/image" />
     </LinearLayout>

@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <TextView
-            android:textSize="40dp"
+            android:textSize="18dp"
             android:text="title"
             android:layout_gravity="center_horizontal"
             android:id="@+id/textViewCategoryTitle"
