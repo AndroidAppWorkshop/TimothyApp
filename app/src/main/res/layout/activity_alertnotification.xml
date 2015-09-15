@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/black"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout android:layout_width="match_parent"
@@ -17,15 +16,21 @@
             android:layout_margin="10dp"
             android:textColor="@color/saddlebrown"
             android:text="Title" />
-        <TextView
-            android:id="@+id/content"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_margin="15dp"
-            android:paddingBottom="60dp"
-            android:textColor="@color/saddlebrown"
-            android:text="new message" />
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                android:paddingBottom="60dp"
+                android:textColor="@color/saddlebrown"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="" />
+        </ScrollView>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -34,12 +39,14 @@
             android:orientation="horizontal">
             <Button
                 android:id="@+id/cancle"
-                android:layout_width="150dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_margin="10dp"
                 android:layout_height="wrap_content"
                 android:text="Cancle"/>
             <Button android:id="@+id/ok"
-                android:layout_width="150dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_margin="10dp"
                 android:layout_height="wrap_content"
                 android:text="Ok"/>

@@ -15,6 +15,8 @@ import com.timothy.Activitys.OrderActivity;
 import com.timothy.R;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import org.json.JSONObject;
+
 import library.timothy.Resources.StringResources;
 
 public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
@@ -28,8 +30,6 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
         String messageType = gcm.getMessageType(intent);
         Resources res = context.getResources();
 
-        KeyguardManager km = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
-        boolean showingLocked = km.inKeyguardRestrictedInputMode();
         if (!extras.isEmpty()) {
             if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
                 Log.i(getClass() + res.getString(R.string.GcmError), extras.toString());
@@ -38,11 +38,10 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                 Log.i(getClass() + res.getString(R.string.GcmMessage), extras.toString());
         String content = extras.getString(StringResources.Gcm.Message);
-//                if (showingLocked)
-                    Intent it = new Intent(context , AlertActivity.class);
-                    it.putExtra(StringResources.Gcm.Message, content);
-                    it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(it);
+                Intent it = new Intent(context , AlertActivity.class);
+                it.putExtra(StringResources.Gcm.Message, content);
+                it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(it);
 
 
 

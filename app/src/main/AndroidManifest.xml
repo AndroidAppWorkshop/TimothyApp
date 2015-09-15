@@ -30,7 +30,7 @@
         <activity android:name="com.timothy.Activitys.SendActivity" />
         <activity android:name="com.timothy.Activitys.CartActivity" />
         <activity android:name=".Activitys.HistoryActivity" />
-        <activity android:name=".Activitys.AlertActivity"/>
+        <activity android:name=".Activitys.AlertActivity" android:theme="@style/Transparent"/>
 
         <activity android:name=".Activitys.LoadActivity">
             <intent-filter>

@@ -32,12 +32,9 @@ public class StringResources {
         public static String OrderDetail = "orderDetail";
         public static String True = "true";
         public static String False = "false";
-        public static String Success = "Success";
         public static String Date = "date";
 
         public static String RegId = "RegID";
-        public static String RegistrationId = "RegistrationId";
-        public static String Message = "Message";
         public static String Accept = "Accept";
         public static String ProductName = "productName";
 

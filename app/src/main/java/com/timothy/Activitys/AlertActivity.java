@@ -1,10 +1,8 @@
 package com.timothy.Activitys;
 
 import android.app.Activity;
-import android.app.admin.DevicePolicyManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.os.PowerManager;
 import android.view.View;
 import android.view.Window;
@@ -14,6 +12,14 @@ import android.widget.TextView;
 
 import com.timothy.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+import library.timothy.Order.OrderDetail;
 import library.timothy.Resources.StringResources;
 
 /**
@@ -22,25 +28,36 @@ import library.timothy.Resources.StringResources;
 public class AlertActivity extends Activity{
 
     TextView title , content ;
-    Button btnCancle , btnOk ;
+    Button btnCancel, btnOk ;
     Intent it;
     PowerManager.WakeLock lock ;
     PowerManager manager ;
+    Map<String,String> data = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String Message = getIntent().getStringExtra(StringResources.Gcm.Message);
+
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
         window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         setContentView(R.layout.activity_alertnotification);
+        String Message = getIntent().getStringExtra(StringResources.Gcm.Message);
+        try {
+            JSONArray ja = new JSONArray(Message);
+            OrderDetail detail = new OrderDetail(ja);
+            data = detail.getChild();
+        }
+        catch (JSONException e) { e.printStackTrace();}
         manager = (PowerManager) getSystemService(this.POWER_SERVICE);
-        btnCancle = (Button)findViewById(R.id.cancle);
+        btnCancel = (Button)findViewById(R.id.cancle);
         btnOk = (Button)findViewById(R.id.ok);
         title = (TextView)findViewById(R.id.title);
+        title.setText(getResources().getString(R.string.NewOrder));
         content = (TextView)findViewById(R.id.content);
-        title.setText(Message);
+        for (Map.Entry<String , String > entry : data.entrySet())
+            content.append( entry.getValue()+ "\n" );
+
         it = new Intent();
         it.setClass(this , OrderActivity.class);
         it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -52,7 +69,7 @@ public class AlertActivity extends Activity{
                 finish();
             }
         });
-        btnCancle.setOnClickListener(new View.OnClickListener() {
+        btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

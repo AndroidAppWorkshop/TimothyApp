@@ -12,7 +12,7 @@ import library.timothy.Resources.StringResources;
 public class OrderDetail {
 
     Map<String,String> child = new HashMap<>();
-    OrderDetail(JSONArray jsonArray) throws JSONException {
+    public OrderDetail(JSONArray jsonArray) throws JSONException {
         int size = jsonArray.length();
         JSONObject jo ;
         String productName;

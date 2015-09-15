@@ -25,6 +25,7 @@
     <string name="DrinkMore"> 飲料多 </string>
     <string name="CheckAgain"> 份請重新檢查 </string>
     <string name="Delete"> 完成訂單 </string>
+    <string name="NewOrder"> 接收到新訂單 : </string>
 
     <string name="Message"> 訊息 </string>
     <string name="Reponse"> 回報</string>

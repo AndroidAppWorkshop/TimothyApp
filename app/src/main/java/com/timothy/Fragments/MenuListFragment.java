@@ -244,7 +244,6 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                 if( i == combos.size()-1)
                     Image.setDefaultImageResId(R.drawable.drinks);
 
-
                 final TextView textViewProductCount = (TextView) productView.findViewById(R.id.textViewProductCount);
                 String productId = combosvo.getId();
 

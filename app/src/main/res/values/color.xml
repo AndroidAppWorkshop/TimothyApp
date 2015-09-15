@@ -18,6 +18,7 @@
     <color name="divider">#b6b6b0</color>
     <color name="secondary">#727272</color>
     <color name="sandybrown">#deb887</color>
+    <color name="transparent">#00000000</color>
 
     <color name="bar_bg">#f67743</color>
     <color name="bar_bgbar">#d96739</color>
