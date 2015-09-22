@@ -27,12 +27,13 @@ import library.timothy.Resources.StringResources;
  */
 public class AlertActivity extends Activity{
 
-    TextView title , content ;
-    Button btnCancel, btnOk ;
-    Intent it;
-    PowerManager.WakeLock lock ;
-    PowerManager manager ;
-    Map<String,String> data = new HashMap<>();
+    private TextView title , content ;
+    private Button btnCancel, btnOk ;
+    private Intent it;
+    private PowerManager.WakeLock lock ;
+    private PowerManager manager ;
+    private String OrderId ;
+    private Map<String,String> data = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +46,7 @@ public class AlertActivity extends Activity{
         String Message = getIntent().getStringExtra(StringResources.Gcm.Message);
         try {
             JSONArray ja = new JSONArray(Message);
+            OrderId = ja.getJSONObject(0).getString(StringResources.Key.OrderID);
             OrderDetail detail = new OrderDetail(ja);
             data = detail.getChild();
         }
@@ -53,7 +55,7 @@ public class AlertActivity extends Activity{
         btnCancel = (Button)findViewById(R.id.cancle);
         btnOk = (Button)findViewById(R.id.ok);
         title = (TextView)findViewById(R.id.title);
-        title.setText(getResources().getString(R.string.NewOrder));
+        title.setText(getResources().getString(R.string.NewOrder) + OrderId);
         content = (TextView)findViewById(R.id.content);
         for (Map.Entry<String , String > entry : data.entrySet())
             content.append( entry.getValue()+ "\n" );
