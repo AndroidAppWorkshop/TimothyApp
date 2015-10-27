@@ -38,8 +38,10 @@ import library.timothy.Shopping.Combo;
 import library.timothy.Shopping.ComboDetail;
 import library.timothy.Shopping.ComboRepository;
 import library.timothy.Shopping.ProductRepository;
-
-
+/**
+ * 購物車Activity載入將購買的選項
+ * 具有向Server端送出訂單的Funtion
+**/
 public class CartActivity extends Activity implements View.OnClickListener{
 
     private static final String LOG_TAG = CartActivity.class.getSimpleName();
@@ -54,7 +56,7 @@ public class CartActivity extends Activity implements View.OnClickListener{
     private SharedPreferences sharedPreferences;
     private String apiKey;
     private ProgressBar progressBar;
-
+    //生命週期 於被呼叫時優先執行之一
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +77,7 @@ public class CartActivity extends Activity implements View.OnClickListener{
         price.setText(String.valueOf(cart.calculateSumPrice()));
 
     }
+    //刷新總價與List
     public void refresh()
     {
         cartAdapter.notifyDataSetChanged();
@@ -110,7 +113,7 @@ public class CartActivity extends Activity implements View.OnClickListener{
         }
         Send(realprice, disprice, cart.getProductInCart());
     }
-
+    //呼叫後向Server端POST送出訂單
     private void Send(final int realprice, final int disprice,  Map<String, Integer> productInCart )
     {
 

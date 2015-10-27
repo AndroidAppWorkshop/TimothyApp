@@ -57,7 +57,9 @@ import library.timothy.Resources.UriResources;
 import library.timothy.History.HistoryOrder;
 import library.timothy.History.OrderRepository;
 import library.timothy.History.Product;
-
+/**
+ * History歷史訂單畫面Activity
+ **/
 public class HistoryActivity extends AppCompatActivity implements View.OnClickListener {
 
 
@@ -74,7 +76,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
     private List<String> Barlist;
     private TextView value;
     private OnEntryClickListener OnEntryClickListener;
-
+    //生命週期 於被呼叫時優先執行之一
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,7 +131,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                 calendar.get(Calendar.DAY_OF_MONTH)
         ).show();
     }
-
+    //以POST要求Server端回傳History資訊並在載入後完成設定
     private void loadOrderhistory(String date)  {
         JSONObject dateBody = new JSONObject();
         try {

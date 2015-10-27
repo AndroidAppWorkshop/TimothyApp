@@ -30,7 +30,9 @@ import library.timothy.Order.Order;
 import library.timothy.Order.OrderList;
 import library.timothy.Resources.StringResources;
 import library.timothy.Resources.UriResources;
-
+/**
+ * Adapter of Order Item
+ **/
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;

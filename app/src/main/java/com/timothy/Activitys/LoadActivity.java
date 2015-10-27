@@ -16,12 +16,14 @@ import library.timothy.Resources.StringResources;
 
 /**
  * Created by h94u04 on 2015/6/12.
+ * 於APP 最先啟動的Activty 並向Server端驗證是否曾經登入
  */
 public class LoadActivity extends Activity {
 
     private Intent intent;
     private ProgressBar progressBar;
     private Context context;
+    //生命週期 於被呼叫時優先執行之一
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +44,7 @@ public class LoadActivity extends Activity {
         intent = new Intent( context , LoginActivity.class);
 
         animation.setAnimationListener(new Animation.AnimationListener() {
+            //設定讀取的浮現動畫的生命週期
             @Override
             public void onAnimationStart(Animation animation) {
                 progressBar.setVisibility(View.VISIBLE);
@@ -64,7 +67,6 @@ public class LoadActivity extends Activity {
             }
             @Override
             public void onAnimationRepeat(Animation animation) {
-
             }
         });
     }

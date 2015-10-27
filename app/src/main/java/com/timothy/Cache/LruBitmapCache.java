@@ -5,7 +5,12 @@ import android.util.LruCache;
 
 import com.android.volley.toolbox.ImageLoader;
 
+import java.util.ArrayList;
+/**
+ * 控制圖片載入時存取的快取Class
+ **/
 public class LruBitmapCache extends LruCache<String, Bitmap> implements ImageLoader.ImageCache {
+    ArrayList<String> urlKey = new ArrayList<>();
     public static int getDefaultLruCacheSize() {
         final int maxMemory =
                 (int) (Runtime.getRuntime().maxMemory() );
@@ -30,6 +35,11 @@ public class LruBitmapCache extends LruCache<String, Bitmap> implements ImageLoa
 
     @Override
     public void putBitmap(String url, Bitmap bitmap) {
+        urlKey.add(url);
         put(url, bitmap);
+    }
+
+    public ArrayList<String> getUrlKey() {
+        return urlKey;
     }
 }

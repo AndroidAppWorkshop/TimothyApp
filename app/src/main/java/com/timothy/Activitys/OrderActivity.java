@@ -10,7 +10,9 @@ import android.widget.ExpandableListView;
 
 import com.timothy.Adapter.ExpandableListAdapter;
 import com.timothy.R;
-
+/**
+ * Order訂單畫面Activty
+ **/
 public class OrderActivity extends Activity implements View.OnClickListener {
 
     ExpandableListView orderList;
@@ -18,12 +20,11 @@ public class OrderActivity extends Activity implements View.OnClickListener {
     Button  reQuestBtn;
     Context context;
     Intent it;
-
+    //生命週期 於被呼叫時優先執行之一
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
-
         orderList = (ExpandableListView) findViewById(R.id.Order_List);
         context = getApplicationContext();
         expandableListAdapter = new ExpandableListAdapter(this,orderList);

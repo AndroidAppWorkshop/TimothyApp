@@ -20,7 +20,9 @@ import java.util.Map;
 import library.timothy.Shopping.Cart;
 import library.timothy.Shopping.Product;
 import library.timothy.Shopping.ProductRepository;
-
+/**
+ * Adapter of Cart Item
+**/
 public class CartAdapter extends BaseAdapter
 {
     private ProductRepository productRepository = new ProductRepository();

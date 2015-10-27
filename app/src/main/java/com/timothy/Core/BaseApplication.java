@@ -10,13 +10,19 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.timothy.Cache.LruBitmapCache;
-
+/**
+ * Application Core
+ * 存放核心參數
+ * ImageLoader , InternetQueue (網路執行佇列 )
+ **/
 public class BaseApplication extends Application {
     public static final String TAG = BaseApplication.class.getSimpleName();
     private static BaseApplication instance;
     private RequestQueue requestQueue;
     private ImageLoader imageLoader;
     private LruBitmapCache LruBitmapCache;
+
+    public static BaseApplication jason(){return instance;}
 
     public static synchronized BaseApplication getInstance() {
         return instance;
@@ -25,7 +31,7 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        instance = this;
+        instance = this ;
     }
 
     public RequestQueue getRequestQueue() {
@@ -56,5 +62,11 @@ public class BaseApplication extends Application {
         }
 
         return this.imageLoader;
+    }
+    public LruBitmapCache getLruBitmapCache() {
+        if (this.LruBitmapCache == null) {
+            getImageLoader();
+        }
+        return this.LruBitmapCache;
     }
 }

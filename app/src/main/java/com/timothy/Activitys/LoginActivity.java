@@ -36,6 +36,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * 於SignIn身分登入畫面時呼叫
+ *向Server端驗證身分並存取Server端給予的AuthorizationCode
+**/
 public class LoginActivity extends Activity
 {
     private static final String LOG_TAG = LoginActivity.class.getSimpleName();
@@ -51,6 +55,7 @@ public class LoginActivity extends Activity
     private MagicLenGCM gcm;
     private  static Map<String, Boolean>  resultApi = new HashMap<String, Boolean>();
     private  static Set<String> AuthorizationSet = new HashSet<>();
+    //生命週期 於被呼叫時優先執行之一
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

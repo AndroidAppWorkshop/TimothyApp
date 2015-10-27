@@ -32,7 +32,11 @@ import java.util.Map;
 
 import library.timothy.Resources.StringResources;
 import library.timothy.Resources.UriResources;
-
+/**
+ * 處理接收到的回傳
+ * 將回傳通知於使用者
+ * 與產生手機RegistrationId並儲存( Phone Identification Code )
+ **/
 public class MagicLenGCM {
 
     private final static String SENDER_ID = StringResources.Gcm.SendId;
@@ -73,7 +77,7 @@ public class MagicLenGCM {
     public void setMagicLenGCMListener(MagicLenGCMListener listener) {
         this.listener = listener;
     }
-
+    //獲得Gcm狀態
     private GCMState openGCM() {
         switch (checkPlayServices()) {
             case SUPPROT:
@@ -89,7 +93,7 @@ public class MagicLenGCM {
                 return GCMState.PLAY_SERVICES_UNSUPPORT;
         }
     }
-
+    //以Gcm目前狀態，採取相對行為
     public MagicLenGCM GCMcheck() {
         switch (openGCM()) {
             case NEED_REGISTER:
@@ -108,7 +112,7 @@ public class MagicLenGCM {
         }
         return this;
     }
-
+    //載入緩存中的識別碼
     private String getRegistrationId() {
         final SharedPreferences prefs = getGCMPreferences();
         String registrationId = prefs.getString(PROPERTY_REG_ID, Empty);
@@ -152,7 +156,7 @@ public class MagicLenGCM {
         }
         return PlayServicesState.SUPPROT;
     }
-
+    //儲存 Identification Code
     private void storeRegistrationId(String regId) {
         final SharedPreferences prefs = getGCMPreferences();
         int appVersion = getAppVersion();
@@ -162,12 +166,10 @@ public class MagicLenGCM {
         editor.commit();
     }
 
-
-
     private void registerInBackground() {
         new AsyncTaskRegister().execute();
     }
-
+    //向Google產生Identification Code
     private final class AsyncTaskRegister extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... params) {
@@ -198,7 +200,7 @@ public class MagicLenGCM {
                 listener.gcmRegistered(!msg.isEmpty(), msg.toString());
         }
     }
-
+    //Server回傳以振動並通知顯示的載入
     public static void sendLocalNotification(Context context, int notifyID, int drawableSmallIcon,
                                              String title, String msg, String info,
                                              boolean autoCancel, PendingIntent pendingIntent) {
@@ -220,39 +222,6 @@ public class MagicLenGCM {
         mBuilder.setContentIntent(pendingIntent);
         mNotificationManager.notify(notifyID, mBuilder.build());
     }
-
-    public void SendMessage(String message) {
-//        Map<String, String> params = new HashMap<String, String>();
-//        params.put(StringResources.Key.RegistrationId, REGIDforSend);
-//        params.put(StringResources.Key.Message, message);
-
-        BaseApplication.getInstance()
-                .addToRequestQueue(new JsonObjectRequest(Request.Method.POST,
-                        UriResources.Server.PushNotification,
-//                        new JSONObject(params),
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                Log.d(StringResources.Gcm.Notice, response.toString());
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Log.e(StringResources.Gcm.Error, error.getMessage(), error);
-                            }
-                        }) {
-                    @Override
-                    public Map<String, String> getHeaders() {
-                        HashMap<String, String> headers = new HashMap<>();
-                        headers.put(StringResources.Key.Accept, StringResources.Key.JsonFormat);
-                        headers.put(StringResources.Key.ContentType, StringResources.Key.HeaderFormat);
-                        headers.put(StringResources.Key.ApiKey, getAPIkey());
-                        return headers;
-                    }
-                });
-    }
-
     public String getAPIkey() {
         return getActivity().getSharedPreferences(StringResources.Key.ApiKey, Context.MODE_PRIVATE).getString(StringResources.Key.ApiKey, null);
     }

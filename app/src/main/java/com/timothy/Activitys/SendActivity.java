@@ -20,7 +20,9 @@ import library.timothy.Resources.StringResources;
 import library.timothy.Shopping.Cart;
 import library.timothy.Shopping.Product;
 import library.timothy.Shopping.ProductRepository;
-
+/**
+ * 送出畫面Activity
+ **/
 public class SendActivity extends Activity {
     Cart cart;
     ListView listView;
@@ -29,11 +31,11 @@ public class SendActivity extends Activity {
     private ProductRepository productRepository = new ProductRepository();
     int setdisprice=0,setrealprice=0;
     List<String> productDisplayList;
+    //生命週期 於被呼叫時優先執行之一
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send);
-
         cart = getIntent().getParcelableExtra(StringResources.Key.Data);
         setdisprice = getIntent().getIntExtra(StringResources.Key.Disprice, 0);
         setrealprice = getIntent().getIntExtra(StringResources.Key.Realprice, 0);

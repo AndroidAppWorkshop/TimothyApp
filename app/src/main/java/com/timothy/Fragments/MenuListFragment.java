@@ -6,9 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -22,26 +20,19 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.NetworkImageView;
-import com.android.volley.toolbox.Volley;
 import com.timothy.Activitys.CartActivity;
-import com.timothy.Cache.LruBitmapCache;
 import com.timothy.Core.BaseApplication;
 import com.timothy.R;
-
 import org.json.JSONArray;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import library.timothy.Resources.StringResources;
 import library.timothy.Resources.UriResources;
 import library.timothy.Shopping.Cart;
@@ -51,8 +42,9 @@ import library.timothy.Shopping.ComboDetail;
 import library.timothy.Shopping.ComboRepository;
 import library.timothy.Shopping.Product;
 import library.timothy.Shopping.ProductRepository;
-
-
+/**
+ * 點餐畫面 , 主畫面之一
+ **/
 public class MenuListFragment extends Fragment implements View.OnClickListener {
 
     private Cart cart = new Cart();
@@ -73,7 +65,6 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.menulayout, null);
         return view;
-
     }
 
     @Override
@@ -238,8 +229,8 @@ public class MenuListFragment extends Fragment implements View.OnClickListener {
                 TextView textViewProductName = (TextView) productView.findViewById(R.id.textViewProductName);
                 textViewProductName.setText(combosvo.getName());
                 NetworkImageView Image = (NetworkImageView)productView.findViewById(R.id.image);
-
-                Image.setImageUrl(combosvo.getImage(), BaseApplication.getInstance().getImageLoader());
+                ImageLoader Loader = BaseApplication.getInstance().getImageLoader();
+                Image.setImageUrl(combosvo.getImage(), Loader );
                 Image.setDefaultImageResId(R.drawable.loading);
                 if( i == combos.size()-1)
                     Image.setDefaultImageResId(R.drawable.drinks);

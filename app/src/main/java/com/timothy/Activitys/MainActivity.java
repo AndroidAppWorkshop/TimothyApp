@@ -15,12 +15,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
-import android.widget.ListView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.timothy.Adapter.DrawerAdapter;
+import com.timothy.Fragments.ImageListFragment;
 import com.timothy.Fragments.MenuListFragment;
-import com.timothy.Fragments.PushNotificationFragment;
 import com.timothy.R;
 
 import java.util.ArrayList;
@@ -29,16 +28,18 @@ import java.util.Set;
 
 import library.timothy.Resources.StringResources;
 
+/**
+ * 選單主畫面的Activity
+ **/
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener , View.OnClickListener{
 
-//    ListView LV;
     DrawerLayout DL;
     Menu mMenu;
     ViewPager viewPager;
     Fragment Fra = null;
     ImageButton HistoryBtn , OrderBtn;
     int MenuPage = 0;
-
+    //生命週期 於被呼叫時優先執行之一
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +48,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         DL = (DrawerLayout) findViewById(R.id.DraOut);
         HistoryBtn = (ImageButton)findViewById(R.id.DraHistory);
         OrderBtn = (ImageButton)findViewById(R.id.DraOrder);
-//        LV = (ListView) findViewById(R.id.LV);
-//        LV.setAdapter(new DrawerAdapter(this, R.layout.drawerlist, getList()));
-//        LV.setOnItemClickListener(this);
         HistoryBtn.setImageResource(R.drawable.historyicon);
         OrderBtn.setImageResource(R.drawable.ordericon);
         HistoryBtn.setOnClickListener(this);
@@ -59,9 +57,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabsStrip.setViewPager(viewPager);
-
     }
-
+    //載入側邊滑動(右上咖啡圖示的選單)
     private List<DrawerAdapter.DrawerItem> getList() {
         List<DrawerAdapter.DrawerItem> list = new ArrayList<>();
         int[] DraIcon = {R.drawable.historyicon, R.drawable.ordericon};
@@ -70,9 +67,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
         return list;
     }
-
-
-
     class PagerAdapter extends FragmentPagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
 
         private final int[] icon = {R.drawable.actionbartab_1, R.drawable.actionbar_pushicon};
@@ -87,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             if (position == MenuPage) {
                 return new MenuListFragment();
             }
-            return new PushNotificationFragment();
+            return new ImageListFragment();
         }
 
         @Override
