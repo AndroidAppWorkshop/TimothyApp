@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -44,8 +45,21 @@ public class ImageListFragment extends Fragment{
                 if(BaseApplication.getInstance() != null){
                     list.setVisibility(View.VISIBLE);
                     list.setAdapter(new ImageAdapter());
-                    image.setClickable(false);
                 }
+            }
+        });
+        list.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if(firstVisibleItem == 0 )
+                    image.setVisibility(View.VISIBLE);
+                else
+                    image.setVisibility(View.GONE);
             }
         });
 
@@ -70,10 +84,11 @@ public class ImageListFragment extends Fragment{
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = getActivity().getLayoutInflater().inflate(R.layout.drawerlist, null);
+            convertView = getActivity().getLayoutInflater().inflate(R.layout.fragimage, null);
 
             ImageView imageView = (ImageView)convertView.findViewById(R.id.DraiImage);
             imageView.setImageBitmap(cache.getBitmap(Keylist.get(position)));
+            imageView.setPadding(0,1,0,0);
             return convertView;
         }
     }
