@@ -129,41 +129,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
-
-    private void removeOrder(int position) {
-        OrderRequest(KeyList.get(position));
-    }
     private Map<String, Order> setData(Map<String, Order> DataMap) {
         return this.DataMap = DataMap;
     }
-
-    public void OrderRequest() {
-        BaseApplication.getInstance().addToRequestQueue(new JsonArrayRequest(Request.Method.POST,
-                UriResources.Server.Order,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray jsonArray) {
-                        OrderList = new OrderList().mapNewData(jsonArray);
-                        KeyList = OrderList.getKeyList();
-                        expandableListAdapter.setData(OrderList.getOrderList());
-                        expandableListView.setAdapter(expandableListAdapter);
-                        expandableListAdapter.notifyDataSetChanged();
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        Log.e(volleyError.getClass().toString(), volleyError.getStackTrace().toString());
-                    }
-                }) {
-            @Override
-            public Map<String, String> getHeaders() {
-            HashMap<String, String> headers = new HashMap<>();
-            headers.put(StringResources.Key.ApiKey, context.getSharedPreferences(StringResources.Key.ApiKey, Context.MODE_PRIVATE).getString(StringResources.Key.ApiKey, null));
-            return headers;
-        }});
+    private void removeOrder(int position) {
+        OrderRequest(KeyList.get(position));
     }
-
     public void OrderRequest(final String SerialNumber) {
         Map<String, String> bodymap = new HashMap<>();
 
@@ -197,6 +168,33 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 return headers;
             }
         });
-
     }
+    public void OrderRequest() {
+        BaseApplication.getInstance().addToRequestQueue(new JsonArrayRequest(Request.Method.POST,
+                UriResources.Server.Order,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray jsonArray) {
+                        OrderList = new OrderList().mapNewData(jsonArray);
+                        KeyList = OrderList.getKeyList();
+                        expandableListAdapter.setData(OrderList.getOrderList());
+                        expandableListView.setAdapter(expandableListAdapter);
+                        expandableListAdapter.notifyDataSetChanged();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Log.e(volleyError.getClass().toString(), volleyError.getStackTrace().toString());
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+            HashMap<String, String> headers = new HashMap<>();
+            headers.put(StringResources.Key.ApiKey, context.getSharedPreferences(StringResources.Key.ApiKey, Context.MODE_PRIVATE).getString(StringResources.Key.ApiKey, null));
+            return headers;
+        }});
+    }
+
+
 }

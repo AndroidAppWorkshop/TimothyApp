@@ -73,9 +73,11 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
     private Paint BarGridPaint;
     private Button quest;
     private DrawerLayout Drawer;
-    private List<String> Barlist;
+    private List<String> Barlist = new ArrayList<>();
     private TextView value;
     private OnEntryClickListener OnEntryClickListener;
+    private List<HistoryOrder> orders ;
+    private Map<String , Integer> counts ;
     //生命週期 於被呼叫時優先執行之一
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +134,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         ).show();
     }
     //以POST要求Server端回傳History資訊並在載入後完成設定
-    private void loadOrderhistory(String date)  {
+    private void loadOrderhistory(final String date)  {
         JSONObject dateBody = new JSONObject();
         try {
             dateBody.put(StringResources.Key.Date,date);
@@ -147,6 +149,8 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                         new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray jsonArray) {
+                                if (jsonArray.isNull(0))
+                                    Toast.makeText(HistoryActivity.this,"No Order In this Day "+date,Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
                                 OrderRepository.refreshData(jsonArray);
                                 renderlistview();
@@ -183,9 +187,11 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
 
     class ExpandableAdapter extends BaseExpandableListAdapter {
 
-        private List<HistoryOrder> orders = OrderRepository.getOrders();
-        private Map<String , Integer> counts = OrderRepository.getCounts();
-        ExpandableAdapter() {updateBarChart();}
+        ExpandableAdapter() {
+            orders = OrderRepository.getOrders();
+            counts = OrderRepository.getCounts();
+            updateBarChart();
+            }
 
         public int getGroupCount() {
             return orders.size();
@@ -254,10 +260,12 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         public void updateBarChart(){
 
             BarChart.reset();
-
+            if(counts.isEmpty())
+                return;
             BarSet barSet = new BarSet();
             Bar bar;
             int Max = 10 ;
+
             for(Map.Entry<String , Integer> entry : counts.entrySet()){
 
                 String Key = entry.getKey();
@@ -275,9 +283,19 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
             }
             Barlist = new ArrayList<>();
             Barlist.addAll(counts.keySet());
-            int divid = Max / 5 + 1;
+            OnEntryClickListener = new OnEntryClickListener() {
+                @Override
+                public void onClick(int setIndex, int entryIndex, Rect rect){
+                    value.clearAnimation();
+                    AlphaAnimation animation = new AlphaAnimation(0.1f,1.0f);
+                    animation.setDuration(1000);
+                    value.setAnimation(animation);
+                    String text = Barlist.get(entryIndex);
+                    value.setText(text);
+                }
+            };
+            int divid = Max / 5 ;
             BarChart.addData(barSet);
-
             BarChart.setSetSpacing(Tools.fromDpToPx(2));
             BarChart.setBarSpacing(Tools.fromDpToPx(9));
             BarChart.setOnEntryClickListener(OnEntryClickListener);
@@ -285,6 +303,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                     .setAxisBorderValues(0, Max, divid)
                     .setGrid(BarChartView.GridType.FULL , BarGridPaint)
                     .show();
+
         }
     }
     private void initBarChart(){
@@ -294,18 +313,8 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         BarGridPaint = new Paint();
         BarGridPaint.setColor(this.getResources().getColor(R.color.white));
         BarGridPaint.setStyle(Paint.Style.STROKE);
-        BarGridPaint.setAntiAlias(true);
         BarGridPaint.setStrokeWidth(Tools.fromDpToPx(0.70f));
-        OnEntryClickListener = new OnEntryClickListener() {
-            @Override
-            public void onClick(int setIndex, int entryIndex, Rect rect){
-                AlphaAnimation animation = new AlphaAnimation(0.1f,1.0f);
-                animation.setDuration(1000);
-                value.setAnimation(animation);
-                String text = Barlist.get(entryIndex);
-                value.setText(text);
-            }
-        };
+
     }
 }
 

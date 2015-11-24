@@ -19,7 +19,6 @@ import library.timothy.Resources.StringResources;
  * 於APP 最先啟動的Activty 並向Server端驗證是否曾經登入
  */
 public class LoadActivity extends Activity {
-
     private Intent intent;
     private ProgressBar progressBar;
     private Context context;

@@ -116,7 +116,6 @@ public class CartActivity extends Activity implements View.OnClickListener{
     //呼叫後向Server端POST送出訂單
     private void Send(final int realprice, final int disprice,  Map<String, Integer> productInCart )
     {
-
         try {
             progressBar.setVisibility(View.VISIBLE);
             JSONEncode(productInCart);
@@ -165,10 +164,7 @@ public class CartActivity extends Activity implements View.OnClickListener{
                             return headers;
                         }
                     });
-
-        } catch (Exception e) {
-            Log.e(LOG_TAG, e.getMessage(), e);
-        }
+        } catch (Exception e) {Log.e(LOG_TAG, e.getMessage(), e);}
     }
 
     private void JSONEncode( Map<String, Integer> productInCart )  throws JSONException {
