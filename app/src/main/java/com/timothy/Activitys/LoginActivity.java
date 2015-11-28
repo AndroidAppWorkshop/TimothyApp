@@ -2,6 +2,7 @@ package com.timothy.Activitys;
 
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -275,8 +276,7 @@ public class LoginActivity extends Activity
             startActivity(intent);
             finish();
         }
-        else
-        {
+        else {
             Intent intent = new Intent(this, OrderActivity.class);
             startActivity(intent);
             finish();

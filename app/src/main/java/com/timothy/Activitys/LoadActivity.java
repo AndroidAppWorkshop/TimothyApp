@@ -3,6 +3,8 @@ package com.timothy.Activitys;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -12,7 +14,13 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import com.timothy.R;
+
+import java.util.Set;
+
+import library.timothy.Order.Order;
 import library.timothy.Resources.StringResources;
+
+import static android.net.NetworkInfo.State.CONNECTED;
 
 /**
  * Created by h94u04 on 2015/6/12.
@@ -22,6 +30,8 @@ public class LoadActivity extends Activity {
     private Intent intent;
     private ProgressBar progressBar;
     private Context context;
+    private NetworkInfo mNetworkInfo;
+    private AlphaAnimation animation;
     //生命週期 於被呼叫時優先執行之一
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,12 +46,12 @@ public class LoadActivity extends Activity {
         ImageView loadingImage = (ImageView) findViewById(R.id.LoadImage);
         loadingImage.setImageResource(R.drawable.timothycafe);
 
-        AlphaAnimation animation = new AlphaAnimation(0.1f, 1.0f);
+        animation = new AlphaAnimation(0.1f, 1.0f);
         animation.setDuration(3000);
         loadingImage.setAnimation(animation);
-
+        ConnectivityManager mConnectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
         intent = new Intent( context , LoginActivity.class);
-
         animation.setAnimationListener(new Animation.AnimationListener() {
             //設定讀取的浮現動畫的生命週期
             @Override
@@ -49,24 +59,25 @@ public class LoadActivity extends Activity {
                 progressBar.setVisibility(View.VISIBLE);
             }
             @Override
-            public void onAnimationEnd(Animation animation) {
-
-             if (getSharedPreferences(StringResources.Key.ApiKey, MODE_PRIVATE)
-                                .getString(StringResources.Key.ApiKey, null) != null &&
-                getSharedPreferences(StringResources.Key.Login , MODE_PRIVATE)
-                                .getStringSet(StringResources.Key.Login, null ) != null ) {
-                 intent.setClass(context , MainActivity.class);
-                 startActivity(intent);
-             }
-             else
-                 startActivity(intent);
-
-             progressBar.setVisibility(View.INVISIBLE);
-             finish();
+            public void onAnimationEnd(Animation animationA) {
+                progressBar.setVisibility(View.INVISIBLE);
+                least();
             }
             @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
+            public void onAnimationRepeat(Animation animation) {}
         });
+        startActivity(intent);
+        finish();
+    }
+    private void least() {
+        Set<String> Login = getSharedPreferences(StringResources.Key.Login , MODE_PRIVATE)
+                .getStringSet(StringResources.Key.Login, null) ;
+        if (getSharedPreferences(StringResources.Key.ApiKey, MODE_PRIVATE)
+                .getString(StringResources.Key.ApiKey, null) != null && Login != null ){
+            if(Login.size() != 4)
+                intent.setClass(context ,OrderActivity.class);
+            else
+                intent.setClass(context , MainActivity.class);
+        }
     }
 }

@@ -283,17 +283,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
             }
             Barlist = new ArrayList<>();
             Barlist.addAll(counts.keySet());
-            OnEntryClickListener = new OnEntryClickListener() {
-                @Override
-                public void onClick(int setIndex, int entryIndex, Rect rect){
-                    value.clearAnimation();
-                    AlphaAnimation animation = new AlphaAnimation(0.1f,1.0f);
-                    animation.setDuration(1000);
-                    value.setAnimation(animation);
-                    String text = Barlist.get(entryIndex);
-                    value.setText(text);
-                }
-            };
+
             int divid = Max / 5 ;
             BarChart.addData(barSet);
             BarChart.setSetSpacing(Tools.fromDpToPx(2));
@@ -303,7 +293,6 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                     .setAxisBorderValues(0, Max, divid)
                     .setGrid(BarChartView.GridType.FULL , BarGridPaint)
                     .show();
-
         }
     }
     private void initBarChart(){
@@ -314,7 +303,23 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
         BarGridPaint.setColor(this.getResources().getColor(R.color.white));
         BarGridPaint.setStyle(Paint.Style.STROKE);
         BarGridPaint.setStrokeWidth(Tools.fromDpToPx(0.70f));
+        OnEntryClickListener = new OnEntryClickListener() {
+            @Override
+            public void onClick(int setIndex, int entryIndex, Rect rect){
+                value.clearAnimation();
 
+                AlphaAnimation animation = new AlphaAnimation(0.1f,1.0f);
+                animation.setDuration(1000);
+                value.setAnimation(animation);
+                String text;
+                try{
+                    text = Barlist.get(entryIndex);
+                }catch (Exception e){
+                    text ="當日沒有任何訂單";
+                }
+                value.setText(text);
+            }
+        };
     }
 }
 
