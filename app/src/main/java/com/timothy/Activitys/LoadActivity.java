@@ -66,8 +66,6 @@ public class LoadActivity extends Activity {
             @Override
             public void onAnimationRepeat(Animation animation) {}
         });
-        startActivity(intent);
-        finish();
     }
     private void least() {
         Set<String> Login = getSharedPreferences(StringResources.Key.Login , MODE_PRIVATE)
@@ -79,5 +77,7 @@ public class LoadActivity extends Activity {
             else
                 intent.setClass(context , MainActivity.class);
         }
+        startActivity(intent);
+        finish();
     }
 }
